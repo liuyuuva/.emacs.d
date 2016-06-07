@@ -360,7 +360,7 @@
 
 
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-(add-hook 'org-mode-hook 'toggle_truncate_lines)
+;(add-hook 'org-mode-hook 'toggle_truncate_lines)
 
 ;;;;Org Capture
 (setq org-capture-templates
