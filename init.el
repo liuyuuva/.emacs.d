@@ -143,7 +143,8 @@
      (diminish 'elpy-mode "elpy")
      (elpy-enable)
      (elpy-use-ipython)
-      (setq elpy-rpc-backend "jedi")))
+     ;(setq elpy-rpc-backend "jedi")
+     ))
 
 
 ;; if windows redefine M-TAB to F5 since M-TAB is used for switching applications
