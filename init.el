@@ -8,7 +8,7 @@
 
 (if (eq system-type 'windows-nt)
     (progn
-      	(let ((default-directory "C:/Users/yliu193/.emacs.d/"))
+      	(let ((default-directory "~/.emacs.d/"))
 	(normal-top-level-add-subdirs-to-load-path))
 	(add-to-list 'backup-directory-alist  '("." . "~/Work/emacs_backup/backup"))
 	(setq auto-save-file-name-transforms '((".*" "~/Work/emacs_backup/autosaves" t)))
@@ -25,30 +25,11 @@
 			  (cons "Input your LDAP UID !"
 				(base64-encode-string "LOGIN:PASSWORD"))))))
   (progn
-    (let ((default-directory "/Users/yuliu/.emacs.d/"))
+    (let ((default-directory "~/.emacs.d/"))
       (normal-top-level-add-subdirs-to-load-path))
-    (add-to-list 'backup-directory-alist  '("." . "/Users/yuliu/.emacs.d/backup"))
-    (setq auto-save-file-name-transforms '((".*" "/Users/yuliu/.emacs.d/autosaves" t)))))
+    (add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup"))
+    (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves" t)))))
   
-
-
-;(if (equal "yliu193" user-login-name)
-;    (progn
-;      (setq default-directory (concat (getenv "HOME") "/" "Work/Notes_Planning/"))
-;      (add-to-list 'exec-path "~/Softwares/Aspell/bin")
-;      (setq ispell-dictionary "~/Softwares/Aspell/dict")
-;      (setq myprojectfile "~/Work/Notes_Planning/Projects_2016.org")
-;      (setq user-mail-address "yliu193@ford.com")
-;      (setq url-proxy-services;
-;	    '(("no_proxy" . "^\\(localhost\\|10.*\\)")
-;	      ("http" . "19.12.1.40:83")
-;	      ("https" . "19.12.1.40:83")))
- ;     (setq url-http-proxy-basic-auth-storage
-;	    (list (list "19.12.1.40:83"
-;			(cons "Input your LDAP UID !"
- ;                     (base64-encode-string "LOGIN:PASSWORD"))))))
-  ;  )
-
 	
 
 (require 'package)
