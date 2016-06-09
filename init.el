@@ -11,7 +11,7 @@
       	(let ((default-directory "~/.emacs.d/"))
 	(normal-top-level-add-subdirs-to-load-path))
 	(add-to-list 'backup-directory-alist  '("." . "~/Work/emacs_backup/backup/"))
-	(setq auto-save-file-name-transforms '((".*" "~/Work/emacs_backup/autosaves/" t)))
+	(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves" t)))
 	(setq default-directory "~/Work/Notes_Planning/")
 	(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
 	(setq ispell-dictionary "~/Softwares/Aspell/dict/")
@@ -71,24 +71,51 @@
           helm-quick-update t
           helm-M-x-requires-pattern nil
           helm-ff-skip-boring-files t)
+    (global-unset-key (kbd "M-h"))
     (helm-mode))
-  :bind (("C-c h" . helm-mini)
-         ("C-h a" . helm-apropos)
+  :bind  (("M-h m" . helm-mini)
+         ("M-h a" . helm-apropos)
          ("C-x C-b" . helm-buffers-list)
          ("C-x b" . helm-buffers-list)
          ("M-y" . helm-show-kill-ring)
-         ("M-x" . helm-M-x)
-         ("C-x c o" . helm-occur)
-         ("C-x c s" . helm-swoop)
-         ("C-x c y" . helm-yas-complete)
-         ("C-x c Y" . helm-yas-create-snippet-on-region)
-         ("C-x c b" . my/helm-do-grep-book-notes)
-         ("C-x c SPC" . helm-all-mark-rings)))
+         ("M-h x" . helm-M-x)
+         ("M-h o" . helm-occur)
+         ("M-h s" . helm-swoop)
+         ("M-h y" . helm-yas-complete)
+         ("M-h Y" . helm-yas-create-snippet-on-region)
+         ("M-h b" . my/helm-do-grep-book-notes)
+         ("M-h SPC" . helm-all-mark-rings)))
+
 (use-package helm-descbinds
   :defer t
   :bind (("C-h b" . helm-descbinds)
          ("C-h w" . helm-descbinds)))
 (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
+
+
+;; (global-set-key (kbd "M-s") 'ace-jump-char-mode)
+;; ;(global-set-key (kbd "C-\'") 'ace-jump-char-mode)
+;; (global-set-key (kbd "S-SPC") 'ace-jump-line-mode)
+
+;; (use-package avy
+;;   :ensure t
+;;   :config
+;;   (progn
+;;     (global-set-key (kbd "M-s") 'avy-goto-char)
+;;     (global-set-key (kbd "S-SPC") 'avy-goto-line)))
+
+(use-package ace-jump-mode
+  :ensure t
+  :config
+  (progn
+    (global-set-key (kbd "M-s") 'ace-jump-char-mode)
+    (global-set-key (kbd "S-SPC") 'ace-jump-line-mode)
+    ))
+
+
+(use-package ace-window
+  :ensure t
+  :config (global-set-key (kbd "M-p") 'ace-window))
 
 ;; (use-package ido
 ;;   :init (progn (ido-mode 1)
@@ -1047,10 +1074,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (global-set-key (kbd "C-M-m") 'delete-minibuffer-contents)
 
-
-(global-set-key (kbd "M-s") 'ace-jump-char-mode)
-;(global-set-key (kbd "C-\'") 'ace-jump-char-mode)
-(global-set-key (kbd "S-SPC") 'ace-jump-line-mode)
 
 
 
