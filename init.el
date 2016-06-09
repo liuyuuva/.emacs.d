@@ -179,7 +179,7 @@
 
 (use-package elpy
   :ensure t
-   :defer 2
+   :defer t
    :config
    (progn
      (when (require 'flycheck nil t)
