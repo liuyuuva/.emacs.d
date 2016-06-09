@@ -78,8 +78,8 @@
          ("M-h s" . helm-swoop)
          ("M-h y" . helm-yas-complete)
          ("M-h Y" . helm-yas-create-snippet-on-region)
-         ("M-h b" . my/helm-do-grep-book-notes)
-         ("M-h SPC" . helm-all-mark-rings)))
+         ("M-h SPC" . helm-all-mark-rings)
+	 ("M-h b". helm-bookmarks)))
 
 (use-package helm-descbinds
   :defer t
@@ -144,7 +144,7 @@
   
  
 (use-package breadcrumb
-  :commands bc-set bc-previous bc-next bc-list bc-local-next bc-local-previous
+  ;:commands bc-set bc-previous bc-next bc-list bc-local-next bc-local-previous
   :bind (("C-c m" . bc-set)
 	 ("M-j" . bc-previous)
 	 ("S-M-j" . bc-next)
@@ -173,9 +173,9 @@
 ;;   :ensure t
 ;;   :defer t)
 
-;; (use-package python-mode
-;;   :defer t
-;;   :ensure t)
+(use-package python-mode
+  :defer t
+  :ensure t)
 
 (use-package elpy
   :ensure t
@@ -192,7 +192,7 @@
      (elpy-use-ipython)
      ;(setq elpy-rpc-backend "jedi")
      ))
-
+(add-hook 'python-mode-hook 'elpy-mode)
 
 ;; if windows redefine M-TAB to F5 since M-TAB is used for switching applications
 (if (eq system-type 'windows-nt)
