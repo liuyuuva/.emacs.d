@@ -72,13 +72,16 @@
           helm-M-x-requires-pattern nil
           helm-ff-skip-boring-files t)
     (global-unset-key (kbd "M-h"))
-    (helm-mode))
+    (helm-mode)
+    (define-key helm-map (kbd "C-r") 'helm-previous-line)
+    (define-key helm-map (kbd "C-s") 'helm-next-line)
+        )
   :bind  (("M-h m" . helm-mini)
          ("M-h a" . helm-apropos)
          ("C-x C-b" . helm-buffers-list)
          ("C-x b" . helm-buffers-list)
          ("M-y" . helm-show-kill-ring)
-         ("M-h x" . helm-M-x)
+         ("M-x" . helm-M-x)
          ("M-h o" . helm-occur)
          ("M-h s" . helm-swoop)
          ("M-h y" . helm-yas-complete)
@@ -90,8 +93,12 @@
   :defer t
   :bind (("C-h b" . helm-descbinds)
          ("C-h w" . helm-descbinds)))
-(ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 
+
+(use-package color-theme
+  :init (color-theme-initialize)
+  :config (color-theme-vim-colors)
+  )
 
 ;; (global-set-key (kbd "M-s") 'ace-jump-char-mode)
 ;; ;(global-set-key (kbd "C-\'") 'ace-jump-char-mode)
@@ -117,19 +124,19 @@
   :ensure t
   :config (global-set-key (kbd "M-p") 'ace-window))
 
-;; (use-package ido
-;;   :init (progn (ido-mode 1)
-;;                (ido-everywhere 1))
-;;   :config
-;;   (progn
-;;     (setq ido-case-fold t)
-;;     (setq ido-everywhere t)
-;;     (setq ido-enable-prefix nil)
-;;     (setq ido-enable-flex-matching t)
-;;     (setq ido-create-new-buffer 'always)
-;;     (setq ido-max-prospects 10)
-;;     (setq ido-use-faces nil)
-;;     (add-to-list 'ido-ignore-files "appspec.yml")))
+(use-package ido
+  :init (progn (ido-mode 1)
+               (ido-everywhere 1))
+  :config
+  (progn
+    (setq ido-case-fold t)
+    (setq ido-everywhere t)
+    (setq ido-enable-prefix nil)
+    (setq ido-enable-flex-matching t)
+    (setq ido-create-new-buffer 'always)
+    (setq ido-max-prospects 10)
+    (setq ido-use-faces nil)
+    (add-to-list 'ido-ignore-files "appspec.yml")))
 
 
 (use-package cc-mode
@@ -385,6 +392,7 @@
 (add-hook 'org-mode-hook 'org-bullets-mode)
 ;(add-hook 'org-mode-hook 'toggle_truncate_lines)
 
+ 
 ;;;;Org Capture
 (setq org-capture-templates
       '(("t" "Todo" entry (file myprojectfile )
@@ -840,7 +848,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 
 (with-eval-after-load "org"
-	(progn
+  (progn
+    (define-key org-mode-map (kbd "M-h") nil)
 	;;F1
 	(define-key org-mode-map (kbd "<f1>") 'open-notes-projects)
 	(define-key org-mode-map (kbd "M-<f1>") 'delete-other-windows)
