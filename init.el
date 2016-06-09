@@ -16,14 +16,7 @@
 	(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
 	(setq ispell-dictionary "~/Softwares/Aspell/dict/")
 	(setq myprojectfile "~/Work/Notes_Planning/Projects_2016.org")
-	(setq url-proxy-services;
-	      '(("no_proxy" . "^\\(localhost\\|10.*\\)")
-		("http" . "19.12.1.40:83")
-		("https" . "19.12.1.40:83")))
-	(setq url-http-proxy-basic-auth-storage
-	      (list (list "19.12.1.40:83"
-			  (cons "Input your LDAP UID !"
-				(base64-encode-string "LOGIN:PASSWORD"))))))
+	(load-file "~/.emacs.d/init_proxy.el"))
   (progn
     (let ((default-directory "~/.emacs.d/"))
       (normal-top-level-add-subdirs-to-load-path))
@@ -40,8 +33,8 @@
 ;; Avoid multiple initialization of installed packages.
 (setq package-enable-at-startup nil)
 ;; Add Melpa to the list of package archives.
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+
 
 ;; Do package initiazation.
 (package-initialize)
@@ -137,13 +130,13 @@
 	 ("M-<down>" . bc-local-next)
 	 ("C-c C-l" . bc-list)))
 
-(use-package undo-tree
-  :diminish undo-tree-mode
-  :config
-  (progn
-    (global-undo-tree-mode)
-    (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t)))
+;; (use-package undo-tree
+;;   :diminish undo-tree-mode
+;;   :config
+;;   (progn
+;;     (global-undo-tree-mode)
+;;     (setq undo-tree-visualizer-timestamps t)
+;;     (setq undo-tree-visualizer-diff t)))
 
 (use-package guide-key
   :defer t
@@ -1042,8 +1035,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (global-set-key (kbd "C-S-f") 'org-forward-same-level )
 (global-set-key (kbd "C-S-w") 'org-cut-subtree)
 (global-set-key (kbd "C-S-u") 'outline-up-heading)
-(global-set-key (kbd "C-z")     'set-mark-command)
-(global-set-key "\C-x\C-b" 'buffer-menu)
+(global-set-key (kbd "C-z")  'set-mark-command)
+;(global-set-key "\C-x\C-b" 'buffer-menu)
 (global-set-key (kbd "C-<backspace>") 'backward-kill-word)
 (global-set-key (kbd "C-/") 'flyspell-check-previous-highlighted-word)
 (global-set-key (kbd "C-1") 'jump-back-local-mark) ;jump back mark in local mark ring
