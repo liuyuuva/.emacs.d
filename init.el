@@ -64,21 +64,52 @@
 
 
 
-
-
-(use-package ido
-  :init (progn (ido-mode 1)
-               (ido-everywhere 1))
-  :config
+(use-package helm
+  :diminish helm-mode
+  :init
   (progn
-    (setq ido-case-fold t)
-    (setq ido-everywhere t)
-    (setq ido-enable-prefix nil)
-    (setq ido-enable-flex-matching t)
-    (setq ido-create-new-buffer 'always)
-    (setq ido-max-prospects 10)
-    (setq ido-use-faces nil)
-    (add-to-list 'ido-ignore-files "appspec.yml")))
+    (require 'helm-config)
+    (setq helm-candidate-number-limit 100)
+    ;; From https://gist.github.com/antifuchs/9238468
+    (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+          helm-input-idle-delay 0.01  ; this actually updates things
+                                        ; reeeelatively quickly.
+          helm-yas-display-key-on-candidate t
+          helm-quick-update t
+          helm-M-x-requires-pattern nil
+          helm-ff-skip-boring-files t)
+    (helm-mode))
+  :bind (("C-c h" . helm-mini)
+         ("C-h a" . helm-apropos)
+         ("C-x C-b" . helm-buffers-list)
+         ("C-x b" . helm-buffers-list)
+         ("M-y" . helm-show-kill-ring)
+         ("M-x" . helm-M-x)
+         ("C-x c o" . helm-occur)
+         ("C-x c s" . helm-swoop)
+         ("C-x c y" . helm-yas-complete)
+         ("C-x c Y" . helm-yas-create-snippet-on-region)
+         ("C-x c b" . my/helm-do-grep-book-notes)
+         ("C-x c SPC" . helm-all-mark-rings)))
+(use-package helm-descbinds
+  :defer t
+  :bind (("C-h b" . helm-descbinds)
+         ("C-h w" . helm-descbinds)))
+(ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
+
+;; (use-package ido
+;;   :init (progn (ido-mode 1)
+;;                (ido-everywhere 1))
+;;   :config
+;;   (progn
+;;     (setq ido-case-fold t)
+;;     (setq ido-everywhere t)
+;;     (setq ido-enable-prefix nil)
+;;     (setq ido-enable-flex-matching t)
+;;     (setq ido-create-new-buffer 'always)
+;;     (setq ido-max-prospects 10)
+;;     (setq ido-use-faces nil)
+;;     (add-to-list 'ido-ignore-files "appspec.yml")))
 
 
 (use-package cc-mode
@@ -154,7 +185,6 @@
 		(lambda ()
 		  (local-unset-key (kbd "M-TAB"))
 		  (define-key elpy-mode-map (kbd "<f5>") 'elpy-company-backend)))))
-
 
 
 
