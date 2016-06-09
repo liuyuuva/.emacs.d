@@ -1,11 +1,3 @@
-;;; Emacs is not a package manager, and here we load its package manager!
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Pacakge Setting
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Set work email address if used on work laptop
-
-
 (if (eq system-type 'windows-nt)
     (progn
       	(let ((default-directory "~/.emacs.d/"))
@@ -58,7 +50,7 @@
 
 
 (use-package helm
-  :diminish helm-mode
+  :diminish helm
   :init
   (progn
     (require 'helm-config)
@@ -99,10 +91,6 @@
   :init (color-theme-initialize)
   :config (color-theme-vim-colors)
   )
-
-;; (global-set-key (kbd "M-s") 'ace-jump-char-mode)
-;; ;(global-set-key (kbd "C-\'") 'ace-jump-char-mode)
-;; (global-set-key (kbd "S-SPC") 'ace-jump-line-mode)
 
 ;; (use-package avy
 ;;   :ensure t
@@ -164,13 +152,14 @@
 	 ("M-<down>" . bc-local-next)
 	 ("C-c C-l" . bc-list)))
 
-;; (use-package undo-tree
-;;   :diminish undo-tree-mode
-;;   :config
-;;   (progn
-;;     (global-undo-tree-mode)
-;;     (setq undo-tree-visualizer-timestamps t)
-;;     (setq undo-tree-visualizer-diff t)))
+ (use-package undo-tree
+   :defer t
+   :diminish undo-tree-mode
+   :config
+   (progn
+     (global-undo-tree-mode)
+     (setq undo-tree-visualizer-timestamps t)
+     (setq undo-tree-visualizer-diff t)))
 
 (use-package guide-key
   :defer t
@@ -233,11 +222,6 @@
 (setq imenu-auto-rescan t)
 (global-set-key (kbd "C-c i") 'imenu)
 
-;; (add-to-list 'desktop-modes-not-to-save 'dired-mode)
-;;    (add-to-list 'desktop-modes-not-to-save 'Info-mode)
-;;    (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
-;;    (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
-
 (define-globalized-minor-mode real-global-auto-complete-mode
   auto-complete-mode (lambda ()
                        (if (not (minibufferp (current-buffer)))
@@ -260,9 +244,6 @@
 
 (require 'smart-compile)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Python
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Backup
@@ -281,9 +262,6 @@
        (backup-buffer)))
    (add-hook 'before-save-hook  'force-backup-of-buffer)
 (setq initial-scratch-message "") ;; Uh, I know what Scratch is for
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Set Proxy
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
 
 (when (window-system)
@@ -336,7 +314,7 @@
 
 (setq column-number-mode t)
 (setq line-number-mode t)
-(mouse-wheel-mode t)
+;(mouse-wheel-mode t)
 
 (setq kill-ring-max 200)
 (mouse-avoidance-mode 'animate)
