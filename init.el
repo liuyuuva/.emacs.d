@@ -1,3 +1,4 @@
+
 (if (eq system-type 'windows-nt)
     (progn
       	(let ((default-directory "~/.emacs.d/"))
@@ -47,7 +48,12 @@
 
 (require 'benchmark-init)
 
-
+(use-package magit
+  :ensure t
+  :config
+  (progn
+    (global-set-key (kbd "C-x g") 'magit-status)
+    ))
 
 (use-package helm
   :diminish helm
