@@ -127,20 +127,6 @@
     (add-to-list 'ido-ignore-files "appspec.yml")))
 
 
-(use-package cc-mode
-  :defer t
-  :config
-  (progn
-    (use-package google-c-style
-      :ensure t
-      :init
-      (progn
-	(add-hook 'c-mode-common-hook
-		  (lambda ()
-		    (google-set-c-style)
-		    (google-make-newline-indent))))
-      :config
-      (c-set-offset 'statement-case-open 0))))
   
  
 (use-package breadcrumb
@@ -236,15 +222,71 @@
 
 (define-key ac-complete-mode-map "\C-n" 'ac-next)
 (define-key ac-complete-mode-map "\C-p" 'ac-previous)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C Programming
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package cc-mode
+  :defer t
+  :config
+  (progn
+    (use-package google-c-style
+      :ensure t
+      :init
+      (progn
+	(add-hook 'c-mode-common-hook
+		  (lambda ()
+		    (google-set-c-style)
+		    (google-make-newline-indent))))
+      :config
+      (c-set-offset 'statement-case-open 0))))
 
+(use-package helm-gtags
+  :ensure t
+  :init
+  (progn
+    (setq
+     helm-gtags-ignore-case t
+     helm-gtags-auto-update t
+     helm-gtags-use-input-at-cursor t
+     helm-gtags-pulse-at-cursor t
+     helm-gtags-prefix-key "\C-cg"
+     helm-gtags-suggested-key-mapping t
+     ))
+  :config
+  (progn
+    (add-hook 'dired-mode-hook 'helm-gtags-mode)
+    (add-hook 'eshell-mode-hook 'helm-gtags-mode)
+    (add-hook 'c-mode-hook 'helm-gtags-mode)
+    (add-hook 'c++-mode-hook 'helm-gtags-mode)
+    (add-hook 'asm-mode-hook 'helm-gtags-mode)
+    
+    (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+    (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+    (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+    (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+    (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+    (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
+    ))
 
+;(use-package cedet
+;  :defer t
+;  :ensure t)
 
 (require 'smart-compile)
 
+; sementic seems to make the computer very slow
+;; (use-package sementic
+;;   :config
+;;   (progn
+;;     (global-semanticdb-minor-mode 1)
+;;     (global-semantic-idle-scheduler-mode 1)
+;;     (semantic-mode 1)
+;; ))
 
+;(use-package function-args;
+;	:init 
+;	(fa-config-default))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Backup
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
