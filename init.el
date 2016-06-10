@@ -67,6 +67,7 @@
     (helm-mode)
     (define-key helm-map (kbd "C-r") 'helm-previous-line)
     (define-key helm-map (kbd "C-s") 'helm-next-line)
+    (define-key helm-map (kbd "C-'") 'ace-jump-helm-line)
         )
   :bind  (("M-h m" . helm-mini)
          ("M-h a" . helm-apropos)
@@ -79,7 +80,8 @@
          ("M-h y" . helm-yas-complete)
          ("M-h Y" . helm-yas-create-snippet-on-region)
          ("M-h SPC" . helm-all-mark-rings)
-	 ("M-h b". helm-bookmarks)))
+	 ("M-h b" . helm-bookmarks)
+	 ("M-h j" . ace-jump-helm-line)))
 
 (use-package helm-descbinds
   :defer t
