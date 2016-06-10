@@ -48,12 +48,11 @@
 
 (require 'benchmark-init)
 
+(global-set-key (kbd "C-x g") 'magit-status)
 (use-package magit
+  :defer t
   :ensure t
-  :config
-  (progn
-    (global-set-key (kbd "C-x g") 'magit-status)
-    ))
+)
 
 (use-package helm
   :diminish helm
@@ -132,7 +131,7 @@
     (setq ido-create-new-buffer 'prompt)
     (setq ido-max-prospects 10)
     (setq ido-use-faces nil)
-    (setq ido-file-extensions-order '(".org" ".c" ".tex" ".py" ".emacs" ".el" ".ini" ".cfg" ".cnf")
+    (setq ido-file-extensions-order '(".org" ".c" ".tex" ".py" ".emacs" ".el" ".ini" ".cfg" ".cnf"))
     (add-to-list 'ido-ignore-files "appspec.yml")))
 
 
