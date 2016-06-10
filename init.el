@@ -1,3 +1,4 @@
+
 (if (eq system-type 'windows-nt)
     (progn
       	(let ((default-directory "~/.emacs.d/"))
@@ -47,7 +48,12 @@
 
 (require 'benchmark-init)
 
-
+(use-package magit
+  :ensure t
+  :config
+  (progn
+    (global-set-key (kbd "C-x g") 'magit-status)
+    ))
 
 (use-package helm
   :diminish helm
@@ -123,9 +129,10 @@
     (setq ido-everywhere t)
     (setq ido-enable-prefix nil)
     (setq ido-enable-flex-matching t)
-    (setq ido-create-new-buffer 'always)
+    (setq ido-create-new-buffer 'prompt)
     (setq ido-max-prospects 10)
     (setq ido-use-faces nil)
+    (setq ido-file-extensions-order '(".org" ".c" ".tex" ".py" ".emacs" ".el" ".ini" ".cfg" ".cnf")
     (add-to-list 'ido-ignore-files "appspec.yml")))
 
 
