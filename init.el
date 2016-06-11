@@ -9,7 +9,8 @@
 	(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
 	(setq ispell-dictionary "~/Softwares/Aspell/dict/")
 	(setq myprojectfile "~/Work/Notes_Planning/Projects_2016.org")
-	(load-file "~/.emacs.d/init_proxy.el"))
+	(load-file "~/.emacs.d/init_proxy.el")
+	)
   (progn
     (let ((default-directory "~/.emacs.d/"))
       (normal-top-level-add-subdirs-to-load-path))
@@ -27,7 +28,7 @@
 (setq package-enable-at-startup nil)
 ;; Add Melpa to the list of package archives.
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 
 ;; Do package initiazation.
 (package-initialize)
@@ -664,12 +665,23 @@ last month."
 	      ("f" "Tasks DONE Last Week" tags (concat "TODO=\"DONE\"" "+CLOSED>=\"<-1w>\""))
 	   ("S" "Tasks CLOSED Last Month" tags (concat "CLOSED>=\"<-1m>\"")) ))
 
-
-
-
-
 (setq org-agenda-start-with-follow-mode 1)
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((R . t)
+   (python . t)
+   (emacs-lisp . t)
+   (C . t)
+   (dot . t)
+   (latex . t)
+   (lisp . t)
+   (sh . t)
+   (matlab . t)
+ ))
+   
+
+;; End of org setting
 
 (defun uniq-lines (beg end)
   "Unique lines in region.
@@ -854,11 +866,11 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;; ace jump mode major function
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;(add-to-list 'load-path "c:/Users/yliu193/AppData/Roaming/.emacs.d/elpa/ace-jump-mode-20140616.115")
-(autoload
-  'ace-jump-mode
-  "ace-jump-mode"
-  "Emacs quick move minor mode"
-  t)
+;; (autoload
+;;   'ace-jump-mode
+;;   "ace-jump-mode"
+;;   "Emacs quick move minor mode"
+;;   t)
 
 (add-hook 'matlab-mode-hook 'ace-jump-mode)
 
