@@ -680,7 +680,13 @@ last month."
    (matlab . t)
  ))
    
-
+(require 'ox-latex)
+(add-to-list 'org-latex-classes
+             '("beamer"
+               "\\documentclass\[presentation\]\{beamer\}"
+               ("\\section\{%s\}" . "\\section*\{%s\}")
+               ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
+               ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
 ;; End of org setting
 
 (defun uniq-lines (beg end)
