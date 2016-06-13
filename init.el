@@ -1141,10 +1141,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- 
+ '(org-agenda-files (quote ("~/Work/Notes_Planning/Projects_2016.org")))
  '(org-drawers (quote ("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTE")))
  '(org-indent-mode-turns-on-hiding-stars t)
- 
  '(org-special-ctrl-a/e t)
  '(org-special-ctrl-k t)
  '(org-stuck-projects
