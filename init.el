@@ -212,7 +212,22 @@
 
 
 
-(require 'ispell)
+;;(require 'ispell)
+(use-package ispell
+  :ensure t
+  :config
+  (progn
+    (setq-default ispell-program-name "aspell")
+    (setq-default ispell-local-dictionary "american")
+    (add-hook 'org-mode-hook 'flyspell-mode)
+    
+    (add-hook 'latex-mode-hook 'flyspell-mode)
+    (add-hook 'tex-mode-hook 'flyspell-mode)
+    (add-hook 'bibtex-mode-hook 'flyspell-mode)))
+
+(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+(setq flyspell-issue-welcome-flag nil) ;; fix flyspell problem
+    
 ;(require 'desktop)
 (require 'recentf)
 (require 'calendar)
@@ -695,13 +710,24 @@ last month."
    (matlab . t)
  ))
    
-(require 'ox-latex)
-(add-to-list 'org-latex-classes
+;; (require 'ox-latex)
+;; (add-to-list 'org-latex-classes
+;;              '("beamer"
+;;                "\\documentclass\[presentation\]\{beamer\}"
+;;                ("\\section\{%s\}" . "\\section*\{%s\}")
+;;                ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
+;;                ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
+
+(use-package ox-latex
+  :defer t
+  :config
+  (add-to-list 'org-latex-classes
              '("beamer"
                "\\documentclass\[presentation\]\{beamer\}"
                ("\\section\{%s\}" . "\\section*\{%s\}")
                ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
-               ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
+               ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}"))))
+  
 ;; End of org setting
 
 (defun uniq-lines (beg end)
@@ -835,17 +861,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; aspell setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq-default ispell-program-name "aspell")
-(setq-default ispell-local-dictionary "american")
-(add-hook 'org-mode-hook 'flyspell-mode)
-
-(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-
-(setq flyspell-issue-welcome-flag nil) ;; fix flyspell problem
-
-(add-hook 'latex-mode-hook 'flyspell-mode)
-(add-hook 'tex-mode-hook 'flyspell-mode)
-(add-hook 'bibtex-mode-hook 'flyspell-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Desktop Setting
