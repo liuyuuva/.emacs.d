@@ -381,7 +381,11 @@
 (setq kill-ring-max 200)
 (mouse-avoidance-mode 'animate)
 
-(setq frame-title-format "%b")
+;;(setq frame-title-format "%b")
+(setq frame-title-format
+      '((:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
 (transient-mark-mode t)
 
 (setq default-fill-column 72)
