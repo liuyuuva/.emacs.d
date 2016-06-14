@@ -15,7 +15,18 @@
     (let ((default-directory "~/.emacs.d/"))
       (normal-top-level-add-subdirs-to-load-path))
     (add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
-    (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/" t)))))
+    (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+    (setq ispell-program-name "aspell"
+      ispell-dictionary "english"
+      ispell-dictionary-alist
+      (let ((default '("[A-Za-z]" "[^A-Za-z]" "[']" nil
+                       ("-B" "-d" "english" "--dict-dir"
+                        "/Library/Application Support/cocoAspell/aspell6-en-6.0-0")
+                       nil iso-8859-1)))
+        `((nil ,@default)
+          ("english" ,@default))))
+;With the above apsell config for mac os, i also edited /usr/local/etc/aspell.conf to change the string after "dict-dir" to "/Library/Application Support/cocoAspell/aspell6-en-6.0-0". Flyspell mode now works fine.
+    ))
   
 	
 
