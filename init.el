@@ -227,7 +227,14 @@
 
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
 (setq flyspell-issue-welcome-flag nil) ;; fix flyspell problem
-    
+
+(use-package org-bullets
+  :defer t
+  :config (setcdr org-bullets-bullet-map nil)
+  )
+
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))    
+
 ;(require 'desktop)
 (require 'recentf)
 (require 'calendar)
@@ -448,7 +455,7 @@
 
 
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-(add-hook 'org-mode-hook 'org-bullets-mode)
+
 ;(add-hook 'org-mode-hook 'toggle_truncate_lines)
 
  
