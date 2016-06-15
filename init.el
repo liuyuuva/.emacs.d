@@ -242,13 +242,26 @@
 (require 'auto-complete-config)
 
 (ac-config-default)
-(require 'iedit)
-(require 'imenu)
+
+(use-package iedit
+  :ensure t
+  :defer t
+  ) ;; iedit can edit multiple occurrence at the same time.
+
+(use-package imenu
+  :ensure t
+  :config
+  (progn
+    (setq imenu-auto-rescan t)
+    (global-set-key (kbd "C-c i") 'imenu)
+    (defun try-to-add-imenu ()
+      (condition-case nil (imenu-add-to-menubar "iMenu") (error nil)))
+    (add-hook 'font-lock-mode-hook 'try-to-add-imenu)
+    ))
+
 (which-function-mode 1)
 (global-linum-mode 1)
 ;(semantic-mode 1)
-(setq imenu-auto-rescan t)
-(global-set-key (kbd "C-c i") 'imenu)
 
 (define-globalized-minor-mode real-global-auto-complete-mode
   auto-complete-mode (lambda ()
@@ -257,10 +270,6 @@
                        ))
 (real-global-auto-complete-mode t)
 
-(defun try-to-add-imenu ()
-  (condition-case nil (imenu-add-to-menubar "iMenu") (error nil)))
-
-(add-hook 'font-lock-mode-hook 'try-to-add-imenu)
 
 (define-key ac-complete-mode-map "\C-n" 'ac-next)
 (define-key ac-complete-mode-map "\C-p" 'ac-previous)
@@ -852,70 +861,19 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;; Matlab setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-;(add-to-list 'load-path "~/.emacs.d/matlab-emacs")
-(load-library "matlab-load")
-		 
-;(custom-set-variables
-; '(matlab-shell-command-switches '("-nodesktop -nosplash")))
-
- (add-hook 'matlab-mode 'auto-complete-mode)
-; (add-hook 'matlab-mode
-          ; (lambda ()
-            ; (auto-complete-mode 1)
-            ; ))
- 
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; aspell setting
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Desktop Setting
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; (desktop-save-mode 1)
-;; (add-hook 'auto-save-hook (lambda () (desktop-save-in-desktop-dir)))
-  
-  ; desktop-override-stale-locks.el begins here
-;; (defun emacs-process-p (pid)
-;;   "If pid is the process ID of an emacs process, return t, else nil.
-;; Also returns nil if pid is nil."
-;;   (when pid
-;;     (let ((attributes (process-attributes pid)) (cmd))
-;;       (dolist (attr attributes)
-;;         (if (string= "comm" (car attr))
-;;             (setq cmd (cdr attr))))
-;;       (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
-
-;; (defadvice desktop-owner (after pry-from-cold-dead-hands activate)
-;;   "Don't allow dead emacsen to own the desktop file."
-;;   (when (not (emacs-process-p ad-return-value))
-;;     (setq ad-return-value nil)))
-	
-;; (setq desktop-buffers-not-to-save
-;;         (concat "\\("
-;;                 "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
-;;                 "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
-;; 	        "\\)$"))
-;;    (add-to-list 'desktop-modes-not-to-save 'dired-mode)
-;;    (add-to-list 'desktop-modes-not-to-save 'Info-mode)
-;;    (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
-;;    (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
-   
-   
+(if (eq system-type 'windows-nt)
+    (progn
+      (autoload 'matlab-mode "matlab" "Matlab Editing Mode" t)
+      (add-to-list
+       'auto-mode-alist
+       '("\\.m$" . matlab-mode))
+      (setq matlab-indent-function t)
+      (setq matlab-shell-command "matlab")
+      (add-hook 'matlab-mode 'auto-complete-mode)
+      (add-hook 'matlab-mode-hook 'ace-jump-mode)
+      ))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ace jump mode major function
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;(add-to-list 'load-path "c:/Users/yliu193/AppData/Roaming/.emacs.d/elpa/ace-jump-mode-20140616.115")
-;; (autoload
-;;   'ace-jump-mode
-;;   "ace-jump-mode"
-;;   "Emacs quick move minor mode"
-;;   t)
-
-(add-hook 'matlab-mode-hook 'ace-jump-mode)
 
 
 
