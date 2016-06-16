@@ -85,7 +85,13 @@
     (define-key helm-map (kbd "C-r") 'helm-follow-action-backward)
     (define-key helm-map (kbd "C-s") 'helm-follow-action-forward)
     (define-key helm-map (kbd "C-'") 'ace-jump-helm-line)
-        )
+    ;; When doing isearch, hand the word over to helm-swoop
+    (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+    ;; follow mode in helm
+   
+    (custom-set-variables
+     '(helm-follow-mode-persistent t))
+    )
   :bind  (("M-h m" . helm-mini)
          ("M-h a" . helm-apropos)
          ("C-x C-b" . helm-buffers-list)
@@ -434,7 +440,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org Mode Setting;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+(org-agenda-to-appt)
 
 (setq org-latex-create-formula-image-program 'dvipng)
 (setq default-major-mode 'org-mode)
