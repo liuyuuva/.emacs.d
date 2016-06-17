@@ -252,7 +252,10 @@
 (use-package iedit
   :ensure t
   :defer t
+
   ) ;; iedit can edit multiple occurrence at the same time.
+(global-set-key (kbd "C-`") 'iedit-mode)
+
 
 (use-package imenu
   :ensure t
