@@ -1,4 +1,3 @@
-
 (if (eq system-type 'windows-nt)
     (progn
       	(let ((default-directory "~/.emacs.d/"))
