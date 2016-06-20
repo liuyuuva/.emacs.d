@@ -253,7 +253,7 @@
   :defer t
 
   ) ;; iedit can edit multiple occurrence at the same time.
-(global-set-key (kbd "C-`") 'iedit-mode)
+(global-set-key  (kbd "C-`") 'iedit-mode)
 
 
 (use-package imenu
@@ -871,16 +871,19 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (if (eq system-type 'windows-nt)
-    (progn
-      (autoload 'matlab-mode "matlab" "Matlab Editing Mode" t)
-      (add-to-list
-       'auto-mode-alist
-       '("\\.m$" . matlab-mode))
-      (setq matlab-indent-function t)
-      (setq matlab-shell-command "matlab")
-      (add-hook 'matlab-mode 'auto-complete-mode)
-      (add-hook 'matlab-mode-hook 'ace-jump-mode)
-      ))
+      (eval-after-load 'matlab
+	'(progn
+	   (add-to-list
+	    'auto-mode-alist
+	    '("\\.m$" . matlab-mode))
+	   (setq matlab-indent-function t)
+	   (setq matlab-shell-command "matlab")
+	   (add-hook 'matlab-mode 'auto-complete-mode)
+	   (add-hook 'matlab-mode-hook 'ace-jump-mode)
+	   (define-key matlab-mode-map (kbd "M-s") nil)
+	   ))
+  )
+
 
 
 
