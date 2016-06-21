@@ -299,7 +299,10 @@
 		    (google-make-newline-indent))))
       :config
       (c-set-offset 'statement-case-open 0))))
-
+;; Some bindings for hi-lock mode that will be very convenient for C code reading
+(global-set-key (kbd "C-.") 'highlight-symbol-at-point)
+(global-set-key (kbd "C->") 'highlight-phrase)
+ 
 (use-package helm-gtags
   :ensure t
   :init
