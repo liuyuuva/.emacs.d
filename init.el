@@ -93,7 +93,7 @@
     )
   :bind  (("M-h m" . helm-mini)
          ("M-h a" . helm-apropos)
-         ;("C-x C-b" . helm-buffers-list)
+;         ("C-x C-b" . helm-buffers-list)
          ("C-x b" . helm-buffers-list)
          ("M-y" . helm-show-kill-ring)
          ("M-x" . helm-M-x)
@@ -104,7 +104,7 @@
          ("M-h SPC" . helm-all-mark-rings)
 	 ("M-h b" . helm-bookmarks)
 	 ("M-h j" . ace-jump-helm-line)))
-
+(global-set-key (kbd "C-x C-b") 'buffer-menu) ; this is my preferred buffer list behavior over helm. this is actually what i had been using before helm. not list-buffers in fact, was buffer-menu
 (use-package helm-descbinds
   :defer t
   :bind (("C-h b" . helm-descbinds)
