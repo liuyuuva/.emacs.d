@@ -93,7 +93,7 @@
     )
   :bind  (("M-h m" . helm-mini)
          ("M-h a" . helm-apropos)
-         ("C-x C-b" . helm-buffers-list)
+         ;("C-x C-b" . helm-buffers-list)
          ("C-x b" . helm-buffers-list)
          ("M-y" . helm-show-kill-ring)
          ("M-x" . helm-M-x)
