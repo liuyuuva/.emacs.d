@@ -378,20 +378,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dired
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "<f12> h") ;; open Emacs home directory
-  (lambda ()
-    (interactive)
-    (dired "~/")))
+;; (global-set-key (kbd "<f12> h") ;; open Emacs home directory
+;;   (lambda ()
+;;     (interactive)
+;;     (dired "~/")))
 
-(global-set-key (kbd "<f12> w") ;; open Work directory
-  (lambda ()
-    (interactive)
-    (dired "C:/Users/yliu193/Work")))
+;; (global-set-key (kbd "<f12> w") ;; open Work directory
+;;   (lambda ()
+;;     (interactive)
+;;     (dired "C:/Users/yliu193/Work")))
 
-(global-set-key (kbd "<f12> n") ;; open Notes_Planning 
-  (lambda ()
-    (interactive)
-    (dired "C:/Users/yliu193/Work/Notes_Planning")))
+;; (global-set-key (kbd "<f12> n") ;; open Notes_Planning 
+;;   (lambda ()
+;;     (interactive)
+;;     (dired "C:/Users/yliu193/Work/Notes_Planning")))
 
 
 
@@ -1106,7 +1106,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;; F12
 ;;;;;;;;
 
-;(global-set-key (kbd "<f12>") 'show-all);'org-archive-subtree)
+(global-set-key (kbd "<f12>") 'apply-macro-to-region-lines);'org-archive-subtree)
 (global-set-key (kbd "C-<f12>") 'org-overview)
 (global-set-key (kbd "M-<f12>") 'org-forward-same-level)
 (global-set-key (kbd "S-<f12>") 'outline-next-visible-heading)
