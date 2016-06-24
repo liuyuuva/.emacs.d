@@ -474,6 +474,10 @@
 
 
 
+ (add-to-list 'org-emphasis-alist
+ 	     '("*"  (:foreground "red")
+ 	       ))
+
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
 ;(add-hook 'org-mode-hook 'toggle_truncate_lines)
