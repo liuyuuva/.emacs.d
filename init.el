@@ -67,6 +67,8 @@
 
 (use-package which-key
   :ensure t
+  :init
+  (which-key-mode)
   :config
   (progn
     (setq which-key-popup-type 'side-window)
