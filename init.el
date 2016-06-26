@@ -65,6 +65,15 @@
   :ensure t
 )
 
+(use-package which-key
+  :ensure t
+  :config
+  (progn
+    (setq which-key-popup-type 'side-window)
+    (which-key-setup-side-window-right-bottom)
+    ))x
+
+  
 (use-package helm
   :diminish helm
   :init
@@ -1161,6 +1170,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(helm-follow-mode-persistent t)
  '(org-agenda-files (quote ("~/Work/Notes_Planning/Projects_2016.org")))
  '(org-drawers (quote ("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTE")))
  '(org-indent-mode-turns-on-hiding-stars t)
