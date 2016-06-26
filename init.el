@@ -71,7 +71,7 @@
   (progn
     (setq which-key-popup-type 'side-window)
     (which-key-setup-side-window-right-bottom)
-    ))x
+    ))
 
   
 (use-package helm
