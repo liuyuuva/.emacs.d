@@ -249,16 +249,30 @@
         ))
   ))
 
-;; (use-package auto-complete
-;;   :init
-;;   (progn
-    
+ ;; (use-package auto-complete
+ ;;   :init
+ ;;   (progn
+ ;;     (auto-complete-mode t))
+ ;;   :bind (("C-n" . ac-next)
+ ;; 	  ("C-p" . ac-previous))
+ ;;   :config
+ ;;   (progn
+ ;;     (use-package auto-complete-config)
+ ;;     (ac-config-default))
+ ;;   )
+
+
+
+;; (define-globalized-minor-mode real-global-auto-complete-mode
+;;   auto-complete-mode (lambda ()
+;;                        (if (not (minibufferp (current-buffer)))
+;;                          (auto-complete-mode 1))
+;;                        ))
+;; (real-global-auto-complete-mode t)
+
+
   
 
-;; (require 'auto-complete)
-;; (require 'auto-complete-config)
-
-;; (ac-config-default)
 
 
 
@@ -312,16 +326,6 @@
 (global-linum-mode 1)
 (semantic-mode 1);keeps parsing repeatedly for large c files. 
 
-;; (define-globalized-minor-mode real-global-auto-complete-mode
-;;   auto-complete-mode (lambda ()
-;;                        (if (not (minibufferp (current-buffer)))
-;;                          (auto-complete-mode 1))
-;;                        ))
-;; (real-global-auto-complete-mode t)
-
-
-;; (define-key ac-complete-mode-map "\C-n" 'ac-next)
-;; (define-key ac-complete-mode-map "\C-p" 'ac-previous)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C Programming
@@ -439,6 +443,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; General Setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun unfill-paragraph ()
+  (interactive)
+  (let ((fill-column most-positive-fixnum))
+    (fill-paragraph)))
+
+(defun unfill-region (start end)
+  (interactive "r")
+  (let ((fill-column most-positive-fixnum))
+    (fill-region start end)))
+
 (setq sentence-end-double-space nil)
 ;(autopair-global-mode 1)
 ;(setq autopair-autowrap t)
@@ -926,7 +940,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	    '("\\.m$" . matlab-mode))
 	   (setq matlab-indent-function t)
 	   (setq matlab-shell-command "matlab")
-	   (add-hook 'matlab-mode 'auto-complete-mode)
+	  ; (add-hook 'matlab-mode 'auto-complete-mode)
 	   (add-hook 'matlab-mode-hook 'ace-jump-mode)
 	   (define-key matlab-mode-map (kbd "M-s") nil)
 	   ))
