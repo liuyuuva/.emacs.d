@@ -75,6 +75,17 @@
     (which-key-setup-side-window-right-bottom)
     ))
 
+
+(use-package highlight-symbol
+  :ensure t
+  :config
+  (progn
+    (define-key global-map (kbd "M-H") 'highlight-symbol-at-point)
+    (define-key global-map (kbd "M-N") 'highlight-symbol-next)
+    (define-key global-map (kbd "M-P") 'highlight-symbol-prev)
+    )
+  )
+
   
 (use-package helm
   :diminish helm
