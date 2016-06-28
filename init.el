@@ -237,9 +237,28 @@
 (use-package company
   :ensure t
   :config
+  (progn
   (add-hook 'after-init-hook 'global-company-mode)
-  )
+  ;(global-set-key "\t" 'company-complete-common)
+  (setq company-backends
+      '((company-files          ; files & directory
+         company-keywords       ; keywords
+         company-capf
+         )
+        (company-abbrev company-dabbrev)
+        ))
+  ))
 
+;; (use-package auto-complete
+;;   :init
+;;   (progn
+    
+  
+
+;; (require 'auto-complete)
+;; (require 'auto-complete-config)
+
+;; (ac-config-default)
 
 
 
@@ -269,10 +288,6 @@
 ;(require 'desktop)
 (require 'recentf)
 (require 'calendar)
-;; (require 'auto-complete)
-;; (require 'auto-complete-config)
-
-;; (ac-config-default)
 
 (use-package iedit
   :ensure t
@@ -295,7 +310,7 @@
 
 (which-function-mode 1)
 (global-linum-mode 1)
-;(semantic-mode 1)
+(semantic-mode 1);keeps parsing repeatedly for large c files. 
 
 ;; (define-globalized-minor-mode real-global-auto-complete-mode
 ;;   auto-complete-mode (lambda ()
