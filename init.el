@@ -59,6 +59,19 @@
 
 (require 'benchmark-init)
 
+
+
+(use-package bookmark
+  :ensure t
+  :config
+  (progn
+    (define-key global-map (kbd "<f1>") 'bookmark-set)
+    (define-key global-map (kbd "<f2>") 'bookmark-jump)
+    (define-key global-map (kbd "M-L") 'bookmark-bmenu-list)
+    ))
+  
+
+
 (global-set-key (kbd "C-x g") 'magit-status)
 (use-package magit
   :defer t
@@ -454,8 +467,6 @@
     (fill-region start end)))
 
 (setq sentence-end-double-space nil)
-;(autopair-global-mode 1)
-;(setq autopair-autowrap t)
 
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (global-set-key (kbd "C-c q") 'auto-fill-mode)
@@ -473,12 +484,11 @@
 
 (setq column-number-mode t)
 (setq line-number-mode t)
-;(mouse-wheel-mode t)
+
 
 (setq kill-ring-max 200)
 (mouse-avoidance-mode 'animate)
 
-;;(setq frame-title-format "%b")
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
                    (abbreviate-file-name (buffer-file-name))
@@ -548,8 +558,8 @@
 
 
 ;Org Clock 
- (setq org-clock-persist 'history)
- (org-clock-persistence-insinuate)
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
 (setq org-clock-out-remove-zero-time-clocks t)
 
 
@@ -961,13 +971,21 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (call-interactively 'set-mark-command)
 )
 
+(defun jump-to-today-report ()
+	"call jump to bookmark function to go to today's clock table"
+	(interactive)
+	(bookmark-maybe-load-default-file)
+	
+	(bookmark-jump "ClockReportToday")
+	(message "Went to today's clock report."))
+
+
+
 
 (with-eval-after-load "org"
   (progn
     (define-key org-mode-map (kbd "M-h") nil)
 	;;F1
-	(define-key org-mode-map (kbd "<f1>") 'open-notes-projects)
-	(define-key org-mode-map (kbd "M-<f1>") 'delete-other-windows)
 	(define-key org-mode-map (kbd "C-<f1>") 'org-back-to-top-level-heading)
 	;;F5
 	(define-key org-mode-map (kbd "<f5> n") 'mark-nextaction)
@@ -1013,40 +1031,49 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "<f9> x") 'org-clock-select-task)
 	(define-key org-mode-map (kbd "<f9> s") 'org-resolve-clocks)
 	(define-key org-mode-map (kbd "<f9> a") 'org-update-all-dblocks)
+	(define-key org-mode-map (kbd "C-<f12>") 'org-overview)
+	(define-key org-mode-map (kbd "M-<f12>") 'org-forward-same-level)
+	(define-key org-mode-map (kbd "S-<f12>") 'outline-next-visible-heading )
+	(define-key org-mode-map (kbd "C-<f11>") 'org-copy)
+	(define-key org-mode-map (kbd "M-<f11>") 'org-backward-same-level)
+	(define-key org-mode-map (kbd "S-<f11>") 'outline-previous-visible-heading)
+	(define-key org-mode-map (kbd "C-c a") 'org-agenda)
+	(define-key org-mode-map (kbd "C-c b") 'org-iswitchb)
+	(define-key org-mode-map (kbd "C-c l") 'org-store-link)
+	(define-key org-mode-map (kbd "C-S-n") 'outline-next-visible-heading )
+	(define-key org-mode-map (kbd "C-S-p") 'outline-previous-visible-heading )
+	(define-key org-mode-map (kbd "C-S-b") 'org-backward-same-level )
+	(define-key org-mode-map (kbd "C-S-f") 'org-forward-same-level )
+	(define-key org-mode-map (kbd "C-S-w") 'org-cut-subtree)
+	(define-key org-mode-map (kbd "C-S-u") 'outline-up-heading)
+	(define-key org-mode-map (kbd "S-<f9>") 'org-shiftmetaup)
+	(define-key org-mode-map (kbd "M-<f9>") 'org-shiftmetadown)
+	(define-key org-mode-map (kbd "<f9> t") 'jump-to-today-report)
+	
 	) )
 
+;;Global Key Bindings;;
 
 ;;;;;;;
 ;; F1
 ;;;;;;;
-;(global-set-key (kbd "<f1>") 'open-notes-projects)
-(global-set-key (kbd "M-<f1>") 'delete-other-windows)
-;(global-set-key (kbd "C-<f1>") 'org-back-to-top-level-heading)
 
 
 ;;;;;;;
 ;; F2
 ;;;;;;;
 
-(global-set-key (kbd "<f2>") 'other-window)
-
 
 ;;;;;;;
 ;; F3
 ;;;;;;;
 
-;(global-set-key (kbd "<f3>") 'open-notes)
-;(global-set-key (kbd "<f3>") 'kmacro-start-macro)
-;(global-set-key (kbd "M-<f3>") '(kbd "C-u 6 C-c C-t")); mark "TOFILE"
-;(global-set-key (kbd "S-<f3>") ')
 
 
 ;;;;;;;
 ;; F4
 ;;;;;;;
 
-;(global-set-key (kbd "<f4>") 'open-projects)
-;(global-set-key (kbd "C-<f4>") 'kmacro-end-macro)
 (global-set-key (kbd "M-<f4>") 'apply-macro-to-region-lines)
 (global-set-key (kbd "S-<f4>") 'run-infinite-macro)
 
@@ -1055,85 +1082,30 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;; F5
 ;;;;;;;
 
-;(global-set-key (kbd "<f5> f") 'mark-tofile)
-;(global-set-key (kbd "<f5> n") 'mark-nextaction)
-;(global-set-key (kbd "<f5> t") 'mark-todo)
-;(global-set-key (kbd "<f5> d") 'mark-done)
-;(global-set-key (kbd "<f5> m") 'mark-memo)
-;(global-set-key (kbd "<f5> w") 'mark-waiting)
-;(global-set-key (kbd "<f5> c") 'mark-canceled)
-;(global-set-key (kbd "<f5> p") 'mark-inprogress)
-;(global-set-key (kbd "<f5> i") 'mark-inprogress)
-;(global-set-key (kbd "<f5> r") 'mark-report)
-
-;(global-set-key (kbd "C-<f5>") 'org-time-stamp-inactive)
-;(global-set-key (kbd "C-<f5>") ')
-;(global-set-key (kbd "M-<f5>") ')
-;(global-set-key (kbd "S-<f5>") ')
 
 
 ;;;;;;;
 ;; F6
 ;;;;;;;
-;; (global-set-key (kbd "<f6> n") 'show-nextaction)
-;; (global-set-key (kbd "<f6> p") 'show-inprogress)
-;; (global-set-key (kbd "<f6> i") 'show-inprogress)
-;; (global-set-key (kbd "<f6> m") 'show-memo)
-;; (global-set-key (kbd "<f6> w") 'show-waiting)
-;; (global-set-key (kbd "<f6> c") 'show-canceled)
-;; (global-set-key (kbd "<f6> d") 'show-done)
-;; (global-set-key (kbd "<f6> r") 'show-report)
-;; (global-set-key (kbd "<f6> t") 'show-todo-keyword)
-;; (global-set-key (kbd "M-<f6>") (kbd "C-c a n"))
-;; (global-set-key (kbd "<f6> L") 'jtc-tasks-last-month)
 
 
 ;;;;;;;;
 ;; F7
 ;;;;;;;;
-;; (global-set-key (kbd "<f7>") 'org-cut-special)
-;; (global-set-key (kbd "S-<f7>") 'org-insert-drawer)
-;; (global-set-key (kbd "C-<f7>") 'org-archive-subtree)
-;; (global-set-key (kbd "M-<f7>") 'org-toggle-archive-tag)
 
 
 ;;;;;;;;;
 ;; F8
 ;;;;;;;;
-;; (global-set-key (kbd "<f8>") 'add-sublevel-plainitem);'add-sublevel-todo)
-;; (global-set-key (kbd "C-<f8>") 'org-narrow-to-subtree)
+
 (global-set-key (kbd "S-<f8>") 'widen)
 
 
 ;;;;;;;;;
 ;; F9
 ;;;;;;;;
-;; (global-set-key (kbd "<f9> i") 'org-clock-in)
-;; (global-set-key (kbd "<f9> o") 'org-clock-out)
-;; (global-set-key (kbd "<f9> j") 'org-clock-goto)
-;; (global-set-key (kbd "<f9> q") 'org-clock-cancel)
-;; (global-set-key (kbd "<f9> d") 'org-clock-display)
-;; (global-set-key (kbd "<f9> r") 'org-clock-report)
-;; (global-set-key (kbd "<f9> l") 'org-clock-in-last)
-;; (global-set-key (kbd "<f9> x") 'org-clock-select-task)
-;; (global-set-key (kbd "<f9> s") 'org-resolve-clocks)
-;; (global-set-key (kbd "<f9> a") 'org-update-all-dblocks)
 
-(require 'bookmark)
 
-(defun jump-to-today-report ()
-	"call jump to bookmark function to go to today's clock table"
-	(interactive)
-(bookmark-maybe-load-default-file)
-(bookmark-jump "ClockReportToday")
-(message "Went to today's clock report."))
-
-(global-set-key (kbd "<f9> t") 'jump-to-today-report)
-
-(global-set-key (kbd "S-<f9>") 'org-shiftmetaup)
-(global-set-key (kbd "M-<f9>") 'org-shiftmetadown)
-;(global-set-key (kbd "<f9>") 'isearch-forward-regexp)
-;(global-set-key (kbd "<f9>") 'add-sublevel-todo)
 
 
 ;;;;;;;;
@@ -1156,36 +1128,24 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;;;;;;;;
 
 (global-set-key (kbd "<f11>") 'replace-regexp)
-(global-set-key (kbd "C-<f11>") 'org-copy)
-(global-set-key (kbd "M-<f11>") 'org-backward-same-level)
-(global-set-key (kbd "S-<f11>") 'outline-previous-visible-heading)
 
 
 ;;;;;;;;
 ;; F12
 ;;;;;;;;
 
-(global-set-key (kbd "<f12>") 'apply-macro-to-region-lines);'org-archive-subtree)
-(global-set-key (kbd "C-<f12>") 'org-overview)
-(global-set-key (kbd "M-<f12>") 'org-forward-same-level)
-(global-set-key (kbd "S-<f12>") 'outline-next-visible-heading)
+(global-set-key (kbd "<f12>") 'apply-macro-to-region-lines)
+
+
+
 
 
 ;;;;;;;;
 ;; Others
 ;;;;;;;;
 (global-set-key (kbd "C-c r") 'org-capture)
-(global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
 (global-set-key (kbd "C-x z") 'repeat-complex-command)
-(global-set-key (kbd "C-S-n") 'outline-next-visible-heading )
-(global-set-key (kbd "C-S-p") 'outline-previous-visible-heading )
-(global-set-key (kbd "C-S-b") 'org-backward-same-level )
-(global-set-key (kbd "C-S-f") 'org-forward-same-level )
-(global-set-key (kbd "C-S-w") 'org-cut-subtree)
-(global-set-key (kbd "C-S-u") 'outline-up-heading)
 (global-set-key (kbd "C-z")  'set-mark-command)
 ;(global-set-key "\C-x\C-b" 'buffer-menu)
 (global-set-key (kbd "C-<backspace>") 'backward-kill-word)
