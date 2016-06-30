@@ -242,6 +242,15 @@
      ))
 (add-hook 'python-mode-hook 'elpy-mode)
 
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-reload-all)
+  )
+
+
+
 ;;;;if windows redefine M-TAB to TAB since M-TAB is used for switching applications
 ;; (if (eq system-type 'windows-nt)
 ;;     (progn
