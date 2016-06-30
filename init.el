@@ -360,7 +360,7 @@
 
 (which-function-mode 1)
 (global-linum-mode 1)
-(semantic-mode 1);keeps parsing repeatedly for large c files. 
+;;(semantic-mode 1);keeps parsing repeatedly for large c files. 
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
