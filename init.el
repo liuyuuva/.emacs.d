@@ -271,6 +271,7 @@
   :ensure t
   :config
   (company-quickhelp-mode 1)
+  (define-key company-quickhelp-mode-map (kbd "M-h") nil) ;unset this key in company-quickhelp-mode so that it does not conflict with helm mode
   )
 
 
