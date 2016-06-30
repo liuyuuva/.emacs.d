@@ -30,16 +30,11 @@
 	
 
 (require 'package)
-
-
-
-
 ;; Avoid multiple initialization of installed packages.
 (setq package-enable-at-startup nil)
 ;; Add Melpa to the list of package archives.
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-
 ;; Do package initiazation.
 (package-initialize)
 
@@ -72,11 +67,13 @@
   
 
 
-(global-set-key (kbd "C-x g") 'magit-status)
+
 (use-package magit
   :defer t
   :ensure t
-)
+  :init
+  (global-set-key (kbd "C-x g") 'magit-status)
+  )
 
 (use-package which-key
   :ensure t
@@ -121,11 +118,10 @@
     (define-key helm-map (kbd "C-'") 'ace-jump-helm-line)
     ;; When doing isearch, hand the word over to helm-swoop
     (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
-    ;; follow mode in helm
-   
+
     (custom-set-variables
      '(helm-follow-mode-persistent t))
-    )
+     )
   :bind  (("M-h m" . helm-mini)
          ("M-h a" . helm-apropos)
 ;         ("C-x C-b" . helm-buffers-list)
@@ -221,7 +217,17 @@
 
 (use-package python
   :defer t
-  :ensure t)
+  :ensure t
+  :init
+  (progn
+    (add-hook 'python-mode-hook 'elpy-mode)
+    (defun my/python-mode-hook ()
+      (add-to-list 'company-backends 'company-jedi)
+      )
+    (add-hook 'python-mode-hook 'my/python-mode-hook)
+
+    )
+  )
 
 ;(add-hook 'python-mode-hook 'jedi:setup);Really hard to install jedi on windows
 
@@ -240,7 +246,7 @@
      (elpy-use-ipython)
      ;(setq elpy-rpc-backend "jedi")
      ))
-(add-hook 'python-mode-hook 'elpy-mode)
+
 
 
 (use-package yasnippet
@@ -289,9 +295,6 @@
   :defer t
   :ensure t)
 
-(defun my/python-mode-hook ()
-  (add-to-list 'company-backends 'company-jedi))
- (add-hook 'python-mode-hook 'my/python-mode-hook)
 
 ;; ;; ;
 ;;  (use-package auto-complete
@@ -321,7 +324,6 @@
 
 
 
-;;(require 'ispell)
 (use-package ispell
   :ensure t
   :config
@@ -344,16 +346,17 @@
 
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))    
 
-;(require 'desktop)
+
 (require 'recentf)
 (require 'calendar)
 
 (use-package iedit
   :ensure t
   :defer t
-
+  :init
+  (global-set-key  (kbd "C-`") 'iedit-mode)
   ) ;; iedit can edit multiple occurrence at the same time.
-(global-set-key  (kbd "C-`") 'iedit-mode)
+
 
 
 (use-package imenu
@@ -425,7 +428,11 @@
 ;  :defer t
 ;  :ensure t)
 
-(require 'smart-compile)
+;(require 'smart-compile)
+(use-package smart-compile
+  :ensure t
+  :defer t
+  )
 
 ; sementic seems to make the computer very slow
 ;; (use-package sementic
@@ -1166,7 +1173,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;; F12
 ;;;;;;;;
 
-(global-set-key (kbd "<f12>") 'apply-macro-to-region-lines)
+;(global-set-key (kbd "<f12>") 'apply-macro-to-region-lines)
 
 
 
