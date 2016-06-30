@@ -223,6 +223,8 @@
   :defer t
   :ensure t)
 
+;(add-hook 'python-mode-hook 'jedi:setup);Really hard to install jedi on windows
+
 (use-package elpy
   :ensure t
    :defer t
@@ -240,19 +242,22 @@
      ))
 (add-hook 'python-mode-hook 'elpy-mode)
 
-;; if windows redefine M-TAB to F5 since M-TAB is used for switching applications
-(if (eq system-type 'windows-nt)
-    (progn
-      (add-hook 'elpy-mode-hook
-		(lambda ()
-		  (local-unset-key (kbd "M-TAB"))
-		  (define-key elpy-mode-map (kbd "<f5>") 'elpy-company-backend)))))
+;;;;if windows redefine M-TAB to TAB since M-TAB is used for switching applications
+;; (if (eq system-type 'windows-nt)
+;;     (progn
+;;       (add-hook 'elpy-mode-hook
+;; 		(lambda ()
+;; 		  (local-unset-key (kbd "M-TAB"))
+;; 		  (define-key elpy-mode-map (kbd "TAB") 'elpy-company-backend)))))
+
+
 (use-package company
   :ensure t
   :config
   (progn
   (add-hook 'after-init-hook 'global-company-mode)
   ;(global-set-key "\t" 'company-complete-common)
+  (setq company-idle-delay 0.1)
   (setq company-backends
       '((company-files          ; files & directory
          company-keywords       ; keywords
@@ -260,19 +265,36 @@
          )
         (company-abbrev company-dabbrev)
         ))
+  ;(company-quickhelp-mode 1)
   ))
+(use-package company-quickhelp
+  :ensure t
+  :config
+  (company-quickhelp-mode 1)
+  )
 
- ;; (use-package auto-complete
- ;;   :init
- ;;   (progn
- ;;     (auto-complete-mode t))
- ;;   :bind (("C-n" . ac-next)
- ;; 	  ("C-p" . ac-previous))
- ;;   :config
- ;;   (progn
- ;;     (use-package auto-complete-config)
- ;;     (ac-config-default))
- ;;   )
+
+  
+(use-package company-jedi
+  :defer t
+  :ensure t)
+
+(defun my/python-mode-hook ()
+  (add-to-list 'company-backends 'company-jedi))
+ (add-hook 'python-mode-hook 'my/python-mode-hook)
+
+;; ;; ;
+;;  (use-package auto-complete
+;;    :init
+;;    (progn
+;;      (auto-complete-mode t))
+;;    :bind (("C-n" . ac-next)
+;;  	  ("C-p" . ac-previous))
+;;    :config
+;;    (progn
+;;      (use-package auto-complete-config)
+;;      (ac-config-default))
+;;    )
 
 
 
