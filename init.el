@@ -257,13 +257,13 @@
 
 
 
-;;;;if windows redefine M-TAB to TAB since M-TAB is used for switching applications
-;; (if (eq system-type 'windows-nt)
-;;     (progn
-;;       (add-hook 'elpy-mode-hook
-;; 		(lambda ()
-;; 		  (local-unset-key (kbd "M-TAB"))
-;; 		  (define-key elpy-mode-map (kbd "TAB") 'elpy-company-backend)))))
+if windows redefine M-TAB to TAB since M-TAB is used for switching applications
+(if (eq system-type 'windows-nt)
+    (progn
+      (add-hook 'elpy-mode-hook
+		(lambda ()
+		  (local-unset-key (kbd "M-TAB"))
+		  (define-key elpy-mode-map (kbd "F5") 'elpy-company-backend)))))
 
 
 (use-package company
@@ -1215,6 +1215,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("afbb40954f67924d3153f27b6d3399df221b2050f2a72eb2cfa8d29ca783c5a8" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" default)))
  '(helm-follow-mode-persistent t)
  '(org-agenda-files (quote ("~/Work/Notes_Planning/Projects_2016.org")))
  '(org-drawers (quote ("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTE")))
