@@ -257,7 +257,7 @@
 
 
 
-if windows redefine M-TAB to TAB since M-TAB is used for switching applications
+;;if windows redefine M-TAB to TAB since M-TAB is used for switching applications
 (if (eq system-type 'windows-nt)
     (progn
       (add-hook 'elpy-mode-hook
