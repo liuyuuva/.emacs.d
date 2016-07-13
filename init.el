@@ -9,6 +9,7 @@
 	(setq ispell-dictionary "~/Softwares/Aspell/dict/")
 	(setq myprojectfile "~/Work/Notes_Planning/Projects_2016.org")
 	(load-file "~/.emacs.d/init_proxy.el")
+	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 	)
   (progn
     (let ((default-directory "~/.emacs.d/"))
