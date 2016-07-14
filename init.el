@@ -66,7 +66,11 @@
     (define-key global-map (kbd "M-L") 'bookmark-bmenu-list)
     ))
   
-
+(use-package rainbow-delimiters
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+  )
 
 
 (use-package magit
