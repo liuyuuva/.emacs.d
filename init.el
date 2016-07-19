@@ -11,7 +11,7 @@
 	(load-file "~/.emacs.d/init_proxy.el")
 	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 	(setq preview-gs-command "c:/gs/gs9.10/bin/gswin64c.exe")
-	(set-default 'preview-scale-function 1.6)
+	
 	)
   (progn
     (let ((default-directory "~/.emacs.d/"))
@@ -902,16 +902,29 @@ BEG and END (region to sort)."
 
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
-;(setq-default TeX-master nil)
-
-;(load "auctex.el" nil t t)
-;(load "preview-latex.el" nil t t)
+    
 
 
 
 (eval-after-load "tex"
-  '(add-to-list 'TeX-command-list
-                         '("ps2pdf" "ps2pdf %f" TeX-run-command nil t) t))
+     '(add-to-list 'TeX-command-list
+		   '("ps2pdf" "ps2pdf %f" TeX-run-command nil t) t)
+     )
+
+(use-package preview
+  :ensure auctex
+  :commands LaTeX-preview-setup
+  :defer t
+  :config
+  (progn
+    (define-key LaTeX-mode-map (kbd "<f12>") 'preview-buffer)
+    (set-default 'preview-scale-function 1.4)
+    )
+  )
+
+
+
+
 (setq TeX-source-specials-mode 1)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'outline-minor-mode)
