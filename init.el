@@ -10,6 +10,8 @@
 	(setq myprojectfile "~/Work/Notes_Planning/Projects_2016.org")
 	(load-file "~/.emacs.d/init_proxy.el")
 	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
+	(setq preview-gs-command "c:/gs/gs9.10/bin/gswin64c.exe")
+	(set-default 'preview-scale-function 1.6)
 	)
   (progn
     (let ((default-directory "~/.emacs.d/"))
