@@ -922,8 +922,8 @@ BEG and END (region to sort)."
     )
   )
 
-
-
+(add-hook 'LaTeX-mode-hook 'latex-preview-pane-mode) ;;enable preview pane with all latex files
+ (add-hook 'auto-save-hook 'latex-preview-pane-update)
 
 (setq TeX-source-specials-mode 1)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
