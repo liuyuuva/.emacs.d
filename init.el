@@ -30,7 +30,7 @@
 ;With the above apsell config for mac os, i also edited /usr/local/etc/aspell.conf to change the string after "dict-dir" to "/Library/Application Support/cocoAspell/aspell6-en-6.0-0". Flyspell mode now works fine.
     ))
   
-	
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 (require 'package)
 ;; Avoid multiple initialization of installed packages.
@@ -274,7 +274,7 @@
       (add-hook 'elpy-mode-hook
 		(lambda ()
 		  (local-unset-key (kbd "M-TAB"))
-		  (define-key elpy-mode-map (kbd "F5") 'elpy-company-backend)))))
+		  (define-key elpy-mode-map (kbd "<F5>") 'elpy-company-backend)))))
 
 
 (use-package company
@@ -943,7 +943,7 @@ BEG and END (region to sort)."
 (add-hook 'LaTeX-mode-hook 'reftex-mode) 
 
 (setq reftex-ref-macro-prompt nil)
-
+(setq reftex-insert-label-flags '("s" "sfte"))
 (defvar my-LaTeX-no-autofill-environments
   '("equation" "equation*")
   "A list of LaTeX environment names in which `auto-fill-mode' should be inhibited.")
