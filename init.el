@@ -30,7 +30,7 @@
 ;With the above apsell config for mac os, i also edited /usr/local/etc/aspell.conf to change the string after "dict-dir" to "/Library/Application Support/cocoAspell/aspell6-en-6.0-0". Flyspell mode now works fine.
     ))
   
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 (require 'package)
 ;; Avoid multiple initialization of installed packages.
