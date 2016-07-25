@@ -203,6 +203,24 @@
     (setq ido-file-extensions-order '(".org" ".c" ".tex" ".py" ".emacs" ".el" ".ini" ".cfg" ".cnf"))
     (add-to-list 'ido-ignore-files "appspec.yml")))
 
+(use-package anzu
+  :commands (isearch-foward isearch-backward)
+  :config
+  (progn
+    (global-anzu-mode)
+    (global-set-key [remap query-replace] 'anzu-query-replace)
+    (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
+    (global-set-key [remap isearch-query-replace] 'anzu-isearch-query-replace)
+    (global-set-key [remap isearch-query-replace-regexp] 'anzu-isearch-query-replace-regexp)
+    
+    )
+  :bind
+  (
+   ("M-%" . anzu-query-replace)
+   ("C-M-%" . anzu-query-replace-regexp)
+   )
+  )
+
 
   
  
