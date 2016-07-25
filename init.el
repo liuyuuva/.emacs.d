@@ -63,11 +63,21 @@
   :ensure t
   :config
   (progn
-    (define-key global-map (kbd "<f1>") 'bookmark-set)
-    (define-key global-map (kbd "<f2>") 'bookmark-jump)
+    (global-unset-key (kbd "<C-f1>"))
+    (define-key global-map (kbd "<C-f1>") 'bookmark-set)
+    (define-key global-map (kbd "<f1>") 'bookmark-jump)
     (define-key global-map (kbd "M-L") 'bookmark-bmenu-list)
     ))
-  
+
+(use-package bm
+  :config
+  (progn
+    (global-set-key (kbd "<C-f2>") 'bm-toggle)
+    (global-set-key (kbd "<f2>")   'bm-next)
+    (global-set-key (kbd "<S-f2>") 'bm-previous)
+    )
+  )
+
 (use-package rainbow-delimiters
   :ensure t
   :config
@@ -1047,9 +1057,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (with-eval-after-load "org"
   (progn
+    (define-key org-mode-map (kbd "<C-f1>") nil)
     (define-key org-mode-map (kbd "M-h") nil)
 	;;F1
-	(define-key org-mode-map (kbd "C-<f1>") 'org-back-to-top-level-heading)
+	;;(define-key org-mode-map (kbd "C-<f1>") 'org-back-to-top-level-heading)
 	;;F5
 	(define-key org-mode-map (kbd "<f5> n") 'mark-nextaction)
 	(define-key org-mode-map (kbd "<f5> t") 'mark-todo)	
