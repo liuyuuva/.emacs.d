@@ -163,10 +163,10 @@
          ("C-h w" . helm-descbinds)))
 
 
-(use-package color-theme
-  :init (color-theme-initialize)
-  :config (color-theme-vim-colors)
-  )
+;; (use-package color-theme
+;;   :init (color-theme-initialize)
+;;   :config (color-theme-vim-colors)
+;;   )
 
 ;; (use-package avy
 ;;   :ensure t
@@ -1270,7 +1270,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("afbb40954f67924d3153f27b6d3399df221b2050f2a72eb2cfa8d29ca783c5a8" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" default)))
+    ("cdbd0a803de328a4986659d799659939d13ec01da1f482d838b68038c1bb35e8" "afbb40954f67924d3153f27b6d3399df221b2050f2a72eb2cfa8d29ca783c5a8" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" default)))
  '(helm-follow-mode-persistent t)
  '(org-agenda-files (quote ("~/Work/Notes_Planning/Projects_2016.org")))
  '(org-drawers (quote ("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTE")))
