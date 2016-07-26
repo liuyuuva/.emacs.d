@@ -58,6 +58,25 @@
 (require 'benchmark-init)
 
 
+;; open recent directory, requires ivy (part of swiper)
+;; borrows from http://stackoverflow.com/questions/23328037/in-emacs-how-to-maintain-a-list-of-recent-directories
+(defun bjm/ivy-dired-recent-dirs ()
+  "Present a list of recently used directories and open the selected one in dired"
+  (interactive)
+  (let ((recent-dirs
+         (delete-dups
+          (mapcar (lambda (file)
+                    (if (file-directory-p file) file (file-name-directory file)))
+                  recentf-list))))
+
+    (let ((dir (ivy-read "Directory: "
+                         recent-dirs
+                         :re-builder #'ivy--regex
+                         :sort nil
+                         :initial-input nil)))
+      (dired dir))))
+
+(global-set-key (kbd "C-x M-r") 'bjm/ivy-dired-recent-dirs)
 
 (use-package bookmark
   :ensure t
@@ -187,6 +206,88 @@
 (use-package ace-window
   :ensure t
   :config (global-set-key (kbd "M-p") 'ace-window))
+
+
+(use-package evil
+  :ensure t
+  :init
+  (progn
+    ;; if we don't have this evil overwrites the cursor color
+    (setq evil-default-cursor t)
+
+    ;; leader shortcuts
+
+    ;; This has to be before we invoke evil-mode due to:
+    ;; https://github.com/cofi/evil-leader/issues/10
+    (use-package evil-leader
+      :init (global-evil-leader-mode)
+      :config
+      (progn
+        (setq evil-leader/in-all-states t)
+	(setq evil-leader/leader ",")
+        ;; keyboard shortcuts
+        (evil-leader/set-key
+	  "b" 'helm-buffer-list
+	  "eb" 'eval-buffer
+	  "f" 'ido-find-file
+	  "g" 'magit-status
+	  "j" 'ace-jump-char-mode
+	  "k" 'kill-buffer
+	  "K" 'kill-this-buffer
+	  "o" 'helm-occur
+	  "r" 'recentf-open-files
+	  "s" 'helm-swoop
+	  "w" 'save-buffer
+	  "y" 'helm-show-kill-ring
+	  "<SPC>" 'ace-jump-line-mode
+
+	 )
+	)
+      )
+
+    ;; boot evil by default
+    (evil-mode 1))
+  :config
+  (progn
+    (setq evil-emacs-state-cursor '("red" box))
+    (setq evil-normal-state-cursor '("green" box))
+    (setq evil-visual-state-cursor '("orange" box))
+    (setq evil-insert-state-cursor '("red" bar))
+    (setq evil-replace-state-cursor '("red" bar))
+    (setq evil-operator-state-cursor '("red" hollow))
+    ;; use ido to open files
+    (define-key evil-ex-map "e " 'ido-find-file)
+    (define-key evil-ex-map "b " 'ido-switch-buffer)
+
+    ;; ;; jj escapes to normal mode
+    ;; (define-key evil-insert-state-map (kbd "j") 'bw-evil-escape-if-next-char-is-j)
+    (setq
+     ;; h/l wrap around to next lines
+     evil-cross-lines t
+     ;; Training wheels: start evil-mode in emacs mode
+     evil-default-state 'emacs)
+
+    ;; esc should always quit: http://stackoverflow.com/a/10166400/61435
+    (define-key evil-normal-state-map [escape] 'keyboard-quit)
+    (define-key evil-visual-state-map [escape] 'keyboard-quit)
+    (define-key minibuffer-local-map [escape] 'abort-recursive-edit)
+    (define-key minibuffer-local-ns-map [escape] 'abort-recursive-edit)
+    (define-key minibuffer-local-completion-map [escape] 'abort-recursive-edit)
+    (define-key minibuffer-local-must-match-map [escape] 'abort-recursive-edit)
+    (define-key minibuffer-local-isearch-map [escape] 'abort-recursive-edit)
+
+    ;; modes to map to different default states
+    (dolist (mode-map '((comint-mode . emacs)
+                        (term-mode . emacs)
+                        (eshell-mode . emacs)
+                        (help-mode . emacs)
+                        (fundamental-mode . emacs)))
+      (evil-set-initial-state `,(car mode-map) `,(cdr mode-map))
+      )
+    )
+  )
+
+
 
 (use-package ido
   :init (progn (ido-mode 1)
