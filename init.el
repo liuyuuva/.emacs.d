@@ -57,7 +57,7 @@
 
 (require 'benchmark-init)
 
-
+(defalias 'yes-or-no-p 'y-or-n-p)
 ;; open recent directory, requires ivy (part of swiper)
 ;; borrows from http://stackoverflow.com/questions/23328037/in-emacs-how-to-maintain-a-list-of-recent-directories
 (defun bjm/ivy-dired-recent-dirs ()
@@ -214,7 +214,7 @@
   (progn
     ;; if we don't have this evil overwrites the cursor color
     (setq evil-default-cursor t)
-
+    (setq evil-toggle-key "C-`")
     ;; leader shortcuts
 
     ;; This has to be before we invoke evil-mode due to:
@@ -494,7 +494,7 @@
   :ensure t
   :defer t
   :init
-  (global-set-key  (kbd "C-`") 'iedit-mode)
+  (global-set-key  (kbd "C-;") 'iedit-mode)
   ) ;; iedit can edit multiple occurrence at the same time.
 
 
