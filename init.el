@@ -406,25 +406,27 @@
 		  (local-unset-key (kbd "M-TAB"))
 		  (define-key elpy-mode-map (kbd "<F5>") 'elpy-company-backend)))))
 
-;; == irony-mode ==
-(use-package irony
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; C Programming
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package cc-mode
   :ensure t
-  :defer t
-  :init
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'objc-mode-hook 'irony-mode)
   :config
-  ;; replace the `completion-at-point' and `complete-symbol' bindings in
-  ;; irony-mode's buffers by irony-mode's function
-  (defun my-irony-mode-hook ()
-    (define-key irony-mode-map [remap completion-at-point]
-      'irony-completion-at-point-async)
-    (define-key irony-mode-map [remap complete-symbol]
-      'irony-completion-at-point-async))
-  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  )
+  (progn
+    (use-package google-c-style
+      :ensure t
+      :init
+      (progn
+	(add-hook 'c-mode-common-hook
+		  (lambda ()
+		    (google-set-c-style)
+		    (google-make-newline-indent))))
+      :config
+      (c-set-offset 'statement-case-open 0))))
+;; Some bindings for hi-lock mode that will be very convenient for C code reading
+(global-set-key (kbd "C-.") 'highlight-symbol-at-point)
+(global-set-key (kbd "C->") 'highlight-phrase)
+
 
 
 (use-package company
@@ -434,20 +436,24 @@
   (add-hook 'after-init-hook 'global-company-mode)
   ;(global-set-key "\t" 'company-complete-common)
   (setq company-idle-delay nil
-	company-show-numbers t)
-  (use-package company-irony :ensure t :defer t)
+	company-show-numbers t
+	company-async-timeout 10)
   (setq company-backends
       '((company-files          ; files & directory
          company-keywords       ; keywords
          company-capf
+	 company-clang
          )
         (company-abbrev company-dabbrev)
-	(company-irony company-gtags)
-        ))
+        )
+      )
+  (setq company-backends (delete 'company-semantic company-backends))
+
+      (define-key c-mode-map  [(tab)] 'company-complete)
+      (define-key c++-mode-map  [(tab)] 'company-complete)
+      )
   
   
-  ;(company-quickhelp-mode 1)
-  )
   :bind ("C-'" . company-complete-common)
   )
 
@@ -543,27 +549,6 @@
 (global-linum-mode 1)
 ;;(semantic-mode 1);keeps parsing repeatedly for large c files. 
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; C Programming
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package cc-mode
-  :defer t
-  :config
-  (progn
-    (use-package google-c-style
-      :ensure t
-      :init
-      (progn
-	(add-hook 'c-mode-common-hook
-		  (lambda ()
-		    (google-set-c-style)
-		    (google-make-newline-indent))))
-      :config
-      (c-set-offset 'statement-case-open 0))))
-;; Some bindings for hi-lock mode that will be very convenient for C code reading
-(global-set-key (kbd "C-.") 'highlight-symbol-at-point)
-(global-set-key (kbd "C->") 'highlight-phrase)
  
 (use-package helm-gtags
   :ensure t
