@@ -406,6 +406,26 @@
 		  (local-unset-key (kbd "M-TAB"))
 		  (define-key elpy-mode-map (kbd "<F5>") 'elpy-company-backend)))))
 
+;; == irony-mode ==
+(use-package irony
+  :ensure t
+  :defer t
+  :init
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'objc-mode-hook 'irony-mode)
+  :config
+  ;; replace the `completion-at-point' and `complete-symbol' bindings in
+  ;; irony-mode's buffers by irony-mode's function
+  (defun my-irony-mode-hook ()
+    (define-key irony-mode-map [remap completion-at-point]
+      'irony-completion-at-point-async)
+    (define-key irony-mode-map [remap complete-symbol]
+      'irony-completion-at-point-async))
+  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+  )
+
 
 (use-package company
   :ensure t
@@ -413,16 +433,24 @@
   (progn
   (add-hook 'after-init-hook 'global-company-mode)
   ;(global-set-key "\t" 'company-complete-common)
-  (setq company-idle-delay 0.1)
+  (setq company-idle-delay nil
+	company-show-numbers t)
+  (use-package company-irony :ensure t :defer t)
   (setq company-backends
       '((company-files          ; files & directory
          company-keywords       ; keywords
          company-capf
          )
         (company-abbrev company-dabbrev)
+	(company-irony company-gtags)
         ))
+  
+  
   ;(company-quickhelp-mode 1)
-  ))
+  )
+  :bind ("C-'" . company-complete-common)
+  )
+
 (use-package company-quickhelp
   :ensure t
   :config
@@ -1372,7 +1400,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("5cd0afd0ca01648e1fff95a7a7f8abec925bd654915153fb39ee8e72a8b56a1f" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" "e8586a76a96fd322ccb644ca0c3a1e4f4ca071ccfdb0f19bef90c4040d5d3841" "cdbd0a803de328a4986659d799659939d13ec01da1f482d838b68038c1bb35e8" "afbb40954f67924d3153f27b6d3399df221b2050f2a72eb2cfa8d29ca783c5a8" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" default)))
+    ("8e7ca85479dab486e15e0119f2948ba7ffcaa0ef161b3facb8103fb06f93b428" "5cd0afd0ca01648e1fff95a7a7f8abec925bd654915153fb39ee8e72a8b56a1f" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" "e8586a76a96fd322ccb644ca0c3a1e4f4ca071ccfdb0f19bef90c4040d5d3841" "cdbd0a803de328a4986659d799659939d13ec01da1f482d838b68038c1bb35e8" "afbb40954f67924d3153f27b6d3399df221b2050f2a72eb2cfa8d29ca783c5a8" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" default)))
  '(helm-follow-mode-persistent t)
  '(org-agenda-files (quote ("~/Work/Notes_Planning/Projects_2016.org")))
  '(org-drawers (quote ("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTE")))
