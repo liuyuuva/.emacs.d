@@ -10,6 +10,7 @@
 	(setq myprojectfile "~/Work/Notes_Planning/Projects_2016.org")
 	(load-file "~/.emacs.d/init_proxy.el")
 	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
+	(add-to-list 'exec-path "c:/llvm/bin");; added for clang
 	(setq preview-gs-command "gswin64c")
 	(setq doc-view-ghostscript-program "gswin64c")
 	)
@@ -29,7 +30,8 @@
           ("english" ,@default))))
 ;With the above apsell config for mac os, i also edited /usr/local/etc/aspell.conf to change the string after "dict-dir" to "/Library/Application Support/cocoAspell/aspell6-en-6.0-0". Flyspell mode now works fine.
     ))
-  
+
+
 ;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 (require 'package)
@@ -77,6 +79,15 @@
       (dired dir))))
 
 (global-set-key (kbd "C-x M-r") 'bjm/ivy-dired-recent-dirs)
+
+;; remember cursor position
+(if (version< emacs-version "25.0")
+    (progn
+      (use-package saveplace
+	:config (setq-default save-place t))
+      (setq-default save-place t))
+  (save-place-mode 1))
+
 
 (use-package bookmark
   :ensure t
@@ -437,7 +448,7 @@
   ;(global-set-key "\t" 'company-complete-common)
   (setq company-idle-delay nil
 	company-show-numbers t
-	company-async-timeout 10)
+	company-async-timeout 50)
   (setq company-backends
       '((company-files          ; files & directory
          company-keywords       ; keywords
