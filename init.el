@@ -108,6 +108,14 @@
     )
   )
 
+(use-package neotree
+  :config
+  (progn
+    (global-set-key [f12] 'neotree-toggle)
+    )
+
+ )
+
 (use-package rainbow-delimiters
   :ensure t
   :config
