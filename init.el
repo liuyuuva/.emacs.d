@@ -1355,7 +1355,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;; F10
 ;;;;;;;;
 
-(global-set-key (kbd "<f10>") 'smart-compile)
+(global-set-key (kbd "<f10>") 'nolinum)
 ;(global-set-key (kbd "M-<f10>") 'org-copy-special)
 ;(global-set-key (kbd "S-<f10>") 'org-paste-special)
 
