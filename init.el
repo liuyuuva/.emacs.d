@@ -193,6 +193,7 @@
 	 ("M-h i" . helm-imenu)
 	 ("M-h e" . helm-semantic-or-imenu)
 	 ("M-h f" . helm-find-files)
+	 ("M-h p" . helm-swoop-back-to-last-point)
 ))
 (global-set-key (kbd "C-x C-b") 'buffer-menu) ; this is my preferred buffer list behavior over helm. this is actually what i had been using before helm. not list-buffers in fact, was buffer-menu
 (use-package helm-descbinds
