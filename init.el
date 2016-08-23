@@ -566,7 +566,22 @@
     ))
 
 (which-function-mode 1)
-(global-linum-mode 1)
+
+(use-package linum
+  :ensure t
+  :config
+  (progn
+    (global-linum-mode 1)
+    (defun nolinum()
+      (interactive)
+      (message "Deactivated linum mode")
+      (global-linum-mode 0)
+      (linum-mode 0)
+      )
+    
+    )
+  )
+
 ;;(semantic-mode 1);keeps parsing repeatedly for large c files. 
 
  
@@ -1210,6 +1225,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (with-eval-after-load "org"
   (progn
+    (add-hook 'org-mode-hook 'nolinum)
     (define-key org-mode-map (kbd "<C-f1>") nil)
     (define-key org-mode-map (kbd "M-h") nil)
 	;;F1
