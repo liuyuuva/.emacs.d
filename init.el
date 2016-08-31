@@ -465,6 +465,7 @@
 	 company-clang
          )
         (company-abbrev company-dabbrev)
+	(company-dabbrev-code company-gtags)
         )
       )
   (setq company-backends (delete 'company-semantic company-backends))
@@ -1262,7 +1263,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "M-<f7>") 'org-toggle-archive-tag)
 	;;F8
 	(define-key org-mode-map (kbd "<f8>") 'add-sublevel-plainitem);'add-sublevel-todo)
-	(define-key org-mode-map (kbd "C-<f8>") 'org-narrow-to-subtree)
+
 	;;F9
 	(define-key org-mode-map (kbd "<f9> i") 'org-clock-in)
 	(define-key org-mode-map (kbd "<f9> o") 'org-clock-out)
@@ -1340,9 +1341,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;;;;;;;;;
 ;; F8
 ;;;;;;;;
-
+(global-set-key (kbd "C-<f8>") 'narrow-to-region)
 (global-set-key (kbd "S-<f8>") 'widen)
-
+(global-set-key (kbd "M-<f8>") 'narrow-to-defun)
 
 ;;;;;;;;;
 ;; F9
