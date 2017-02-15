@@ -758,7 +758,7 @@
 (setq org-icalendar-include-todo t) 
 
 (setq org-todo-keywords
-    '((sequence "TODO(t)" "WAITING(w@)"  "REPORT(r)" "NEXTACTION(n)"  "INPROGRESS(p)" "TOFILE(f)"  "|" "DONE(d!)" "CANCELED(c@/i)" "MEMO(m)" )
+    '((sequence "TODO(t)" "WAITING(w@)"  "REPORT(r)" "NEXTACTION(n)"  "INPROGRESS(p)" "TOFILE(f)"  "|" "DONE(d!)" "CANCELED(c@/i)" "MEMO(m)" "LOG(l)" )
    ))
 	 
 (setq org-todo-keyword-faces
