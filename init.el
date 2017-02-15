@@ -762,7 +762,7 @@
    ))
 	 
 (setq org-todo-keyword-faces
-    '(("TODO" . org-warning) ("INPROGRESS" . "orange") ("MEMO" . "blue") ("TOFILE" . org-warning) ("REPORT" . "cyan") ("NEXTACTION" . org-warning)
+    '(("TODO" . org-warning) ("INPROGRESS" . "orange") ("MEMO" . "blue") ("LOG" . "blue") ("TOFILE" . org-warning) ("REPORT" . "cyan") ("NEXTACTION" . org-warning)
     ("CANCELED" . (:foreground "blue" :weight bold))
 	("DONE" . org-done) ("WAITING" . org-warning)))
 
@@ -867,7 +867,13 @@
 (defun mark-memo ()
   (interactive)
   (org-todo "MEMO")
-)
+  )
+
+(defun mark-log ()
+  (interactive)
+  (org-todo "LOG")
+  )
+
 
 (defun mark-waiting ()
   (interactive)
@@ -945,6 +951,11 @@
   (setq current-prefix-arg 9)
   (call-interactively 'org-show-todo-tree))
 
+(defun show-log()
+  (interactive)
+  (setq current-prefix-arg 10)
+  (call-interactively 'org-show-todo-tree))
+
 (defun show-waiting ()
   (interactive)
   (setq current-prefix-arg 2)
@@ -1013,6 +1024,7 @@ last month."
 (setq org-agenda-custom-commands
            '(("w" todo "WAITING")
 	     ("m" todo "MEMO")
+	     ("l" todo "LOG")
              ("n" todo "NEXTACTION")
 	     ("t" todo "TODO")
 	     ("i" todo "INPROGRESS")
