@@ -88,6 +88,15 @@
       (setq-default save-place t))
   (save-place-mode 1))
 
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+	 ("\\.md\\'" . markdown-mode)
+	 ("\\.markdown\\'". markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+      
+
 
 (use-package bookmark
   :ensure t
@@ -1447,7 +1456,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
    (quote
     ("+LEVEL=2/-DONE-MEMO-CANCELED"
      ("TODO" "NEXT" "NEXTACTION")
-     nil ""))))
+     nil "")))
+ '(package-selected-packages
+   (quote
+    (markdown-preview-mode zenburn-theme which-key use-package smart-compile rainbow-delimiters python-mode org-bullets org neotree matlab-mode markdown-mode magit latex-preview-pane latex-math-preview jedi iedit highlight-symbol helm-swoop helm-projectile helm-gtags helm-descbinds hc-zenburn-theme guide-key graphviz-dot-mode google-c-style function-args free-keys flymake-google-cpplint flymake-cppcheck evil-leader elpy ein ecb cyberpunk-theme company-quickhelp company-jedi company-irony color-theme-buffer-local color-theme calmer-forest-theme bm benchmark-init badwolf-theme badger-theme auto-complete-c-headers auto-compile aurora-theme auctex atom-dark-theme arjen-grey-theme anzu anti-zenburn-theme anaconda-mode alect-themes airline-themes ahungry-theme afternoon-theme ace-window ace-jump-mode ace-jump-helm-line abyss-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
