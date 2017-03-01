@@ -120,7 +120,7 @@
 (use-package neotree
   :config
   (progn
-    (global-set-key [f12] 'neotree-toggle)
+    (global-set-key (kbd "<C-f12>") 'neotree-toggle)
     )
 
  )
@@ -472,6 +472,7 @@
          company-keywords       ; keywords
          company-capf
 	 company-clang
+	 company-c-headers
          )
         (company-abbrev company-dabbrev)
 	(company-dabbrev-code company-gtags)
@@ -623,14 +624,15 @@
     (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
     ))
 
-;(use-package cedet
-;  :defer t
-;  :ensure t)
+(use-package cedet
+  :defer t
+  :ensure t)
 
 ;(require 'smart-compile)
 (use-package smart-compile
   :ensure t
   :defer t
+    
   )
 
 ; sementic seems to make the computer very slow
@@ -1401,7 +1403,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;; F12
 ;;;;;;;;
 
-;(global-set-key (kbd "<f12>") 'apply-macro-to-region-lines)
+(global-set-key (kbd "<f12>") 'smart-compile)
 
 
 
