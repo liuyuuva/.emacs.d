@@ -163,6 +163,7 @@
   
 (use-package helm
   :diminish helm
+  :ensure t
   :init
   (progn
     (require 'helm-config)
@@ -249,7 +250,7 @@
     ;; This has to be before we invoke evil-mode due to:
     ;; https://github.com/cofi/evil-leader/issues/10
     (use-package evil-leader
-      :init (global-evil-leader-mode)
+      :init ;(global-evil-leader-mode)
       :config
       (progn
         (setq evil-leader/in-all-states t)
@@ -492,7 +493,7 @@
   :ensure t
   :config
   (company-quickhelp-mode 1)
-  (define-key company-quickhelp-mode-map (kbd "M-h") nil) ;unset this key in company-quickhelp-mode so that it does not conflict with helm mode
+  ;;(define-key company-quickhelp-mode-map (kbd "M-h") nil) ;unset this key in company-quickhelp-mode so that it does not conflict with helm mode
   )
 
 
@@ -1447,7 +1448,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("28ec8ccf6190f6a73812df9bc91df54ce1d6132f18b4c8fcc85d45298569eb53" "8e7ca85479dab486e15e0119f2948ba7ffcaa0ef161b3facb8103fb06f93b428" "5cd0afd0ca01648e1fff95a7a7f8abec925bd654915153fb39ee8e72a8b56a1f" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" "e8586a76a96fd322ccb644ca0c3a1e4f4ca071ccfdb0f19bef90c4040d5d3841" "cdbd0a803de328a4986659d799659939d13ec01da1f482d838b68038c1bb35e8" "afbb40954f67924d3153f27b6d3399df221b2050f2a72eb2cfa8d29ca783c5a8" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" default)))
+    ("3eb93cd9a0da0f3e86b5d932ac0e3b5f0f50de7a0b805d4eb1f67782e9eb67a4" "28ec8ccf6190f6a73812df9bc91df54ce1d6132f18b4c8fcc85d45298569eb53" "8e7ca85479dab486e15e0119f2948ba7ffcaa0ef161b3facb8103fb06f93b428" "5cd0afd0ca01648e1fff95a7a7f8abec925bd654915153fb39ee8e72a8b56a1f" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" "e8586a76a96fd322ccb644ca0c3a1e4f4ca071ccfdb0f19bef90c4040d5d3841" "cdbd0a803de328a4986659d799659939d13ec01da1f482d838b68038c1bb35e8" "afbb40954f67924d3153f27b6d3399df221b2050f2a72eb2cfa8d29ca783c5a8" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" default)))
  '(helm-follow-mode-persistent t)
  '(org-agenda-files (quote ("~/Work/Notes_Planning/Projects_2016.org")))
  '(org-drawers (quote ("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTE")))
