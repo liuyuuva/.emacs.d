@@ -385,37 +385,45 @@
 ;;   :ensure t
 ;;   :defer t)
 
-(use-package python
-  :defer t
-  :ensure t
-  :init
-  (progn
-    (add-hook 'python-mode-hook 'elpy-mode)
-    (defun my/python-mode-hook ()
-      (add-to-list 'company-backends 'company-jedi)
-      )
-    (add-hook 'python-mode-hook 'my/python-mode-hook)
+ (use-package python
+   :defer t
+   :ensure t
+   :init
+   (progn
+     (add-hook 'python-mode-hook 'elpy-mode)
+     (defun my/python-mode-hook ()
+       (add-to-list 'company-backends 'company-jedi)
+       )
+     (add-hook 'python-mode-hook 'my/python-mode-hook)
 
-    )
-  )
+     )
+   )
 
 ;(add-hook 'python-mode-hook 'jedi:setup);Really hard to install jedi on windows
 
-(use-package elpy
-  :ensure t
-   :defer t
-   :config
-   (progn
-     (when (require 'flycheck nil t)
-      (remove-hook 'elpy-modules 'elpy-module-flymake)
-      (remove-hook 'elpy-modules 'elpy-module-yasnippet)
-      (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
-      (add-hook 'elpy-mode-hook 'flycheck-mode))
-     (diminish 'elpy-mode "elpy")
-     (elpy-enable)
-     (elpy-use-ipython)
-     ;(setq elpy-rpc-backend "jedi")
-     ))
+ (use-package elpy
+   :ensure t
+    :defer t
+    :config
+    (progn
+      (when (require 'flycheck nil t)
+       (remove-hook 'elpy-modules 'elpy-module-flymake)
+       (remove-hook 'elpy-modules 'elpy-module-yasnippet)
+       (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
+       (add-hook 'elpy-mode-hook 'flycheck-mode))
+      (diminish 'elpy-mode "elpy")
+      (elpy-enable)
+      (elpy-use-ipython)
+      ;(setq elpy-rpc-backend "jedi")
+      ))
+
+ ;;if windows redefine M-TAB to TAB since M-TAB is used for switching applications
+ (if (eq system-type 'windows-nt)
+     (progn
+       (add-hook 'elpy-mode-hook
+ 		(lambda ()
+ 		  (local-unset-key (kbd "M-TAB"))
+ 		  (define-key elpy-mode-map (kbd "<F5>") 'elpy-company-backend)))))
 
 
 
@@ -428,13 +436,6 @@
 
 
 
-;;if windows redefine M-TAB to TAB since M-TAB is used for switching applications
-(if (eq system-type 'windows-nt)
-    (progn
-      (add-hook 'elpy-mode-hook
-		(lambda ()
-		  (local-unset-key (kbd "M-TAB"))
-		  (define-key elpy-mode-map (kbd "<F5>") 'elpy-company-backend)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C Programming
