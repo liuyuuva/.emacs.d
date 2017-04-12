@@ -1216,10 +1216,13 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	    'auto-mode-alist
 	    '("\\.m$" . matlab-mode))
 	   (setq matlab-indent-function t)
-	   (setq matlab-shell-command "matlab")
+
 	  ; (add-hook 'matlab-mode 'auto-complete-mode)
 	   (add-hook 'matlab-mode-hook 'ace-jump-mode)
 	   (define-key matlab-mode-map (kbd "M-s") nil)
+	   (setq matlab-shell-command "c:\matlabshell\matlabshell.cmd")
+	   (setq matlab-shell-command-switches '())
+	   (setq matlab-shell-echoes nil)
 	   ))
   )
 
@@ -1463,7 +1466,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
      nil "")))
  '(package-selected-packages
    (quote
-    (markdown-preview-mode zenburn-theme which-key use-package smart-compile rainbow-delimiters python-mode org-bullets org neotree matlab-mode markdown-mode magit latex-preview-pane latex-math-preview jedi iedit highlight-symbol helm-swoop helm-projectile helm-gtags helm-descbinds hc-zenburn-theme guide-key graphviz-dot-mode google-c-style function-args free-keys flymake-google-cpplint flymake-cppcheck evil-leader elpy ein ecb cyberpunk-theme company-quickhelp company-jedi company-irony color-theme-buffer-local color-theme calmer-forest-theme bm benchmark-init badwolf-theme badger-theme auto-complete-c-headers auto-compile aurora-theme auctex atom-dark-theme arjen-grey-theme anzu anti-zenburn-theme anaconda-mode alect-themes airline-themes ahungry-theme afternoon-theme ace-window ace-jump-mode ace-jump-helm-line abyss-theme))))
+    (vlf markdown-preview-mode zenburn-theme which-key use-package smart-compile rainbow-delimiters python-mode org-bullets org neotree matlab-mode markdown-mode magit latex-preview-pane latex-math-preview jedi iedit highlight-symbol helm-swoop helm-projectile helm-gtags helm-descbinds hc-zenburn-theme guide-key graphviz-dot-mode google-c-style function-args free-keys flymake-google-cpplint flymake-cppcheck evil-leader elpy ein ecb cyberpunk-theme company-quickhelp company-jedi company-irony color-theme-buffer-local color-theme calmer-forest-theme bm benchmark-init badwolf-theme badger-theme auto-complete-c-headers auto-compile aurora-theme auctex atom-dark-theme arjen-grey-theme anzu anti-zenburn-theme anaconda-mode alect-themes airline-themes ahungry-theme afternoon-theme ace-window ace-jump-mode ace-jump-helm-line abyss-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
