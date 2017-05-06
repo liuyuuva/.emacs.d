@@ -56,8 +56,9 @@
 (eval-when-compile
   (require 'use-package))
 
-
-(require 'benchmark-init)
+(if (eq system-type 'windows-nt)
+    (require 'benchmark-init)
+  )
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; open recent directory, requires ivy (part of swiper)
