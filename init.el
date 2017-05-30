@@ -31,6 +31,8 @@
 ;With the above apsell config for mac os, i also edited /usr/local/etc/aspell.conf to change the string after "dict-dir" to "/Library/Application Support/cocoAspell/aspell6-en-6.0-0". Flyspell mode now works fine.
     ))
 
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file 'noerror)
 
 ;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
@@ -1445,41 +1447,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Custom Varibles
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("3eb93cd9a0da0f3e86b5d932ac0e3b5f0f50de7a0b805d4eb1f67782e9eb67a4" "28ec8ccf6190f6a73812df9bc91df54ce1d6132f18b4c8fcc85d45298569eb53" "8e7ca85479dab486e15e0119f2948ba7ffcaa0ef161b3facb8103fb06f93b428" "5cd0afd0ca01648e1fff95a7a7f8abec925bd654915153fb39ee8e72a8b56a1f" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" "e8586a76a96fd322ccb644ca0c3a1e4f4ca071ccfdb0f19bef90c4040d5d3841" "cdbd0a803de328a4986659d799659939d13ec01da1f482d838b68038c1bb35e8" "afbb40954f67924d3153f27b6d3399df221b2050f2a72eb2cfa8d29ca783c5a8" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" default)))
- '(helm-follow-mode-persistent t)
- '(org-agenda-files (quote ("~/Work/Notes_Planning/Projects_2017.org")))
- '(org-drawers (quote ("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTE")))
- '(org-indent-mode-turns-on-hiding-stars t)
- '(org-special-ctrl-a/e t)
- '(org-special-ctrl-k t)
- '(org-stuck-projects
-   (quote
-    ("+LEVEL=2/-DONE-MEMO-CANCELED"
-     ("TODO" "NEXT" "NEXTACTION")
-     nil "")))
- '(package-selected-packages
-   (quote
-    (vlf markdown-preview-mode zenburn-theme which-key use-package smart-compile rainbow-delimiters python-mode org-bullets org neotree matlab-mode markdown-mode magit latex-preview-pane latex-math-preview jedi iedit highlight-symbol helm-swoop helm-projectile helm-gtags helm-descbinds hc-zenburn-theme guide-key graphviz-dot-mode google-c-style function-args free-keys flymake-google-cpplint flymake-cppcheck evil-leader elpy ein ecb cyberpunk-theme company-quickhelp company-jedi company-irony color-theme-buffer-local color-theme calmer-forest-theme bm benchmark-init badwolf-theme badger-theme auto-complete-c-headers auto-compile aurora-theme auctex atom-dark-theme arjen-grey-theme anzu anti-zenburn-theme anaconda-mode alect-themes airline-themes ahungry-theme afternoon-theme ace-window ace-jump-mode ace-jump-helm-line abyss-theme))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
 
 (put 'upcase-region 'disabled nil)
 
