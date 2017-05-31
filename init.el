@@ -2,7 +2,7 @@
     (progn
       	(let ((default-directory "~/.emacs.d/"))
 	(normal-top-level-add-subdirs-to-load-path))
-	(add-to-list 'backup-directory-alist  '("." . "~/Work/emacs_backup/backup/"))
+	(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
 	(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves" t)))
 	(setq default-directory "~/Work/Notes_Planning/")
 	(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
@@ -14,6 +14,8 @@
 	(setq preview-gs-command "gswin64c")
 	(setq doc-view-ghostscript-program "gswin64c")
 	)
+  )
+(if (eq system-type 'darwin)
   (progn
     (let ((default-directory "~/.emacs.d/"))
       (normal-top-level-add-subdirs-to-load-path))
@@ -28,8 +30,12 @@
                        nil iso-8859-1)))
         `((nil ,@default)
           ("english" ,@default))))
-;With the above apsell config for mac os, i also edited /usr/local/etc/aspell.conf to change the string after "dict-dir" to "/Library/Application Support/cocoAspell/aspell6-en-6.0-0". Flyspell mode now works fine.
-    ))
+;With the above apsell config for mac os, i also edited
+;/usr/local/etc/aspell.conf to change the string after "dict-dir" to
+;"/Library/Application Support/cocoAspell/aspell6-en-6.0-0". Flyspell
+;mode now works fine.
+    )
+  )
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
@@ -93,16 +99,6 @@
 
 (run-at-time (current-time) 300 'recentf-save-list)
 
-(use-package markdown-mode
-  :ensure t
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-	 ("\\.md\\'" . markdown-mode)
-	 ("\\.markdown\\'". markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
-      
-
-
 (use-package bookmark
   :ensure t
   :config
@@ -130,11 +126,11 @@
 
  )
 
-(use-package rainbow-delimiters
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-  )
+;; (use-package rainbow-delimiters
+;;   :ensure t
+;;   :config
+;;   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+;;   )
 
 
 (use-package magit
@@ -164,7 +160,6 @@
     (define-key global-map (kbd "M-P") 'highlight-symbol-prev)
     )
   )
-
   
 (use-package helm
   :diminish helm
@@ -294,8 +289,6 @@
     (define-key evil-ex-map "e " 'ido-find-file)
     (define-key evil-ex-map "b " 'ido-switch-buffer)
 
-    ;; ;; jj escapes to normal mode
-    ;; (define-key evil-insert-state-map (kbd "j") 'bw-evil-escape-if-next-char-is-j)
     (setq
      ;; h/l wrap around to next lines
      evil-cross-lines t
@@ -321,8 +314,6 @@
       )
     )
   )
-
-
 
 (use-package ido
   :init (progn (ido-mode 1)
@@ -357,9 +348,6 @@
    )
   )
 
-
-  
- 
 (use-package breadcrumb
   ;:commands bc-set bc-previous bc-next bc-list bc-local-next bc-local-previous
   :bind (("C-c m" . bc-set)
@@ -386,11 +374,7 @@
   (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
   (guide-key-mode 1)))  ; Enable guide-key-mode
 
-;; (use-package ein
-;;   :ensure t
-;;   :defer t)
-
- (use-package python
+(use-package python
    :defer t
    :ensure t
    :init
@@ -590,15 +574,16 @@
   :config
   (progn
     (global-linum-mode 1)
-    (defun nolinum()
+    )
+  )
+
+(defun nolinum()
       (interactive)
       (message "Deactivated linum mode")
       (global-linum-mode 0)
       (linum-mode 0)
       )
     
-    )
-  )
 
 ;;(semantic-mode 1);keeps parsing repeatedly for large c files. 
 
@@ -666,7 +651,7 @@
 	)
 	
 	  
-   (defun force-backup-of-buffer ()
+(defun force-backup-of-buffer ()
      (let ((buffer-backed-up nil))
        (backup-buffer)))
    (add-hook 'before-save-hook  'force-backup-of-buffer)
@@ -1036,9 +1021,6 @@ last month."
        (jtc-org-tasks-closed-in-month 
         for-month for-year "TODO=\"DONE\"")))
 
-
-
-
 (setq org-agenda-custom-commands
            '(("w" todo "WAITING")
 	     ("m" todo "MEMO")
@@ -1065,14 +1047,6 @@ last month."
    (matlab . t)
  ))
    
-;; (require 'ox-latex)
-;; (add-to-list 'org-latex-classes
-;;              '("beamer"
-;;                "\\documentclass\[presentation\]\{beamer\}"
-;;                ("\\section\{%s\}" . "\\section*\{%s\}")
-;;                ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
-;;                ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
-
 (use-package ox-latex
   :defer t
   :config
@@ -1108,12 +1082,8 @@ BEG and END (region to sort)."
 ;; LaTeX Setting (Windows)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
-    
-
-
 
 (eval-after-load "tex"
      '(add-to-list 'TeX-command-list
@@ -1180,36 +1150,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (add-hook 'LaTeX-mode-hook 'my-LaTeX-setup-auto-fill)
 
-;(setq preview-image-type 'dvipng)
- ;; (add-hook 'latex-mode-hook
- ;;           #'(lambda ()
- ;;               (set (make-local-variable 'autopair-handle-action-fns)
- ;;                    (list #'autopair-default-handle-action
- ;;                         #'autopair-latex-mode-paired-delimiter-action))))
-
-
-;(require 'font-latex)
-
-;; (defun font-latex-jit-lock-force-redisplay (buf start end)
-;;   "Compatibility for Emacsen not offering `jit-lock-force-redisplay'."
-;;     ;; The following block is an expansion of `jit-lock-force-redisplay'
-;;     ;; and involved macros taken from CVS Emacs on 2007-04-28.
-;;     (with-current-buffer buf
-;;       (let ((modified (buffer-modified-p)))
-;;     (unwind-protect
-;;         (let ((buffer-undo-list t)
-;;           (inhibit-read-only t)
-;;           (inhibit-point-motion-hooks t)
-;;           (inhibit-modification-hooks t)
-;;           deactivate-mark
-;;           buffer-file-name
-;;           buffer-file-truename)
-;;           (put-text-property start end 'fontified t))
-;;       (unless modified
-;;         (restore-buffer-modified-p nil))))))
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Matlab setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1231,11 +1171,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	   ))
   )
 
-
-
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1254,12 +1189,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(bookmark-jump "ClockReportToday")
 	(message "Went to today's clock report."))
 
-
-
-
 (with-eval-after-load "org"
   (progn
-    (add-hook 'org-mode-hook 'nolinum)
+;    (add-hook 'org-mode-hook 'nolinum)
     (define-key org-mode-map (kbd "<C-f1>") nil)
     (define-key org-mode-map (kbd "M-h") nil)
 	;;F1
@@ -1384,23 +1316,11 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;; F9
 ;;;;;;;;
 
-
-
-
 ;;;;;;;;
 ;; F10
 ;;;;;;;;
 
 (global-set-key (kbd "<f10>") 'nolinum)
-;(global-set-key (kbd "M-<f10>") 'org-copy-special)
-;(global-set-key (kbd "S-<f10>") 'org-paste-special)
-
-;(global-set-key (kbd "<f10>") 'org-clock-in)
-;(global-set-key (kbd "C-<f10>") 'org-clock-out)
-;(global-set-key (kbd "C-S-<f10>") 'org-clock-cancel)
-;(global-set-key (kbd "M-<f10>") 'org-clock-jump-to-current-clock)
-;(global-set-key (kbd "S-<f10>") 'org-clock-display)
-
 
 ;;;;;;;;
 ;; F11
@@ -1414,10 +1334,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;;;;;;;;
 
 (global-set-key (kbd "<f12>") 'smart-compile)
-
-
-
-
 
 ;;;;;;;;
 ;; Others
@@ -1434,11 +1350,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (global-set-key (kbd "C-+") (kbd "C-u C-_")) ; redo
 (global-set-key (kbd "C-c o") 'occur)
 
-
 (global-set-key (kbd "C-M-m") 'delete-minibuffer-contents)
-
-
-
 
 (setq recentf-max-saved-items 200
       recentf-max-menu-items 15)
@@ -1446,13 +1358,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
 
-
-
 (put 'upcase-region 'disabled nil)
 
-
 (put 'narrow-to-region 'disabled nil)
-
 
 (defun save-macro (name)
     "save a macro. Take a name as argument
@@ -1466,7 +1374,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
      (insert-kbd-macro name)               ; copy the macro
      (newline)                             ; insert a newline
      (switch-to-buffer nil))               ; return to the initial buffer
-
 
 (defun ridm ()
   "Remove intrusive CTRL-Ms from the buffer"
