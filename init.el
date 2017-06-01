@@ -138,7 +138,7 @@
   :ensure t
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "pandoc")
   :config
@@ -155,6 +155,21 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 ;; Mode names that derive directly from the language name
     (mapc 'my-mmm-markdown-auto-class
+      '("awk" "bibtex" "c" "cpp" "css" "html" "latex" "lisp" "makefile"
+        "markdown" "python" "r" "ruby" "sql" "stata" "xml")
+      )
+    (defun my-mmm-gfm-auto-class (lang &optional submode)
+  "Define a mmm-mode class for LANG in `gfm-mode' using SUBMODE.
+If SUBMODE is not provided, use `LANG-mode' by default."
+  (let ((class (intern (concat "gfm-" lang)))
+        (submode (or submode (intern (concat lang "-mode"))))
+        (front (concat "^```" lang "[\n\r]+"))
+        (back "^```"))
+    (mmm-add-classes (list (list class :submode submode :front front :back back)))
+    (mmm-add-mode-ext-class 'gfm-mode nil class)))
+
+;; Mode names that derive directly from the language name
+    (mapc 'my-mmm-gfm-auto-class
       '("awk" "bibtex" "c" "cpp" "css" "html" "latex" "lisp" "makefile"
         "markdown" "python" "r" "ruby" "sql" "stata" "xml")
       )
