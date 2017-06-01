@@ -134,6 +134,43 @@
 
  )
 
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . gfm-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "pandoc")
+  :config
+  (progn
+        (defun my-mmm-markdown-auto-class (lang &optional submode)
+  "Define a mmm-mode class for LANG in `markdown-mode' using SUBMODE.
+If SUBMODE is not provided, use `LANG-mode' by default."
+  (let ((class (intern (concat "markdown-" lang)))
+        (submode (or submode (intern (concat lang "-mode"))))
+        (front (concat "^```" lang "[\n\r]+"))
+        (back "^```"))
+    (mmm-add-classes (list (list class :submode submode :front front :back back)))
+    (mmm-add-mode-ext-class 'markdown-mode nil class)))
+
+;; Mode names that derive directly from the language name
+    (mapc 'my-mmm-markdown-auto-class
+      '("awk" "bibtex" "c" "cpp" "css" "html" "latex" "lisp" "makefile"
+        "markdown" "python" "r" "ruby" "sql" "stata" "xml")
+      )
+    )
+
+  )
+
+(use-package mmm-mode
+  :ensure t
+  :config
+  (progn
+    (setq mmm-global-mode 'maybe)
+    (setq mmm-parse-when-idle 't)
+    )
+  )
+
 ;; (use-package rainbow-delimiters
 ;;   :ensure t
 ;;   :config
@@ -146,6 +183,15 @@
   :init
   (global-set-key (kbd "C-x g") 'magit-status)
   )
+
+(use-package pandoc-mode
+  :ensure t
+  :config
+  (progn
+    (add-hook 'markdown-mode-hook 'pandoc-mode)
+    )
+  )
+
 
 (use-package which-key
   :ensure t
