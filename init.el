@@ -132,7 +132,6 @@
 ;;   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 ;;   )
 
-
 (use-package magit
   :defer t
   :ensure t
