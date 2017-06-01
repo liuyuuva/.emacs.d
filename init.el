@@ -48,6 +48,10 @@
 ;; Add Melpa to the list of package archives.
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+
+(add-to-list 'load-path "~/.emacs.d/elpa/pyvenv-1.9")
 ;; Do package initiazation.
 (package-initialize)
 
@@ -97,7 +101,7 @@
       (setq-default save-place t))
   (save-place-mode 1))
 
-(run-at-time (current-time) 300 'recentf-save-list)
+;(run-at-time (current-time) 300 'recentf-save-list)
 
 (use-package bookmark
   :ensure t
@@ -202,15 +206,31 @@
 	 ("M-h i" . helm-imenu)
 	 ("M-h e" . helm-semantic-or-imenu)
 	 ("M-h f" . helm-find-files)
-	 ("M-h p" . helm-swoop-back-to-last-point)
+	 ("M-h p" . helm-projectile)
+	 ("M-h q" . helm-swoop-back-to-last-point)
 ))
 (global-set-key (kbd "C-x C-b") 'buffer-menu) ; this is my preferred buffer list behavior over helm. this is actually what i had been using before helm. not list-buffers in fact, was buffer-menu
 (use-package helm-descbinds
   :defer t
   :bind (("C-h b" . helm-descbinds)
          ("C-h w" . helm-descbinds)))
+(use-package projectile
+  :ensure t
+  :config
+  (progn
+    (projectile-mode)
+    )
+  )
 
+(use-package helm-projectile
+  :ensure t
+  :config
+  (progn
+    (helm-projectile-on)
+    )
+  )
 
+  
 ;; (use-package color-theme
 ;;   :init (color-theme-initialize)
 ;;   :config (color-theme-vim-colors)
@@ -387,6 +407,17 @@
      )
    )
 
+;; Fix for "native completion" warning as a bug in python.el
+(defun python-shell-completion-native-try ()
+  "Return non-nil if can trigger native completion."
+  (with-eval-after-load 'python
+    '(let ((python-shell-completion-native-enable t)
+           (python-shell-completion-native-output-timeout
+            python-shell-completion-native-try-output-timeout))
+       (python-shell-completion-native-get-completions
+        (get-buffer-process (current-buffer))
+        nil "_"))))
+
 ;(add-hook 'python-mode-hook 'jedi:setup);Really hard to install jedi on windows
 
  (use-package elpy
@@ -402,7 +433,7 @@
       (diminish 'elpy-mode "elpy")
       (elpy-enable)
       (elpy-use-ipython)
-      ;(setq elpy-rpc-backend "jedi")
+      (setq elpy-rpc-backend "jedi")
       ))
 
  ;;if windows redefine M-TAB to TAB since M-TAB is used for switching applications
@@ -413,7 +444,9 @@
  		  (local-unset-key (kbd "M-TAB"))
  		  (define-key elpy-mode-map (kbd "<F5>") 'elpy-company-backend)))))
 
-
+(use-package pyvenv
+  :ensure t
+  )
 
 (use-package yasnippet
   :ensure t
@@ -422,7 +455,20 @@
   (add-hook 'prog-mode-hook #'yas-minor-mode)
   )
 
+(defun company-yasnippet-or-completion ()
+  "Solve company yasnippet conflicts."
+  (interactive)
+  (let ((yas-fallback-behavior
+         (apply 'company-complete-common nil)))
+    (yas-expand)))
 
+(add-hook 'company-mode-hook
+          (lambda ()
+            (substitute-key-definition
+             'company-complete-common
+             'company-yasnippet-or-completion
+             company-active-map)))
+;; above code works perfectly!!
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -488,7 +534,7 @@
 
   
 (use-package company-jedi
-  :defer t
+ 
   :ensure t)
 
 
