@@ -93,6 +93,10 @@
 
 (global-set-key (kbd "C-x M-r") 'bjm/ivy-dired-recent-dirs)
 
+;; Split left and right
+(setq split-height-threshold nil)
+(setq split-width-threshold 0)
+
 ;; remember cursor position
 (if (version< emacs-version "25.0")
     (progn
@@ -393,11 +397,16 @@
   (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
   (guide-key-mode 1)))  ; Enable guide-key-mode
 
+
 (use-package python
    :defer t
    :ensure t
    :init
    (progn
+     (setq python-shell-completion-native-enable nil)
+     (setq-default py-split-windows-on-execute-function 'split-window-horizontally)
+     (custom-set-variables
+      '(py-shell-switch-buffers-on-execute nil))
      (add-hook 'python-mode-hook 'elpy-mode)
      (defun my/python-mode-hook ()
        (add-to-list 'company-backends 'company-jedi)
@@ -406,19 +415,6 @@
 
      )
    )
-
-;; Fix for "native completion" warning as a bug in python.el
-(defun python-shell-completion-native-try ()
-  "Return non-nil if can trigger native completion."
-  (with-eval-after-load 'python
-    '(let ((python-shell-completion-native-enable t)
-           (python-shell-completion-native-output-timeout
-            python-shell-completion-native-try-output-timeout))
-       (python-shell-completion-native-get-completions
-        (get-buffer-process (current-buffer))
-        nil "_"))))
-
-;(add-hook 'python-mode-hook 'jedi:setup);Really hard to install jedi on windows
 
  (use-package elpy
    :ensure t
@@ -447,6 +443,7 @@
 (use-package pyvenv
   :ensure t
   )
+
 
 (use-package yasnippet
   :ensure t
