@@ -13,6 +13,7 @@
 	(add-to-list 'exec-path "c:/llvm/bin");; added for clang
 	(setq preview-gs-command "gswin64c")
 	(setq doc-view-ghostscript-program "gswin64c")
+
 	)
   )
 (if (eq system-type 'darwin)
@@ -551,36 +552,37 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (global-set-key (kbd "C->") 'highlight-phrase)
 
 
-
 (use-package company
   :ensure t
   :config
   (progn
-  (add-hook 'after-init-hook 'global-company-mode)
-  ;(global-set-key "\t" 'company-complete-common)
-  (setq company-idle-delay nil
-	company-show-numbers t
-	company-async-timeout 50)
-  (setq company-backends
-      '((company-files          ; files & directory
-         company-keywords       ; keywords
-         company-capf
-	 company-clang
-	 company-c-headers
-         )
-        (company-abbrev company-dabbrev)
-	(company-dabbrev-code company-gtags)
-        )
-      )
-  (setq company-backends (delete 'company-semantic company-backends))
+    (add-hook 'after-init-hook 'global-company-mode)
+					;(global-set-key "\t" 'company-complete-common)
+    (setq company-idle-delay nil
+	  company-show-numbers t
+	  company-async-timeout 50)
+    (setq company-backends
+	  '(company-files          ; files & directory
+	    company-keywords       ; keywords
+	    company-capf
+	    company-clang
+	    company-c-headers
+	    company-abbrev
+	    company-dabbrev
+	    company-dabbrev-code
+	    company-gtags)
+	  )
+    
+    (setq company-backends (delete 'company-semantic company-backends))
 
-      (define-key c-mode-map  [(tab)] 'company-complete)
-      (define-key c++-mode-map  [(tab)] 'company-complete)
-      )
-  
-  
+    (define-key c-mode-map  [(tab)] 'company-complete)
+    (define-key c++-mode-map  [(tab)] 'company-complete)
+    )
   :bind ("C-'" . company-complete-common)
   )
+
+
+
 
 (use-package company-quickhelp
   :ensure t
