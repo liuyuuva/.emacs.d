@@ -551,11 +551,16 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 		    (google-set-c-style)
 		    (google-make-newline-indent))))
       :config
-      (c-set-offset 'statement-case-open 0))))
+      (c-set-offset 'statement-case-open 0)))
+  )
 ;; Some bindings for hi-lock mode that will be very convenient for C code reading
 (global-set-key (kbd "C-.") 'highlight-symbol-at-point)
 (global-set-key (kbd "C->") 'highlight-phrase)
-
+(add-hook 'c-mode-common-hook
+	  (lambda()
+	    (local-set-key (kbd "C-c o") 'ff-find-other-file)
+	    )
+	  )
 
 (use-package company
   :ensure t
