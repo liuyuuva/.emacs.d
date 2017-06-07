@@ -302,10 +302,10 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   )
 
   
-(use-package color-theme
-   :init (color-theme-initialize)
-   :config (color-theme-vim-colors)
-   )
+;; (use-package color-theme
+;;    :init (color-theme-initialize)
+;;    :config (color-theme-vim-colors)
+;;    )
 
 ;; (use-package avy
 ;;   :ensure t
