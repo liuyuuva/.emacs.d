@@ -55,6 +55,11 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
 
+
+(setq-default tab-width 4) ; or any other preferred value
+(setq-default c-basic-offset 4)
+;(defvaralias 'c-basic-offset 'tab-width)
+
 ;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 (require 'package)
@@ -540,9 +545,16 @@ If SUBMODE is not provided, use `LANG-mode' by default."
             (substitute-key-definition
              'company-complete-common
              'company-yasnippet-or-completion
-             company-active-map)))
+	     company-active-map)))
 ;; above code works perfectly!!
 
+ (defun indent-buffer ()
+      (interactive)
+      (save-excursion
+        (indent-region (point-min) (point-max) nil)))
+    (global-set-key [f12] 'indent-buffer)
+
+(global-set-key "\C-x\\" 'indent-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C Programming
@@ -576,7 +588,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   :config
   (progn
     (add-hook 'after-init-hook 'global-company-mode)
-					;(global-set-key "\t" 'company-complete-common)
+    
     (setq company-idle-delay nil
 	  company-show-numbers t
 	  company-async-timeout 50)
@@ -594,11 +606,15 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     
     (setq company-backends (delete 'company-semantic company-backends))
 
-    (define-key c-mode-map  [(tab)] 'company-complete)
-    (define-key c++-mode-map  [(tab)] 'company-complete)
+  
+;    (define-key company-active-map 'company-complete-common nil)
+;    (define-key company-active-map "C-'" 'company-complete-common)
+;    (define-key c-mode-map  [kbd "F5"] 'company-complete-common)
+;    (define-key c++-mode-map  [kbd "F5"] 'company-complete-common)
+  
     )
-  :bind ("C-'" . company-complete-common)
   )
+(global-set-key (kbd "C-'") 'company-complete)
 
 (use-package company-c-headers
   :ensure t
