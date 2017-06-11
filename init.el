@@ -39,6 +39,15 @@
     )
   )
 
+(if (eq system-type 'gnu/linux)
+    (progn
+      (let ((default-directory "~/.emacs.d/"))
+	  (normal-top-level-add-subdirs-to-load-path))
+    (add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
+    (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+    )
+  )
+
 (add-to-list 'load-path "~/.emacs.d/lisp/")
       
   
