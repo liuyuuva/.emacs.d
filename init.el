@@ -163,6 +163,7 @@
   :init (setq markdown-command "pandoc")
   :config
   (progn
+	(setq markdown-enable-math t)
         (defun my-mmm-markdown-auto-class (lang &optional submode)
   "Define a mmm-mode class for LANG in `markdown-mode' using SUBMODE.
 If SUBMODE is not provided, use `LANG-mode' by default."
@@ -634,7 +635,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
       (defun setup-cpp-clang-options ()
 	(setq irony-additional-clang-options (quote ("-std=c++14" "-stdlib=libc++"))))
 
-      (use-package irony
+     (use-package irony
 	:ensure t
 	:init
 	(progn
