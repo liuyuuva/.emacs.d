@@ -163,6 +163,7 @@
   :init (setq markdown-command "pandoc")
   :config
   (progn
+	(setq markdown-enable-math t)
         (defun my-mmm-markdown-auto-class (lang &optional submode)
   "Define a mmm-mode class for LANG in `markdown-mode' using SUBMODE.
 If SUBMODE is not provided, use `LANG-mode' by default."
@@ -594,14 +595,15 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	  company-async-timeout 50)
     (setq company-backends
 	  '(company-files          ; files & directory
-	    company-keywords       ; keywords
+	    ;company-keywords       ; keywords
 	    company-capf
-	    company-clang
-	    company-c-headers
-	    company-abbrev
-	    company-dabbrev
-	    company-dabbrev-code
-	    company-gtags)
+		company-irony
+		;company-clang
+	    ;company-c-headers
+	    ;company-abbrev
+	    ;company-dabbrev
+	    ;company-dabbrev-code
+	    'company-gtags)
 	  )
     
     (setq company-backends (delete 'company-semantic company-backends))
@@ -637,7 +639,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (use-package irony
   :ensure t
   :defer t
-
 	)
 
 (use-package company-irony
