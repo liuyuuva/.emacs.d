@@ -595,15 +595,9 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	  company-async-timeout 50)
     (setq company-backends
 	  '(company-files          ; files & directory
-	    ;company-keywords       ; keywords
 	    company-capf
 		company-irony
-		;company-clang
-	    ;company-c-headers
-	    ;company-abbrev
-	    ;company-dabbrev
-	    ;company-dabbrev-code
-	    'company-gtags)
+	    )
 	  )
     
     (setq company-backends (delete 'company-semantic company-backends))
@@ -636,9 +630,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 		 )
 	   )
 
-(if (eq 'system-type 'gnu/linux)
-    (progn
-
       (defun setup-c-clang-options ()
 	(setq irony-additional-clang-options (quote ("-std=c11"))))
 
@@ -665,18 +656,21 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 (use-package company-irony
 	   :ensure t
 	   :config
-	   ((progn
+	   (progn
 		(eval-after-load 'company '(add-to-list 'company-backends 'company-irony))
-		(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)))
+		(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+	   )
 	   )
 	 
 	 
-)
+
   (use-package flycheck-irony
 	:ensure t
 	:config
 	(eval-after-load 'flycheck
-	  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)))
+	  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
+	  )
+	)
 
 
 (add-hook 'c++-mode-hook 'irony-mode)
@@ -694,12 +688,9 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 ;; company-irony
 
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-irony))
-
 
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  )
+  
 
 (use-package company-quickhelp
   :ensure t
