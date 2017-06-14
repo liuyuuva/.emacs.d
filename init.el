@@ -636,16 +636,32 @@ If SUBMODE is not provided, use `LANG-mode' by default."
       (defun setup-cpp-clang-options ()
 	(setq irony-additional-clang-options (quote ("-std=c++14" "-stdlib=libc++"))))
 
-(use-package irony
-  :ensure t
-  :defer t
+     (use-package irony
+	:ensure t
+	:init
+	(progn
+	  (add-hook 'c++-mode-hook 'irony-mode)
+	  (add-hook 'c-mode-hook 'irony-mode)
+	  (add-hook 'objc-mode-hook 'irony-mode))
+	:config
+	(progn
+	  (add-hook 'c++-mode-hook 'setup-cpp-clang-options)
+	  (add-hook 'c-mode-hook 'setup-c-clang-options)
+
+	  (when (boundp 'w32-pipe-read-delay)
+	    (setq w32-pipe-read-delay 0))
+	  ;; Set the buffer size to 64K on Windows (from the original 4K)
+	  (when (boundp 'w32-pipe-buffer-size)
+	    (setq irony-server-w32-pipe-buffer-size (* 64 1024))
+	    )
+	  )
 	)
 
 (use-package company-irony
 	:ensure t
 	:config
 	(progn
-;	  (add-to-list 'company-backends 'company-irony)
+	  (eval-after-load 'company '(add-to-list 'company-backends 'company-irony))
 	  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)))
 
       (use-package flycheck-irony
