@@ -4,7 +4,7 @@
 	(normal-top-level-add-subdirs-to-load-path))
 	(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
 	(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves" t)))
-	(setq default-directory "~/Work/Notes_Planning/")
+	(setq default-directory "~/")
 	(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
 	(setq ispell-dictionary "~/Softwares/Aspell/dict/")
 	(setq myprojectfile "~/Work/Notes_Planning/Projects_2017.org")
@@ -1037,6 +1037,38 @@ If SUBMODE is not provided, use `LANG-mode' by default."
         ("n" "Notes" entry (file myprojectfile)
              "* %?\nEntered on %U\n  "))
 )
+
+(use-package org-ref
+  :ensure t
+  :config
+  (progn
+	(add-hook 'org-mode-hook 'org-ref)
+	(setq org-ref-notes-directory "~/reading"
+		  org-ref-bibliography-notes "~/reading/index.org"
+		  org-ref-default-bibliography '("~/reading/index.bib")
+		  org-ref-pdf-directory "~reading/lib/"
+		 )
+	)
+  )
+
+(use-package helm-bibtex
+  :ensure t
+  :config
+  (progn
+	
+	(setq helm-bibtex-bibliography "~/reading/index.bib" ;; where your references are stored
+		  helm-bibtex-library-path "~/reading/lib/" ;; where your pdfs etc are stored
+		  helm-bibtex-notes-path "~/reading/index.org" ;; where your notes are stored
+		  bibtex-completion-bibliography "~/reading/index.bib" ;; writing completion
+		  bibtex-completion-notes-path "~/reading/index.org"
+		  bibtex-completion-library-path "~/reading/lib"
+		  )
+	(setq bibtex-completion-pdf-open-function
+  (lambda (fpath)
+    (start-process "open" "*open*" "open" fpath)))
+
+	)
+  )
 
 
 ;Org Clock 
