@@ -325,12 +325,12 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;;    :config (color-theme-vim-colors)
 ;;    )
 
-;; (use-package avy
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (global-set-key (kbd "M-s") 'avy-goto-char)
-;;     (global-set-key (kbd "S-SPC") 'avy-goto-line)))
+ (use-package avy
+   :ensure t
+   :config
+   (progn
+     (global-set-key (kbd "M-g M-c") 'avy-goto-char)
+     (global-set-key (kbd "M-g M-SPC") 'avy-goto-line)))
 
 (use-package ace-jump-mode
   :ensure t
@@ -357,34 +357,35 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
     ;; This has to be before we invoke evil-mode due to:
     ;; https://github.com/cofi/evil-leader/issues/10
-    (use-package evil-leader
-      :config
-      (progn
-        (setq evil-leader/in-all-states t)
-        (setq evil-leader/set-leader "<SPC>")
-        ;; keyboard shortcuts
-        (evil-leader/set-key
-	  "b" 'helm-buffer-list
-	  "eb" 'eval-buffer
-	  "f" 'ido-find-file
-	  "g" 'magit-status
-	  "j" 'ace-jump-char-mode
-	  "k" 'kill-buffer
-	  "K" 'kill-this-buffer
-	  "o" 'helm-occur
-	  "r" 'recentf-open-files
-	  "s" 'helm-swoop
-	  "w" 'save-buffer
-	  "y" 'helm-show-kill-ring
-	  "<SPC>" 'ace-jump-line-mode
-      "e"   'flycheck-list-errors
+    ;; (use-package evil-leader
+    ;;   :config
+    ;;   (progn
+    ;;     (setq evil-leader/in-all-states t)
+    ;;     (setq evil-leader/set-leader "<SPC>")
+    ;;     ;; keyboard shortcuts
+    ;;     (evil-leader/set-key
+	;;   "b" 'helm-buffer-list
+	;;   "eb" 'eval-buffer
+	;;   "f" 'ido-find-file
+	;;   "g" 'magit-status
+	;;   "j" 'ace-jump-char-mode
+	;;   "k" 'kill-buffer
+	;;   "K" 'kill-this-buffer
+	;;   "o" 'helm-occur
+	;;   "r" 'recentf-open-files
+	;;   "s" 'helm-swoop
+	;;   "w" 'save-buffer
+	;;   "y" 'helm-show-kill-ring
+	;;   "<SPC>" 'ace-jump-line-mode
+    ;;   "e"   'flycheck-list-errors
 
-	 )
-	)
-      )
+	;;  )
+	;;)
+     ;; )
 
     ;; boot evil by default
-    (evil-mode 1))
+    ;;(evil-mode 1))
+	)
   :config
   (progn
     (setq evil-emacs-state-cursor '("red" box))
