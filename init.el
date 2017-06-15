@@ -113,9 +113,7 @@
 
 (global-set-key (kbd "C-x M-r") 'bjm/ivy-dired-recent-dirs)
 
-;; Split left and right
-(setq split-height-threshold nil)
-(setq split-width-threshold 0)
+
 
 ;; remember cursor position
 (if (version< emacs-version "25.0")
@@ -163,6 +161,7 @@
   :init (setq markdown-command "pandoc")
   :config
   (progn
+	(setq markdown-split-window-direction 'right)
 	(setq markdown-enable-math t)
         (defun my-mmm-markdown-auto-class (lang &optional submode)
   "Define a mmm-mode class for LANG in `markdown-mode' using SUBMODE.
@@ -197,6 +196,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     )
 
   )
+
 
 (use-package mmm-mode
   :ensure t
@@ -1038,37 +1038,35 @@ If SUBMODE is not provided, use `LANG-mode' by default."
              "* %?\nEntered on %U\n  "))
 )
 
-;;;;(use-package org-ref
-;;  :ensure t
-;;  :config
-;;  (progn
-;;	(add-hook 'org-mode-hook 'org-ref)
-;;	(setq org-ref-notes-directory "~/reading"
-;;		  org-ref-bibliography-notes "~/reading/index.org"
-;;		  org-ref-default-bibliography '("~/reading/index.bib")
-;;		  org-ref-pdf-directory "~reading/lib/"
-;;		 )
-;;	)
- ; )
+(use-package org-ref
+  :ensure t
+  :config
+  (progn
+;	(add-hook 'org-mode-hook 'org-ref)
+	(setq org-ref-notes-directory "~/References"
+		  org-ref-bibliography-notes "~/References/index.org"
+		  org-ref-default-bibliography '("~/References/index.bib")
+		  org-ref-pdf-directory "~/References/pdfs/"
+		 )
+	)
+ )
 
-;;(use-package helm-bibtex
-;;  :ensure t
-;;  :config
-;;  (progn
-;;	
-;;	(setq helm-bibtex-bibliography "~/reading/index.bib" ;; where your references are stored
-;;		  helm-bibtex-library-path "~/reading/lib/" ;; where your pdfs etc are stored
-;		  helm-bibtex-notes-path "~/reading/index.org" ;; where your notes are stored
-;		  bibtex-completion-bibliography "~/reading/index.bib" ;; writing completion
-;		  bibtex-completion-notes-path "~/reading/index.org"
-;		  bibtex-completion-library-path "~/reading/lib"
-;		  )
-;	(setq bibtex-completion-pdf-open-function
- ; (lambda (fpath)
-;    (start-process "open" "*open*" "open" fpath)))
-;
-;	)
-;  )
+(use-package helm-bibtex
+  :ensure t
+  :config
+  (progn
+	
+	(setq helm-bibtex-bibliography "~/References/index.bib" ;; where your references are stored
+		  helm-bibtex-library-path "~/References/lib/" ;; where your pdfs etc are stored
+	  helm-bibtex-notes-path "~/References/index.org" ;; where your notes are stored
+		  bibtex-completion-bibliography "~/References/index.bib" ;; writing completion
+		  bibtex-completion-notes-path "~/References/index.org"
+		  bibtex-completion-library-path "~/References/lib"
+		  )
+	
+	)
+  )
+
 
 
 ;Org Clock 
