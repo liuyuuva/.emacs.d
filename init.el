@@ -296,10 +296,13 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 ("M-h q" . helm-swoop-back-to-last-point)
 ))
 (global-set-key (kbd "C-x C-b") 'buffer-menu) ; this is my preferred buffer list behavior over helm. this is actually what i had been using before helm. not list-buffers in fact, was buffer-menu
+
+
 (use-package helm-descbinds
   :defer t
   :bind (("C-h b" . helm-descbinds)
          ("C-h w" . helm-descbinds)))
+
 (use-package projectile
   :ensure t
   :config
@@ -355,11 +358,10 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     ;; This has to be before we invoke evil-mode due to:
     ;; https://github.com/cofi/evil-leader/issues/10
     (use-package evil-leader
-      :init ;(global-evil-leader-mode)
       :config
       (progn
         (setq evil-leader/in-all-states t)
-	(setq evil-leader/leader ",")
+        (setq evil-leader/set-leader "<SPC>")
         ;; keyboard shortcuts
         (evil-leader/set-key
 	  "b" 'helm-buffer-list
@@ -375,6 +377,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	  "w" 'save-buffer
 	  "y" 'helm-show-kill-ring
 	  "<SPC>" 'ace-jump-line-mode
+      "e"   'flycheck-list-errors
 
 	 )
 	)
@@ -417,6 +420,10 @@ If SUBMODE is not provided, use `LANG-mode' by default."
                         (fundamental-mode . emacs)))
       (evil-set-initial-state `,(car mode-map) `,(cdr mode-map))
       )
+    (evil-define-key 'normal flycheck-mode-map (kbd "]e") 'flycheck-next-error)
+    (evil-define-key 'normal flycheck-mode-map (kbd "[e") 'flycheck-previous-error)
+    
+
     )
   )
 
@@ -621,22 +628,45 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     )
   )
 
-	 (use-package flycheck
+(use-package flycheck
 	   :ensure t
-	   :config
-	   (progn
+       :bind (
+              ("M-g M-n" . flycheck-next-error)
+              ("M-g M-p" . flycheck-previous-error)
+              ("M-g M-l" . flycheck-list-errors)
+              )
+       :init
+       (require 'flycheck)
+       (setq flycheck-indication-mode 'right-fringe
+             flycheck-check-syntax-automatically '(save mode-enabled))
+       :config
+       (progn    
+
 		 (add-hook 'c++-mode-hook 'flycheck-mode)
 		 (add-hook 'c-mode-hook 'flycheck-mode)
-		 )
-	   )
 
-      (defun setup-c-clang-options ()
+       )
+       )
+
+(define-key flycheck-mode-map (kbd "<F7>") #'flycheck-list-errors)
+(define-key flycheck-mode-map (kbd "<F8>")  #'flycheck-previous-error)
+(define-key flycheck-mode-map (kbd "<F9>") #'flycheck-next-error)
+        
+
+(use-package helm-flycheck
+  :ensure t
+  :config
+  (eval-after-load 'flycheck
+    '(define-key flycheck-mode-map (kbd "M-h c") 'helm-flycheck)))
+
+(defun setup-c-clang-options ()
 	(setq irony-additional-clang-options (quote ("-std=c11"))))
 
-      (defun setup-cpp-clang-options ()
-	(setq irony-additional-clang-options (quote ("-std=c++14" "-stdlib=libc++"))))
+(defun setup-cpp-clang-options ()
+(setq irony-additional-clang-options (quote ("-std=c++14" "-stdlib=libc++")))
+)
 
-     (use-package irony
+(use-package irony
 	:ensure t
 	:init
 	(progn
@@ -653,7 +683,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	
 
 	 
-	 (use-package company-irony
+(use-package company-irony
 	   :ensure t
 	   :config
 	   (progn
@@ -664,7 +694,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 
 	 
 
-  (use-package flycheck-irony
+(use-package flycheck-irony
 	:ensure t
 	:config
 	(eval-after-load 'flycheck
