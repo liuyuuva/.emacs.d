@@ -756,7 +756,14 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;;      (ac-config-default))
 ;;    )
 
+(use-package auto-complete
+  :ensure t
+  )
+(defun my-org-ac-hook ()
+  (auto-complete-mode 1))
 
+(add-hook 'org-mode-hook 'my-org-ac-hook)
+  
 
 ;; (define-globalized-minor-mode real-global-auto-complete-mode
 ;;   auto-complete-mode (lambda ()
