@@ -353,7 +353,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     ;; if we don't have this evil overwrites the cursor color
     (setq evil-default-cursor t)
     (setq evil-toggle-key "C-`")
-    ;; leader shortcuts
+	(evil-mode 1)
+	;; leader shortcuts
 
     ;; This has to be before we invoke evil-mode due to:
     ;; https://github.com/cofi/evil-leader/issues/10
