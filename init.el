@@ -330,7 +330,12 @@ If SUBMODE is not provided, use `LANG-mode' by default."
    :config
    (progn
      (global-set-key (kbd "M-g M-c") 'avy-goto-char)
-     (global-set-key (kbd "M-g M-SPC") 'avy-goto-line)))
+     (global-set-key (kbd "M-g f") 'avy-goto-line)
+	 (global-set-key (kbd "C-:") 'avy-goto-char-timer)
+	 (global-set-key (kbd "M-g w") 'avy-goto-word-1)
+	 )
+   )
+
 
 (use-package ace-jump-mode
   :ensure t
