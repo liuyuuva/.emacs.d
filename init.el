@@ -1038,37 +1038,37 @@ If SUBMODE is not provided, use `LANG-mode' by default."
              "* %?\nEntered on %U\n  "))
 )
 
-(use-package org-ref
-  :ensure t
-  :config
-  (progn
-	(add-hook 'org-mode-hook 'org-ref)
-	(setq org-ref-notes-directory "~/reading"
-		  org-ref-bibliography-notes "~/reading/index.org"
-		  org-ref-default-bibliography '("~/reading/index.bib")
-		  org-ref-pdf-directory "~reading/lib/"
-		 )
-	)
-  )
+;;;;(use-package org-ref
+;;  :ensure t
+;;  :config
+;;  (progn
+;;	(add-hook 'org-mode-hook 'org-ref)
+;;	(setq org-ref-notes-directory "~/reading"
+;;		  org-ref-bibliography-notes "~/reading/index.org"
+;;		  org-ref-default-bibliography '("~/reading/index.bib")
+;;		  org-ref-pdf-directory "~reading/lib/"
+;;		 )
+;;	)
+ ; )
 
-(use-package helm-bibtex
-  :ensure t
-  :config
-  (progn
-	
-	(setq helm-bibtex-bibliography "~/reading/index.bib" ;; where your references are stored
-		  helm-bibtex-library-path "~/reading/lib/" ;; where your pdfs etc are stored
-		  helm-bibtex-notes-path "~/reading/index.org" ;; where your notes are stored
-		  bibtex-completion-bibliography "~/reading/index.bib" ;; writing completion
-		  bibtex-completion-notes-path "~/reading/index.org"
-		  bibtex-completion-library-path "~/reading/lib"
-		  )
-	(setq bibtex-completion-pdf-open-function
-  (lambda (fpath)
-    (start-process "open" "*open*" "open" fpath)))
-
-	)
-  )
+;;(use-package helm-bibtex
+;;  :ensure t
+;;  :config
+;;  (progn
+;;	
+;;	(setq helm-bibtex-bibliography "~/reading/index.bib" ;; where your references are stored
+;;		  helm-bibtex-library-path "~/reading/lib/" ;; where your pdfs etc are stored
+;		  helm-bibtex-notes-path "~/reading/index.org" ;; where your notes are stored
+;		  bibtex-completion-bibliography "~/reading/index.bib" ;; writing completion
+;		  bibtex-completion-notes-path "~/reading/index.org"
+;		  bibtex-completion-library-path "~/reading/lib"
+;		  )
+;	(setq bibtex-completion-pdf-open-function
+ ; (lambda (fpath)
+;    (start-process "open" "*open*" "open" fpath)))
+;
+;	)
+;  )
 
 
 ;Org Clock 
