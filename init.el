@@ -249,7 +249,26 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     (define-key global-map (kbd "M-P") 'highlight-symbol-prev)
     )
   )
-  
+
+(use-package ivy
+  :ensure t
+  :init
+  (progn
+	(ivy-mode 1)
+	(global-unset-key (kbd "M-i"))
+	(setq ivy-use-virtual-buffers t)
+	(setq enable-recursive-minibuffers t)
+	)
+  :bind (("M-i s" . swiper)
+		 ("M-i r" . ivy-resume)
+		 ("M-i x" . counsel-M-x)
+		 ("M-i f" . counsel-find-file)
+		 ("M-i g" . counsel-git)
+		 ("M-i l" . counsel-locate)
+		 )
+  )
+				
+
 (use-package helm
   :diminish helm
   :ensure t
