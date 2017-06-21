@@ -7,7 +7,7 @@
 	(setq default-directory "~/")
 	(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
 	(setq ispell-dictionary "~/Softwares/Aspell/dict/")
-	(setq myprojectfile "~/Work/Notes_Planning/Projects_2017.org")
+	(setq myprojectfile "~/Notes/Projects_2017.org")
 	(load-file "~/.emacs.d/init_proxy.el")
 	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 	(add-to-list 'exec-path "c:/llvm/bin");; added for clang
@@ -1016,7 +1016,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (setq org-icalendar-use-scheduled '(todo-start event-if-todo))
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archived Tasks")
-;(setq org-combined-agenda-icalendar-file "C:/Users/yliu193/Work/Notes_Planning/combined_calendar_export.ics")
 (setq org-startup-indented 1)
 (setq org-tags-column -100)
 (setq org-icalendar-include-todo t) 
@@ -1120,7 +1119,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (defun open-notes ()
    (interactive)
-   (find-file "C:/Users/yliu193/Work/Notes_Planning/Notes.org")
+   (find-file "C:/Users/yliu193/Notes/Notes.org")
  )
 
 (defun open-projects ()
