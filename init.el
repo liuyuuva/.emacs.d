@@ -127,6 +127,7 @@
 
 (use-package bookmark
   :ensure t
+  :defer t
   :config
   (progn
     (global-unset-key (kbd "<C-f1>"))
@@ -136,6 +137,8 @@
     ))
 
 (use-package bm
+  :ensure t
+  :defer t
   :config
   (progn
     (global-set-key (kbd "<C-f2>") 'bm-toggle)
@@ -145,6 +148,8 @@
   )
 
 (use-package neotree
+  :ensure t
+  :defer t
   :config
   (progn
     (global-set-key (kbd "<C-f12>") 'neotree-toggle)
@@ -154,6 +159,7 @@
 
 (use-package markdown-mode
   :ensure t
+  :defer t
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
@@ -200,6 +206,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package mmm-mode
   :ensure t
+  :defer t
   :config
   (progn
     (setq mmm-global-mode 'maybe)
@@ -222,6 +229,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package pandoc-mode
   :ensure t
+  :defer t
   :config
   (progn
     (add-hook 'markdown-mode-hook 'pandoc-mode)
@@ -231,6 +239,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package which-key
   :ensure t
+  :defer t
   :init
   (which-key-mode)
   :config
@@ -241,6 +250,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 
 (use-package highlight-symbol
+  :defer t
   :ensure t
   :config
   (progn
@@ -251,6 +261,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   )
 
 (use-package ivy
+  :defer t
   :ensure t
   :init
   (progn
@@ -271,6 +282,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package helm
   :diminish helm
+  :defer t
   :ensure t
   :init
   (progn
@@ -324,6 +336,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package projectile
   :ensure t
+  :defer t
   :config
   (progn
     (projectile-mode)
@@ -332,6 +345,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package helm-projectile
   :ensure t
+  :defer t
   :config
   (progn
     (helm-projectile-on)
@@ -346,6 +360,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
  (use-package avy
    :ensure t
+   :defer t
    :config
    (progn
      (global-set-key (kbd "M-g M-c") 'avy-goto-char)
@@ -358,6 +373,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package ace-jump-mode
   :ensure t
+  :defer t
   :config
   (progn
     (global-set-key (kbd "M-s") 'ace-jump-char-mode)
@@ -367,11 +383,13 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package ace-window
   :ensure t
+  :defer t
   :config (global-set-key (kbd "M-p") 'ace-window))
 
 
 (use-package evil
   :ensure t
+  :defer t
   :init
   (progn
     ;; if we don't have this evil overwrites the cursor color
@@ -454,6 +472,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   )
 
 (use-package ido
+  :ensure t
+  :defer t
   :init (progn (ido-mode 1)
                (ido-everywhere 1))
   :config
@@ -469,6 +489,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     (add-to-list 'ido-ignore-files "appspec.yml")))
 
 (use-package anzu
+  :defer t
   :commands (isearch-foward isearch-backward)
   :config
   (progn
@@ -557,11 +578,13 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package pyvenv
   :ensure t
+  :defer t
   )
 
 
 (use-package yasnippet
   :ensure t
+  :defer t
   :config
   (yas-reload-all)
   (add-hook 'prog-mode-hook #'yas-minor-mode)
@@ -595,6 +618,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package cc-mode
   :ensure t
+  :defer t
   :config
   (progn
     (use-package google-c-style
@@ -619,6 +643,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package company
   :ensure t
+  :defer t
   :config
   (progn
     (add-hook 'after-init-hook 'global-company-mode)
@@ -647,6 +672,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package company-c-headers
   :ensure t
+  :defer t
   :config
   (progn
     
@@ -681,6 +707,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package helm-flycheck
   :ensure t
+  :defer t
   :config
   (eval-after-load 'flycheck
     '(define-key flycheck-mode-map (kbd "M-h c") 'helm-flycheck)))
@@ -714,8 +741,9 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   (setq irony-server-w32-pipe-buffer-size (* 64 1024)))
 	 
 (use-package company-irony
-	   :ensure t
-	   :config
+  :ensure t
+  :defer t
+  :config
 	   (progn
 		(eval-after-load 'company '(add-to-list 'company-backends 'company-irony))
 		(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
@@ -725,7 +753,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 
 
 (use-package flycheck-irony
-	:ensure t
+  :ensure t
+  :defer t
 	:config
 	(eval-after-load 'flycheck
 	  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
@@ -754,6 +783,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package company-quickhelp
   :ensure t
+  :defer t
   :config
   (company-quickhelp-mode 1)
   ;;(define-key company-quickhelp-mode-map (kbd "M-h") nil) ;unset this key in company-quickhelp-mode so that it does not conflict with helm mode
@@ -762,7 +792,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
   
 (use-package company-jedi
- 
+ :defer t
   :ensure t)
 
 
@@ -780,6 +810,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;;    )
 
 (use-package auto-complete
+  :defer t
   :ensure t
   )
 (defun my-org-ac-hook ()
@@ -803,6 +834,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package ispell
   :ensure t
+  :defer t
   :config
   (progn
     (setq-default ispell-program-name "aspell")
@@ -838,6 +870,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package imenu
   :ensure t
+  :defer t
   :config
   (progn
     (setq imenu-auto-rescan t)
@@ -851,6 +884,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package linum
   :ensure t
+  :defer t
   :config
   (progn
     (global-linum-mode 1)
@@ -870,6 +904,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
  
 (use-package helm-gtags
   :ensure t
+  :defer t
   :init
   (progn
     (setq
