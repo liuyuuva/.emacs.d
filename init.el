@@ -206,7 +206,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package mmm-mode
   :ensure t
-  :defer t
   :config
   (progn
     (setq mmm-global-mode 'maybe)
@@ -250,7 +249,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 
 (use-package highlight-symbol
-  :defer t
   :ensure t
   :config
   (progn
@@ -336,7 +334,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package projectile
   :ensure t
-  :defer t
   :config
   (progn
     (projectile-mode)
@@ -345,7 +342,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package helm-projectile
   :ensure t
-  :defer t
   :config
   (progn
     (helm-projectile-on)
@@ -360,31 +356,31 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
  (use-package avy
    :ensure t
-   :defer t
+
    :config
    (progn
-     (global-set-key (kbd "M-g M-c") 'avy-goto-char)
-     (global-set-key (kbd "M-g f") 'avy-goto-line)
-	 (global-set-key (kbd "C-:") 'avy-goto-char-timer)
+     (global-set-key (kbd "M-g c") 'avy-goto-char)
+     (global-set-key (kbd "S-SPC") 'avy-goto-line)
+	 (global-set-key (kbd "M-s") 'avy-goto-char-timer)
 	 (global-set-key (kbd "M-g w") 'avy-goto-word-1)
 	 )
    )
 
 
-(use-package ace-jump-mode
-  :ensure t
-  :defer t
-  :config
-  (progn
-    (global-set-key (kbd "M-s") 'ace-jump-char-mode)
-    (global-set-key (kbd "S-SPC") 'ace-jump-line-mode)
-    ))
+;; (use-package ace-jump-mode
+;;   :ensure t
+
+;;   :config
+;;   (progn
+;;     (global-set-key (kbd "M-s") 'ace-jump-char-mode)
+;;     (global-set-key (kbd "S-SPC") 'ace-jump-line-mode)
+;;     ))
 
 
-(use-package ace-window
-  :ensure t
-  :defer t
-  :config (global-set-key (kbd "M-p") 'ace-window))
+;; (use-package ace-window
+;;   :ensure t
+;;   :defer t
+;;   :config (global-set-key (kbd "M-p") 'ace-window))
 
 
 (use-package evil
@@ -525,13 +521,14 @@ If SUBMODE is not provided, use `LANG-mode' by default."
      (setq undo-tree-visualizer-timestamps t)
      (setq undo-tree-visualizer-diff t)))
 
-(use-package guide-key
-  :defer t
-  :diminish guide-key-mode
-  :config
-  (progn
-  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
-  (guide-key-mode 1)))  ; Enable guide-key-mode
+;; (use-package guide-key
+;;   :ensure t
+;;   :defer t
+;;   :diminish guide-key-mode
+;;   :config
+;;   (progn
+;;   (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
+;;   (guide-key-mode 1)))  ; Enable guide-key-mode
 
 
 (use-package python
@@ -584,7 +581,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package yasnippet
   :ensure t
-  :defer t
+
   :config
   (yas-reload-all)
   (add-hook 'prog-mode-hook #'yas-minor-mode)
@@ -643,7 +640,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package company
   :ensure t
-  :defer t
+
   :config
   (progn
     (add-hook 'after-init-hook 'global-company-mode)
@@ -783,7 +780,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package company-quickhelp
   :ensure t
-  :defer t
+
   :config
   (company-quickhelp-mode 1)
   ;;(define-key company-quickhelp-mode-map (kbd "M-h") nil) ;unset this key in company-quickhelp-mode so that it does not conflict with helm mode
@@ -792,7 +789,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
   
 (use-package company-jedi
- :defer t
+
   :ensure t)
 
 
@@ -884,7 +881,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package linum
   :ensure t
-  :defer t
+
   :config
   (progn
     (global-linum-mode 1)
@@ -904,7 +901,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
  
 (use-package helm-gtags
   :ensure t
-  :defer t
   :init
   (progn
     (setq
@@ -1060,6 +1056,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (org-agenda-to-appt)
 
 (setq org-latex-create-formula-image-program 'dvipng)
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 (setq default-major-mode 'org-mode)
 
 (setq org-use-speed-commands 1)
