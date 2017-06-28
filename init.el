@@ -628,6 +628,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (add-hook 'c-mode-common-hook
 	  (lambda()
 	    (local-set-key (kbd "C-c o") 'ff-find-other-file)
+		
 	    )
 	  )
 
@@ -654,11 +655,17 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;    (define-key company-active-map 'company-complete-common nil)
 ;    (define-key company-active-map "C-'" 'company-complete-common)
 ;    (define-key c-mode-map  [kbd "F5"] 'company-complete-common)
-;    (define-key c++-mode-map  [kbd "F5"] 'company-complete-common)
+;    (define-key cmode-map  [kbd "F5"] 'company-complete-common)
   
     )
   )
-(global-set-key (kbd "C-'") 'company-complete)
+(global-set-key (kbd "C-'") 'company-complete-common)
+(add-hook 'c-mode-common-hook
+		  (lambda()
+			(local-set-key (kbd "<F5>") 'company-complete-common)
+			)
+		  )
+
 
 (use-package company-c-headers
   :ensure t
