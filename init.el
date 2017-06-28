@@ -57,7 +57,6 @@
 
 
 (setq-default tab-width 4) ; or any other preferred value
-(setq-default c-basic-offset 4)
 ;(defvaralias 'c-basic-offset 'tab-width)
 
 ;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
@@ -618,17 +617,11 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   :defer t
   :config
   (progn
-    (use-package google-c-style
-      :ensure t
-      :init
-      (progn
-	(add-hook 'c-mode-common-hook
-		  (lambda ()
-		    (google-set-c-style)
-		    (google-make-newline-indent))))
-      :config
-      (c-set-offset 'statement-case-open 0)))
+	(setq c-default-style "bsd" c-basic-offset 4)
+	)
   )
+
+	 
 ;; Some bindings for hi-lock mode that will be very convenient for C code reading
 (global-set-key (kbd "C-.") 'highlight-symbol-at-point)
 (global-set-key (kbd "C->") 'highlight-phrase)
@@ -1058,6 +1051,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (setq org-latex-create-formula-image-program 'dvipng)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 (setq default-major-mode 'org-mode)
+
+(setq org-highlight-latex-and-related '(latex script entities))
 
 (setq org-use-speed-commands 1)
 
