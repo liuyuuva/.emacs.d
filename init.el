@@ -646,6 +646,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	  '(company-files          ; files & directory
 	    company-capf
 		company-irony
+		company-gtags
 	    )
 	  )
     
@@ -660,9 +661,10 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     )
   )
 (global-set-key (kbd "C-'") 'company-complete-common)
+
 (add-hook 'c-mode-common-hook
 		  (lambda()
-			(local-set-key (kbd "<F5>") 'company-complete-common)
+			(local-set-key (kbd "<f5>") 'company-complete-common)
 			)
 		  )
 
@@ -809,7 +811,19 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (use-package auto-complete
   :defer t
   :ensure t
+  :init
+  (progn
+	(auto-complete-mode t))
+  :bind
+  ( ("C-n" . ac-next)
+	("C-p" . ac-previous))
+  :config
+  (progn
+	(use-package auto-complete-config)
+	(ac-config-default))
+   
   )
+
 (defun my-org-ac-hook ()
   (auto-complete-mode 1))
 
