@@ -126,7 +126,6 @@
 
 (use-package bookmark
   :ensure t
-  :defer t
   :config
   (progn
     (global-unset-key (kbd "<C-f1>"))
@@ -137,7 +136,6 @@
 
 (use-package bm
   :ensure t
-  :defer t
   :config
   (progn
     (global-set-key (kbd "<C-f2>") 'bm-toggle)
