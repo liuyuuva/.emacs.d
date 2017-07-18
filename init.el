@@ -1693,12 +1693,22 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;;;;;;;;
 ;; Others
 ;;;;;;;;
+
 (global-set-key (kbd "C-c r") 'org-capture)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key (kbd "C-x z") 'repeat-complex-command)
 (global-set-key (kbd "C-z")  'set-mark-command)
 ;(global-set-key "\C-x\C-b" 'buffer-menu)
 (global-set-key (kbd "C-<backspace>") 'backward-kill-word)
+
+
+(global-set-key (kbd "M-<backspace>") (lambda ()
+								(interactive)
+								(kill-line 0)
+								(indent-according-to-mode)))
+
+
+
 (global-set-key (kbd "C-/") 'flyspell-check-previous-highlighted-word)
 (global-set-key (kbd "C-1") 'jump-back-local-mark) ;jump back mark in local mark ring
 (global-set-key (kbd "C-2") 'pop-global-mark) ; jump back to global mark ring
