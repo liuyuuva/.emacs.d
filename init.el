@@ -346,7 +346,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     )
   )
 
-(load-theme 'atom-dark t)  
+
 ;; (use-package color-theme
 ;;    :init (color-theme-initialize)
 ;;    :config (color-theme-vim-colors)
