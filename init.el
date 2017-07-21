@@ -313,7 +313,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
          ("M-h s" . helm-swoop)
          ("M-h y" . helm-yas-complete)
          ("M-h Y" . helm-yas-create-snippet-on-region)
-         ("M-h SPC" . helm-all-mark-rings)
+         ("M-h M" . helm-all-mark-rings)
 	 ("M-h b" . helm-bookmarks)
 	 ("M-h j" . ace-jump-helm-line)
 	 ("M-h i" . helm-imenu)
@@ -323,6 +323,18 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 ("M-h q" . helm-swoop-back-to-last-point)
 ))
 (global-set-key (kbd "C-x C-b") 'buffer-menu) ; this is my preferred buffer list behavior over helm. this is actually what i had been using before helm. not list-buffers in fact, was buffer-menu
+
+(defun whack-whitespace (arg)
+      "Delete all white space from point to the next word.  With prefix ARG
+    delete across newlines as well.  The only danger in this is that you
+    don't have to actually be at the end of a word to make it work.  It
+    skips over to the next whitespace and then whacks it all to the next
+    word."
+      (interactive "P")
+      (let ((regexp (if arg "[ \t\n]+" "[ \t]+")))
+        (re-search-forward regexp nil t)
+        (replace-match "" nil nil)))
+(global-set-key (kbd "M-h SPC") 'whack-whitespace)
 
 
 (use-package helm-descbinds
@@ -1734,13 +1746,3 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
     (goto-char (point-min))
     (replace-string "\C-m\C-j" "\C-j")))
 
-(defun whack-whitespace (arg)
-      "Delete all white space from point to the next word.  With prefix ARG
-    delete across newlines as well.  The only danger in this is that you
-    don't have to actually be at the end of a word to make it work.  It
-    skips over to the next whitespace and then whacks it all to the next
-    word."
-      (interactive "P")
-      (let ((regexp (if arg "[ \t\n]+" "[ \t]+")))
-        (re-search-forward regexp nil t)
-        (replace-match "" nil nil)))
