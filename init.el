@@ -1098,34 +1098,34 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (setq org-icalendar-include-todo t) 
 
 (setq org-todo-keywords
-    '((sequence "TODO(t)" "WAITING(w@)"  "REPORT(r)" "NEXTACTION(n)"  "INPROGRESS(p)" "TOFILE(f)"  "|" "DONE(d!)" "CANCELED(c@/i)" "MEMO(m)" "LOG(l)" )
-   ))
-	 
+	  '((sequence "TODO(t)" "WAITING(w@)"  "REPORT(r)" "NEXTACTION(n)"  "INPROGRESS(p)" "TOFILE(f)"  "|" "DONE(d!)" "CANCELED(c@/i)" "MEMO(m)" "LOG(l)" )
+		))
+
 (setq org-todo-keyword-faces
-    '(("TODO" . org-warning) ("INPROGRESS" . "orange") ("MEMO" . "blue") ("LOG" . "blue") ("TOFILE" . org-warning) ("REPORT" . "cyan") ("NEXTACTION" . org-warning)
-    ("CANCELED" . (:foreground "blue" :weight bold))
-	("DONE" . org-done) ("WAITING" . org-warning)))
+	  '(("TODO" . org-warning) ("INPROGRESS" . "orange") ("MEMO" . "blue") ("LOG" . "blue") ("TOFILE" . org-warning) ("REPORT" . "cyan") ("NEXTACTION" . org-warning)
+		("CANCELED" . (:foreground "blue" :weight bold))
+		("DONE" . org-done) ("WAITING" . org-warning)))
 
 
 
- (add-to-list 'org-emphasis-alist
- 	     '("*"  (:foreground "red")
- 	       ))
+(add-to-list 'org-emphasis-alist
+			 '("*"  (:foreground "red")
+			   ))
 
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
-;(add-hook 'org-mode-hook 'toggle_truncate_lines)
+										;(add-hook 'org-mode-hook 'toggle_truncate_lines)
 
- 
+
 ;;;;Org Capture
 (setq org-capture-templates
       '(("t" "Todo" entry (file myprojectfile )
-             "* TODO %?\n  ")
+		 "* TODO %?\n  ")
         ("n" "Notes" entry (file myprojectfile)
-             "* %?\nEntered on %U\n  "))
-)
+		 "* %?\nEntered on %U\n  "))
+	  )
 
-;(use-package org-ref
+										;(use-package org-ref
 ;;   :ensure t
 ;;   :config
 ;;   (progn
@@ -1142,7 +1142,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;;   :ensure t
 ;;   :config
 ;;   (progn
-	
+
 ;; 	(setq helm-bibtex-bibliography "~/References/index.bib" ;; where your references are stored
 ;; 		  helm-bibtex-library-path "~/References/lib/" ;; where your pdfs etc are stored
 ;; 	  helm-bibtex-notes-path "~/References/index.org" ;; where your notes are stored
@@ -1150,13 +1150,13 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;; 		  bibtex-completion-notes-path "~/References/index.org"
 ;; 		  bibtex-completion-library-path "~/References/lib"
 ;; 		  )
-	
+
 ;; 	)
 ;;   )
 
 
 
-;Org Clock 
+										;Org Clock 
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 (setq org-clock-out-remove-zero-time-clocks t)
@@ -1167,7 +1167,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (setq org-clock-history-length 23)
 (setq org-clock-in-resume t)
-;(setq org-clock-persist t)
+										;(setq org-clock-persist t)
 (setq org-clock-persist-query-resume t)
 (setq org-clock-auto-clock-resolution #'when-no-clock-is-running)
 (setq org-clock-report-include-clocking-task t)
@@ -1194,25 +1194,25 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil)))))
 
 (setq org-agenda-clockreport-parameter-plist 
- '(:fileskip0 t :link t :maxlevel 2 :formula "$5=($3+$4)*(60/25);t"))
+	  '(:fileskip0 t :link t :maxlevel 2 :formula "$5=($3+$4)*(60/25);t"))
 
 
 (setq org-log-done 'time)
 
 (setq org-refile-targets 
-	'((nil :maxlevel . 6 )
-	))
+	  '((nil :maxlevel . 6 )
+		))
 
 
 (defun open-notes ()
-   (interactive)
-   (find-file "C:/Users/yliu193/Notes/Notes.org")
- )
+  (interactive)
+  (find-file "C:/Users/yliu193/Notes/Notes.org")
+  )
 
 (defun open-projects ()
-   (interactive)
-   (find-file myprojectfile)
- )
+  (interactive)
+  (find-file myprojectfile)
+  )
 
 
 (defun open-notes-projects ()
@@ -1221,27 +1221,27 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   (open-projects)
   (other-window 1)
   (open-notes)
-)
+  )
 
 (defun mark-tofile ()
   (interactive)
   (org-todo "TOFILE")
-)
+  )
 
 (defun mark-nextaction ()
   (interactive)
   (org-todo "NEXTACTION")
-)
+  )
 
 (defun mark-todo ()
   (interactive)
   (org-todo "TODO")
-)
+  )
 
 (defun mark-done ()
   (interactive)
   (org-todo "DONE")
-)
+  )
 
 
 (defun mark-memo ()
@@ -1258,26 +1258,26 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (defun mark-waiting ()
   (interactive)
   (org-todo "WAITING")
-)
+  )
 
 (defun mark-canceled ()
   (interactive)
   (org-todo "CANCELED")
-)
+  )
 
 (defun mark-report ()
   (interactive)
   (org-todo "REPORT")
-)
+  )
 
 (defun mark-inprogress ()
   (interactive)
   (org-todo "INPROGRESS")
   )
- (defun show-nextaction ()
-   (interactive)
-   (setq current-prefix-arg 4)
-   (call-interactively 'org-show-todo-tree))
+(defun show-nextaction ()
+  (interactive)
+  (setq current-prefix-arg 4)
+  (call-interactively 'org-show-todo-tree))
 
 (defun org-set-line-checkbox (arg)
   (interactive "P")
@@ -1298,11 +1298,11 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   (or (re-search-backward "^\* " nil t)
       (goto-char (point-min))))
 
-;(defun show-nextaction-agenda ()
-;  (interactive)
-;  (setq 
-;  (org-agenda "N")
-;)
+										;(defun show-nextaction-agenda ()
+										;  (interactive)
+										;  (setq 
+										;  (org-agenda "N")
+										;)
 
 ;; (defun show-nextaction 
 ;;       (let ((case-fold-search nil)
@@ -1379,13 +1379,13 @@ criteria can be provided via the optional match-string argument "
          (for-month (or month (calendar-extract-month today)))
          (for-year  (or year  (calendar-extract-year today))))
     (org-tags-view nil 
-          (concat
-           match-string
-           (format "+CLOSED>=\"[%d-%02d-01]\"" 
-                   for-year for-month)
-           (format "+CLOSED<=\"[%d-%02d-%02d]\"" 
-                   for-year for-month 
-                   (calendar-last-day-of-month for-month for-year))))))
+				   (concat
+					match-string
+					(format "+CLOSED>=\"[%d-%02d-01]\"" 
+							for-year for-month)
+					(format "+CLOSED<=\"[%d-%02d-%02d]\"" 
+							for-year for-month 
+							(calendar-last-day-of-month for-month for-year))))))
 
 (defun jtc-tasks-last-month ()
   "Produces an org agenda tags view list of all the tasks completed
@@ -1394,20 +1394,20 @@ last month."
   (let* ((today (calendar-current-date))
          (for-month (calendar-extract-month today))
          (for-year  (calendar-extract-year today)))
-       (calendar-increment-month for-month for-year -1)
-       (jtc-org-tasks-closed-in-month 
-        for-month for-year "TODO=\"DONE\"")))
+	(calendar-increment-month for-month for-year -1)
+	(jtc-org-tasks-closed-in-month 
+	 for-month for-year "TODO=\"DONE\"")))
 
 (setq org-agenda-custom-commands
-           '(("w" todo "WAITING")
-	     ("m" todo "MEMO")
-	     ("l" todo "LOG")
-             ("n" todo "NEXTACTION")
-	     ("t" todo "TODO")
-	     ("i" todo "INPROGRESS")
-	     ("F" "Tasks CLOSED Last Week" tags  (concat "CLOSED>=\"<-1w>\""))
-	      ("f" "Tasks DONE Last Week" tags (concat "TODO=\"DONE\"" "+CLOSED>=\"<-1w>\""))
-	   ("S" "Tasks CLOSED Last Month" tags (concat "CLOSED>=\"<-1m>\"")) ))
+	  '(("w" todo "WAITING")
+		("m" todo "MEMO")
+		("l" todo "LOG")
+		("n" todo "NEXTACTION")
+		("t" todo "TODO")
+		("i" todo "INPROGRESS")
+		("F" "Tasks CLOSED Last Week" tags  (concat "CLOSED>=\"<-1w>\""))
+		("f" "Tasks DONE Last Week" tags (concat "TODO=\"DONE\"" "+CLOSED>=\"<-1w>\""))
+		("S" "Tasks CLOSED Last Month" tags (concat "CLOSED>=\"<-1m>\"")) ))
 
 (setq org-agenda-start-with-follow-mode 1)
 
@@ -1422,18 +1422,18 @@ last month."
    (lisp . t)
    (sh . t)
    (matlab . t)
- ))
-   
+   ))
+
 (use-package ox-latex
   :defer t
   :config
   (add-to-list 'org-latex-classes
-             '("beamer"
-               "\\documentclass\[presentation\]\{beamer\}"
-               ("\\section\{%s\}" . "\\section*\{%s\}")
-               ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
-               ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}"))))
-  
+			   '("beamer"
+				 "\\documentclass\[presentation\]\{beamer\}"
+				 ("\\section\{%s\}" . "\\section*\{%s\}")
+				 ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
+				 ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}"))))
+
 ;; End of org setting
 
 (defun uniq-lines (beg end)
@@ -1463,9 +1463,9 @@ BEG and END (region to sort)."
 (setq TeX-parse-self t)
 
 (eval-after-load "tex"
-     '(add-to-list 'TeX-command-list
-		   '("ps2pdf" "ps2pdf %f" TeX-run-command nil t) t)
-     )
+  '(add-to-list 'TeX-command-list
+				'("ps2pdf" "ps2pdf %f" TeX-run-command nil t) t)
+  )
 
 (use-package preview
   :ensure auctex
@@ -1479,7 +1479,7 @@ BEG and END (region to sort)."
   )
 
 (add-hook 'LaTeX-mode-hook 'latex-preview-pane-mode) ;;enable preview pane with all latex files
- (add-hook 'auto-save-hook 'latex-preview-pane-update)
+(add-hook 'auto-save-hook 'latex-preview-pane-update)
 
 (setq TeX-source-specials-mode 1)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
@@ -1532,20 +1532,20 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (if (eq system-type 'windows-nt)
-      (eval-after-load 'matlab
-	'(progn
-	   (add-to-list
-	    'auto-mode-alist
-	    '("\\.m$" . matlab-mode))
-	   (setq matlab-indent-function t)
+	(eval-after-load 'matlab
+	  '(progn
+		 (add-to-list
+		  'auto-mode-alist
+		  '("\\.m$" . matlab-mode))
+		 (setq matlab-indent-function t)
 
-	  ; (add-hook 'matlab-mode 'auto-complete-mode)
-	   (add-hook 'matlab-mode-hook 'ace-jump-mode)
-	   (define-key matlab-mode-map (kbd "M-s") nil)
-	   (setq matlab-shell-command "c:\matlabshell\matlabshell.cmd")
-	   (setq matlab-shell-command-switches '())
-	   (setq matlab-shell-echoes nil)
-	   ))
+										; (add-hook 'matlab-mode 'auto-complete-mode)
+		 (add-hook 'matlab-mode-hook 'ace-jump-mode)
+		 (define-key matlab-mode-map (kbd "M-s") nil)
+		 (setq matlab-shell-command "c:\matlabshell\matlabshell.cmd")
+		 (setq matlab-shell-command-switches '())
+		 (setq matlab-shell-echoes nil)
+		 ))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1556,19 +1556,20 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (interactive)
   (setq current-prefix-arg 1)
   (call-interactively 'set-mark-command)
-)
+  )
 
 (defun jump-to-today-report ()
-	"call jump to bookmark function to go to today's clock table"
-	(interactive)
-	(bookmark-maybe-load-default-file)
-	
-	(bookmark-jump "ClockReportToday")
-	(message "Went to today's clock report."))
+  "call jump to bookmark function to go to today's clock table"
+  (interactive)
+  (bookmark-maybe-load-default-file)
+  
+  (bookmark-jump "ClockReportToday")
+  (message "Went to today's clock report."))
 
 (with-eval-after-load "org"
   (progn
-;    (add-hook 'org-mode-hook 'nolinum)
+	;; (add-hook 'org-mode-hook 'nolinum)
+	(add-hook 'org-mode-hook #'visual-line-mode)
     (define-key org-mode-map (kbd "<C-f1>") nil)
     (define-key org-mode-map (kbd "M-h") nil)
 	;;F1
