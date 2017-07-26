@@ -1187,6 +1187,16 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (advice-add 'org-clocktable-indent-string :override #'my-org-clocktable-indent-string)
 
+(use-package org-pomodoro
+  :ensure t
+  :commands (org-pomodoro)
+  :config
+  (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil)))))
+
+(setq org-agenda-clockreport-parameter-plist 
+ '(:fileskip0 t :link t :maxlevel 2 :formula "$5=($3+$4)*(60/25);t"))
+
+
 (setq org-log-done 'time)
 
 (setq org-refile-targets 
@@ -1609,6 +1619,11 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "<f9> x") 'org-clock-select-task)
 	(define-key org-mode-map (kbd "<f9> s") 'org-resolve-clocks)
 	(define-key org-mode-map (kbd "<f9> a") 'org-update-all-dblocks)
+
+	(define-key org-mode-map (kbd "<f9> p") 'org-pomodoro)
+	(define-key org-mode-map (kbd "<f9> k")	'org-pomodoro-kill)
+
+	
 	(define-key org-mode-map (kbd "C-<f12>") 'org-overview)
 	(define-key org-mode-map (kbd "M-<f12>") 'org-forward-same-level)
 	(define-key org-mode-map (kbd "S-<f12>") 'outline-next-visible-heading )
