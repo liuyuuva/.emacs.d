@@ -824,9 +824,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   :init
   (progn
 	(auto-complete-mode t))
-  :bind
-  ( ("C-n" . ac-next)
-	("C-p" . ac-previous))
   :config
   (progn
 	(use-package auto-complete-config)
