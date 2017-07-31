@@ -1642,7 +1642,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "<f9> t") 'jump-to-today-report)
 	
 	) )
-
+(add-hook 'org-agenda-mode-hook
+      (lambda()
+        (define-key org-agenda-mode-map
+          (kbd "RET") (lambda () (interactive) (org-agenda-switch-to t)))))
 ;;Global Key Bindings;;
 
 ;;;;;;;
