@@ -1646,6 +1646,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
       (lambda()
         (define-key org-agenda-mode-map
           (kbd "RET") (lambda () (interactive) (org-agenda-switch-to t)))))
+(setq org-hide-emphasis-markers t)
 ;;Global Key Bindings;;
 
 ;;;;;;;
