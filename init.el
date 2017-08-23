@@ -286,8 +286,10 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     (setq helm-candidate-number-limit 100)
     ;; From https://gist.github.com/antifuchs/9238468
     (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-          helm-input-idle-delay 0.01  ; this actually updates things
+          helm-input-idle-delay 0.1 ;0.01  ; this actually updates things
                                         ; reeeelatively quickly.
+		  helm-cycle-resume-delay 2
+		  helm-follow-input-idle-delay 1
           helm-yas-display-key-on-candidate t
           helm-quick-update t
           helm-M-x-requires-pattern nil
@@ -321,7 +323,10 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 ("M-h f" . helm-find-files)
 	 ("M-h p" . helm-projectile)
 	 ("M-h q" . helm-swoop-back-to-last-point)
-))
+	 ("M-h g" . helm-ag)
+	 )
+  )
+
 (global-set-key (kbd "C-x C-b") 'buffer-menu) ; this is my preferred buffer list behavior over helm. this is actually what i had been using before helm. not list-buffers in fact, was buffer-menu
 
 (defun whack-whitespace (arg)
@@ -1397,7 +1402,7 @@ last month."
 
 (setq org-agenda-custom-commands
 	  '(("w" todo "WAITING")
-		("m" todo "MEMO")
+		("o" todo "MEMO")
 		("l" todo "LOG")
 		("n" todo "NEXTACTION")
 		("t" todo "TODO")
