@@ -324,9 +324,22 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 ("M-h p" . helm-projectile)
 	 ("M-h q" . helm-swoop-back-to-last-point)
 	 ("M-h g" . helm-ag)
+	 ("M-h d" . helm-do-ag)
+	 ("M-h r" . helm-resume)
 	 )
   )
 
+
+(use-package helm-ag
+  :ensure t
+  :config
+  (progn
+	(setq helm-ag-fuzzy-match t
+		  helm-ag-use-temp-buffer t
+		  )
+	)
+  )
+	
 (global-set-key (kbd "C-x C-b") 'buffer-menu) ; this is my preferred buffer list behavior over helm. this is actually what i had been using before helm. not list-buffers in fact, was buffer-menu
 
 (defun whack-whitespace (arg)
@@ -1072,7 +1085,29 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 
 
+(defvar my-mode-line-buffer-line-count nil)
+(make-variable-buffer-local 'my-mode-line-buffer-line-count)
 
+(setq-default mode-line-format
+              '("  " mode-line-modified
+                (list 'line-number-mode "  ")
+                (:eval (when line-number-mode
+                         (let ((str "L%l"))
+                           (when (and (not (buffer-modified-p)) my-mode-line-buffer-line-count)
+                             (setq str (concat str "/" my-mode-line-buffer-line-count)))
+                           str)))
+                "  %p"
+                (list 'column-number-mode "  C%c")
+                "  " mode-line-buffer-identification
+                "  " mode-line-modes))
+
+(defun my-mode-line-count-lines ()
+  (setq my-mode-line-buffer-line-count (int-to-string (count-lines (point-min) (point-max)))))
+
+(add-hook 'find-file-hook 'my-mode-line-count-lines)
+(add-hook 'after-save-hook 'my-mode-line-count-lines)
+(add-hook 'after-revert-hook 'my-mode-line-count-lines)
+(add-hook 'dired-after-readin-hook 'my-mode-line-count-lines)
 
 
 
@@ -1533,22 +1568,34 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;; Matlab setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(if (eq system-type 'windows-nt)
-	(eval-after-load 'matlab
-	  '(progn
-		 (add-to-list
-		  'auto-mode-alist
-		  '("\\.m$" . matlab-mode))
-		 (setq matlab-indent-function t)
+;; (if (eq system-type 'windows-nt)
+;; 	(eval-after-load 'matlab
+;; 	  '(progn
+;; 		 (add-to-list
+;; 		  'auto-mode-alist
+;; 		  '("\\.m$" . matlab-mode))
+;; 		 (setq matlab-indent-function t)
 
-										; (add-hook 'matlab-mode 'auto-complete-mode)
-		 (add-hook 'matlab-mode-hook 'ace-jump-mode)
-		 (define-key matlab-mode-map (kbd "M-s") nil)
-		 (setq matlab-shell-command "c:\matlabshell\matlabshell.cmd")
-		 (setq matlab-shell-command-switches '())
-		 (setq matlab-shell-echoes nil)
-		 ))
-  )
+;; 										; (add-hook 'matlab-mode 'auto-complete-mode)
+;; 		 (add-hook 'matlab-mode-hook 'ace-jump-mode)
+;; 		 (define-key matlab-mode-map (kbd "M-s") nil)
+;; 		 (setq matlab-shell-command "c:\matlabshell\matlabshell.cmd")
+;; 		 (setq matlab-shell-command-switches '())
+;; 		 (setq matlab-shell-echoes nil)
+;; 		 ))
+;;   )
+										;
+;; Octave Mode
+
+(setq auto-mode-alist
+      (cons '("\\.m$" . octave-mode) auto-mode-alist))
+
+(add-hook 'octave-mode-hook
+          (lambda ()
+			(setq comment-start "% ")
+
+			)
+		  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings;
@@ -1746,6 +1793,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (global-set-key (kbd "C-/") 'flyspell-check-previous-highlighted-word)
 (global-set-key (kbd "C-1") 'jump-back-local-mark) ;jump back mark in local mark ring
 (global-set-key (kbd "C-2") 'pop-global-mark) ; jump back to global mark ring
+(global-set-key (kbd "C-0") (lambda () (interactive) (push-mark-command nil nil)));
+push-mark-
+;(global-set-key (kbd "C-0") (lambda() (interactive) (push-mark nil nil 1)))
 (global-set-key (kbd "C-+") (kbd "C-u C-_")) ; redo
 (global-set-key (kbd "C-c o") 'occur)
 
