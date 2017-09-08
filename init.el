@@ -1603,25 +1603,18 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(setq octave-send-echo-input t)
 	(setq octave-send-line-auto-forward t)
 	(setq octave-send-show-buffer t)
+	
 
-	(add-hook 'octave-mode-hook
-          (lambda ()
-			(setq comment-start "% ")
-            (auto-complete-mode 1)
 			)
 		  )
-	)
-  )
+(add-hook 'octave-mode-hook
+		  (lambda ()
+			(auto-complete-mode 1)
+			(setq comment-start "% ")
+			)
+		  )
 
-(use-package ac-octave
-  :ensure t
-  :config
-  (progn
-	(defun ac-octave-mode-setup ()
-	  (setq ac-sources '(ac-source-octave)))
-	(add-hook 'octave-mode-hook 'ac-octave-mode-setup)
-	)
-  )
+  
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings;
@@ -1740,7 +1733,13 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;;;;;;;
 ;; F3
 ;;;;;;;
+(defmacro defkbalias (old new)
+  `(define-key (current-global-map) ,new
+     (lookup-key (current-global-map) ,old)))
 
+;; now "C-x -" equals to "C-x 2"
+;;(defkbalias (kbd "C-x 2") (kbd "C-x -"))
+(defkbalias (kbd "C-x C-k") (kbd "C-<f3>")) ; use C-F3 as kmacro pefix
 
 
 ;;;;;;;
@@ -1749,6 +1748,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (global-set-key (kbd "M-<f4>") 'apply-macro-to-region-lines)
 (global-set-key (kbd "S-<f4>") 'run-infinite-macro)
+
 
 
 ;;;;;;;
@@ -1819,6 +1819,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (global-set-key (kbd "C-/") 'flyspell-check-previous-highlighted-word)
 (global-set-key (kbd "C-1") 'jump-back-local-mark) ;jump back mark in local mark ring
 (global-set-key (kbd "C-2") 'pop-global-mark) ; jump back to global mark ring
+
+
 
 (defun unpop-to-mark-command ()
   "Unpop off mark ring. Does nothing if mark ring is empty."
