@@ -323,7 +323,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 ("M-h f" . helm-find-files)
 	 ("M-h p" . helm-projectile)
 	 ("M-h q" . helm-swoop-back-to-last-point)
-	 ("M-h g" . helm-ag)
+	 ("M-h g" . rgrep)
 	 ("M-h d" . helm-do-ag)
 	 ("M-h r" . helm-resume)
 	 )
@@ -509,6 +509,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     (setq ido-create-new-buffer 'prompt)
     (setq ido-max-prospects 10)
     (setq ido-use-faces nil)
+	(setq ido-auto-merge-work-directories-length -1)
     (setq ido-file-extensions-order '(".org" ".c" ".tex" ".py" ".emacs" ".el" ".ini" ".cfg" ".cnf"))
     (add-to-list 'ido-ignore-files "appspec.yml")))
 
@@ -1461,16 +1462,29 @@ last month."
    (matlab . t)
    ))
 
-(use-package ox-latex
-  :defer t
-  :config
-  (add-to-list 'org-latex-classes
-			   '("beamer"
-				 "\\documentclass\[presentation\]\{beamer\}"
-				 ("\\section\{%s\}" . "\\section*\{%s\}")
-				 ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
-				 ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}"))))
+ (use-package ox-latex
+   :ensure nil
+   )
 
+ ;;   (add-to-list 'org-latex-classes
+ ;; 			   '("beamer"
+ ;; 				 "\\documentclass\[presentation\]\{beamer\}"
+ ;; 				 ("\\section\{%s\}" . "\\section*\{%s\}")
+ ;; 				 ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
+ ;; 				 ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}"))))
+
+
+ (use-package ox-beamer
+   :ensure nil
+   :config
+   (add-to-list 'org-latex-classes
+  			   '("beamer"
+  				 "\\documentclass\[dvipdfmx,presentation\]\{beamer\}"
+  				 ("\\section\{%s\}" . "\\section*\{%s\}")
+  				 ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
+  				 ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}"))))
+
+   
 ;; End of org setting
 
 (defun uniq-lines (beg end)
@@ -1515,8 +1529,8 @@ BEG and END (region to sort)."
     )
   )
 
-(add-hook 'LaTeX-mode-hook 'latex-preview-pane-mode) ;;enable preview pane with all latex files
-(add-hook 'auto-save-hook 'latex-preview-pane-update)
+;(add-hook 'LaTeX-mode-hook 'latex-preview-pane-mode) ;;enable preview pane with all latex files
+;(add-hook 'auto-save-hook 'latex-preview-pane-update)
 
 (setq TeX-source-specials-mode 1)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
@@ -1563,7 +1577,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (setq auto-fill-function 'my-LaTeX-auto-fill-function))
 
 (add-hook 'LaTeX-mode-hook 'my-LaTeX-setup-auto-fill)
-
+(add-hook 'LaTeX-mode-hook
+		  (lambda () (local-set-key (quote [f9]) #'LaTeX-indent-line)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Matlab setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
