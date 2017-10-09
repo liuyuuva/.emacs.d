@@ -49,7 +49,13 @@
   )
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-      
+
+;; Instant Access to Init File
+(defun load-init ()
+  "Edit the init file in another window."
+  (interactive)
+  (find-file-other-window user-init-file))
+(global-set-key (kbd "C-c I") 'load-init)
   
 
 (setq custom-file "~/.emacs.d/custom.el")
@@ -144,6 +150,11 @@
     (global-set-key (kbd "<S-f2>") 'bm-previous)
     )
   )
+
+(use-package vlf
+  :ensure t
+  :config (progn
+            (require 'vlf-setup)))
 
 (use-package neotree
   :ensure t
@@ -1122,6 +1133,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (use-package org-journal
   :defer t
   :ensure t
+  :init
+  (setq org-journal-dir "~/work_journal")
   )
 
 
