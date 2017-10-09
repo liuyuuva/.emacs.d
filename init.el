@@ -614,6 +614,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   :config
   (yas-reload-all)
   (add-hook 'prog-mode-hook #'yas-minor-mode)
+  (yas-global-mode 1)
   )
 
 (defun company-yasnippet-or-completion ()
@@ -691,6 +692,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     )
   )
 (global-set-key (kbd "C-'") 'company-complete-common)
+
 
 (add-hook 'c-mode-common-hook
 		  (lambda()
@@ -1116,6 +1118,12 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;; Org Mode Setting;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (org-agenda-to-appt)
+
+(use-package org-journal
+  :defer t
+  :ensure t
+  )
+
 
 (setq org-latex-create-formula-image-program 'dvipng)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
