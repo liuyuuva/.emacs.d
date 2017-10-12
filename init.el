@@ -9,8 +9,8 @@
 	(setq ispell-dictionary "~/Softwares/Aspell/dict/")
 	(setq myprojectfile "~/Notes/Projects_2017.org")
 	(load-file "~/.emacs.d/init_proxy.el")
-	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
-	(add-to-list 'exec-path "c:/llvm/bin");; added for clang
+;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
+	(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
 	(setq preview-gs-command "gswin64c")
 	(setq doc-view-ghostscript-program "gswin64c")
 	)
@@ -656,7 +656,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package cc-mode
   :ensure t
-  :defer t
   :config
   (progn
 	(setq c-default-style "bsd" c-basic-offset 4)
@@ -674,6 +673,31 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	    )
 	  )
 
+(use-package irony
+	:ensure t
+	:init
+	(progn
+	  (add-hook 'c++-mode-hook 'irony-mode)
+	  (add-hook 'c-mode-hook 'irony-mode)
+	    )
+	  )
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+	
+(when (boundp 'w32-pipe-read-delay)
+  (setq w32-pipe-read-delay 0))
+;; Set the buffer size to 64K on Windows (from the original 4K)
+	 
+	 
+
 (use-package company
   :ensure t
 
@@ -685,9 +709,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	  company-show-numbers t
 	  company-async-timeout 50)
     (setq company-backends
-	  '(company-files          ; files & directory
-	    company-capf
-		company-irony
+	  '(company-irony
 		company-gtags
 	    )
 	  )
@@ -702,15 +724,19 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   
     )
   )
+
+
+
+(define-key c-mode-map  [(tab)] 'company-complete)
+(define-key c++-mode-map  [(tab)] 'company-complete)
+;;(eval-after-load 'company
+;;  '(add-to-list 'company-backends 'company-irony))
 (global-set-key (kbd "C-'") 'company-complete-common)
 
 
-(add-hook 'c-mode-common-hook
-		  (lambda()
-			(local-set-key (kbd "<f5>") 'company-complete-common)
-			)
-		  )
-
+(use-package company-irony
+  :ensure t
+	   )
 
 (use-package company-c-headers
   :ensure t
@@ -754,44 +780,12 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   (eval-after-load 'flycheck
     '(define-key flycheck-mode-map (kbd "M-h c") 'helm-flycheck)))
 
-(defun setup-c-clang-options ()
-	(setq irony-additional-clang-options (quote ("-std=c11"))))
+;; (defun setup-c-clang-options ()
+;; 	(setq irony-additional-clang-options (quote ("-std=c11"))))
 
-(defun setup-cpp-clang-options ()
-(setq irony-additional-clang-options (quote ("-std=c++14" "-stdlib=libc++")))
-)
-
-(use-package irony
-	:ensure t
-	:init
-	(progn
-	  (add-hook 'c++-mode-hook 'irony-mode)
-	  (add-hook 'c-mode-hook 'irony-mode)
-	  (add-hook 'objc-mode-hook 'irony-mode))
-	:config
-	(progn
-	  (add-hook 'c++-mode-hook 'setup-cpp-clang-options)
-	  (add-hook 'c-mode-hook 'setup-c-clang-options)
-
-	    )
-	  )
-	
-(when (boundp 'w32-pipe-read-delay)
-  (setq w32-pipe-read-delay 0))
-;; Set the buffer size to 64K on Windows (from the original 4K)
-(when (boundp 'w32-pipe-buffer-size)
-  (setq irony-server-w32-pipe-buffer-size (* 64 1024)))
-	 
-(use-package company-irony
-  :ensure t
-  :defer t
-  :config
-	   (progn
-		(eval-after-load 'company '(add-to-list 'company-backends 'company-irony))
-		(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-	   )
-	   )
-	 
+;; (defun setup-cpp-clang-options ()
+;; (setq irony-additional-clang-options (quote ("-std=c++14" "-stdlib=libc++")))
+;; )
 	 
 
 (use-package flycheck-irony
@@ -809,18 +803,18 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (add-hook 'objc-mode-hook 'irony-mode)
 
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
-    ;; irony-mode's buffers by irony-mode's asynchronous function
-    (defun my-irony-mode-hook ()
-      (define-key irony-mode-map [remap completion-at-point]
-        'irony-completion-at-point-async)
-      (define-key irony-mode-map [remap complete-symbol]
-        'irony-completion-at-point-async))
-    (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+    ;; ;; irony-mode's buffers by irony-mode's asynchronous function
+    ;; (defun my-irony-mode-hook ()
+    ;;   (define-key irony-mode-map [remap completion-at-point]
+    ;;     'irony-completion-at-point-async)
+    ;;   (define-key irony-mode-map [remap complete-symbol]
+    ;;     'irony-completion-at-point-async))
+    ;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
 
 ;; company-irony
 
 
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+;;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
   
 
 (use-package company-quickhelp
