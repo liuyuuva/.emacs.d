@@ -854,10 +854,10 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   ;; :init
   ;; (progn
   ;; 	(auto-complete-mode t))
-  :config
-  (progn
-	(use-package auto-complete-config)
-	(ac-config-default))
+  ;; :config
+  ;; (progn
+  ;; 	(use-package auto-complete-config)
+  ;; 	(ac-config-default))
    
   )
 
