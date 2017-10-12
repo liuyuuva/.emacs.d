@@ -851,9 +851,9 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package auto-complete
   :ensure t
-  :init
-  (progn
-	(auto-complete-mode t))
+  ;; :init
+  ;; (progn
+  ;; 	(auto-complete-mode t))
   :config
   (progn
 	(use-package auto-complete-config)
