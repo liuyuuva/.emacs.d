@@ -672,7 +672,11 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 		
 	    )
 	  )
-
+;; in addition to cmake to obtain compile_commands.json, should also
+;; manually get a .clang_complete file in root folder of project include
+;; "-I/.../" where /.../ is the folder structure, such as /src/,
+;; /include/, /header/, etc. there could be multiple. This way the irony I/O
+;; error will be gone, and function prototype can be auto completed 
 (use-package irony
 	:ensure t
 	:init
