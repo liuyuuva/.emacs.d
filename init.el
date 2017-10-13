@@ -415,10 +415,10 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;;     (global-set-key (kbd "S-SPC") 'ace-jump-line-mode)
 ;;     ))
 
-
+(global-unset-key (kbd "C-M-z"))
  (use-package ace-window
    :ensure t
-   :config (global-set-key (kbd "M-p") 'ace-window))
+   :config (global-set-key (kbd "C-M-z") 'ace-window))
 
 
 (use-package evil
@@ -504,6 +504,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
     )
   )
+
 
 (use-package ido
   :ensure t
@@ -759,6 +760,9 @@ If SUBMODE is not provided, use `LANG-mode' by default."
               ("M-g M-n" . flycheck-next-error)
               ("M-g M-p" . flycheck-previous-error)
               ("M-g M-l" . flycheck-list-errors)
+			  ("M-p" . flycheck-previous-error)
+			  ("M-n". flycheck-next-error)
+			  
               )
        :init
        (require 'flycheck)
@@ -855,10 +859,16 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   ;; :init
   ;; (progn
   ;; 	(auto-complete-mode t))
-  ;; :config
-  ;; (progn
-  ;; 	(use-package auto-complete-config)
-  ;; 	(ac-config-default))
+   :config
+   (progn
+	 (setq ac-modes '(emacs-lisp-mode
+					  lisp-mode
+					  lisp-interaction-mode
+					  )
+		   )
+	 
+	 (use-package auto-complete-config)
+   	(ac-config-default))
    
   )
 
