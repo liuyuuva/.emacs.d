@@ -11,6 +11,7 @@
 	(load-file "~/.emacs.d/init_proxy.el")
 ;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 	(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
+	(add-to-list 'exec-path "c:/msys64/usr/bin");;added for find.exe and grep.exe
 	(setq preview-gs-command "gswin64c")
 	(setq doc-view-ghostscript-program "gswin64c")
 	)
@@ -854,28 +855,28 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;;      (ac-config-default))
 ;;    )
 
-(use-package auto-complete
-  :ensure t
-  ;; :init
-  ;; (progn
-  ;; 	(auto-complete-mode t))
-   :config
-   (progn
-	 (setq ac-modes '(emacs-lisp-mode
-					  lisp-mode
-					  lisp-interaction-mode
-					  )
-		   )
+;; (use-package auto-complete
+;;   :ensure t
+;;   ;; :init
+;;   ;; (progn
+;;   ;; 	(auto-complete-mode t))
+;;    :config
+;;    (progn
+;; 	 (setq ac-modes '(emacs-lisp-mode
+;; 					  lisp-mode
+;; 					  lisp-interaction-mode
+;; 					  )
+;; 		   )
 	 
-	 (use-package auto-complete-config)
-   	(ac-config-default))
+;; 	 (use-package auto-complete-config)
+;;    	(ac-config-default))
    
-  )
+;;   )
 
-(defun my-org-ac-hook ()
-  (auto-complete-mode 1))
+;; (defun my-org-ac-hook ()
+;;   (auto-complete-mode 1))
 
-(add-hook 'org-mode-hook 'my-org-ac-hook)
+;(add-hook 'org-mode-hook 'my-org-ac-hook)
   
 
 ;; (define-globalized-minor-mode real-global-auto-complete-mode
@@ -1651,12 +1652,12 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 			)
 		  )
-(add-hook 'octave-mode-hook
-		  (lambda ()
-			(auto-complete-mode 1)
-			(setq comment-start "% ")
-			)
-		  )
+ (add-hook 'octave-mode-hook
+ 		  (lambda ()
+ 			;(auto-complete-mode 1)
+ 			(setq comment-start "% ")
+ 			)
+ 		  )
 
   
 
