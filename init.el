@@ -12,6 +12,7 @@
 ;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 	(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
 	(add-to-list 'exec-path "c:/msys64/usr/bin");;added for find.exe and grep.exe
+	(add-to-list 'exec-path "c:/glo653wb/bin");; for global.exe
 	(setq preview-gs-command "gswin64c")
 	(setq doc-view-ghostscript-program "gswin64c")
 	)
@@ -49,6 +50,7 @@
     )
   )
 
+(server-start)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
 ;; Instant Access to Init File
