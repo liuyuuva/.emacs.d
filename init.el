@@ -783,7 +783,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (define-key flycheck-mode-map (kbd "<F7>") #'flycheck-list-errors)
 (define-key flycheck-mode-map (kbd "<F8>")  #'flycheck-previous-error)
 (define-key flycheck-mode-map (kbd "<F9>") #'flycheck-next-error)
-        
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))        
 
 (use-package helm-flycheck
   :ensure t
