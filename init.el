@@ -398,13 +398,11 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
  (use-package avy
    :ensure t
-
    :config
    (progn
-     (global-set-key (kbd "M-g c") 'avy-goto-char)
      (global-set-key (kbd "S-SPC") 'avy-goto-line)
 	 (global-set-key (kbd "M-s") 'avy-goto-char-timer)
-	 (global-set-key (kbd "M-g w") 'avy-goto-word-1)
+	 
 	 )
    )
 
@@ -757,15 +755,18 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     )
   )
 
+(use-package company-irony-c-headers
+  :ensure t
+  :defer t
+  :after company
+  :config
+  (add-to-list 'company-backends 'company-irony-c-headers)
+  )
+
 (use-package flycheck
 	   :ensure t
        :bind (
-              ("M-g M-n" . flycheck-next-error)
-              ("M-g M-p" . flycheck-previous-error)
-              ("M-g M-l" . flycheck-list-errors)
-			  ("M-p" . flycheck-previous-error)
-			  ("M-n". flycheck-next-error)
-			  
+               ("M-g M-l" . flycheck-list-errors)
               )
        :init
        (require 'flycheck)
@@ -783,7 +784,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (define-key flycheck-mode-map (kbd "<F7>") #'flycheck-list-errors)
 (define-key flycheck-mode-map (kbd "<F8>")  #'flycheck-previous-error)
 (define-key flycheck-mode-map (kbd "<F9>") #'flycheck-next-error)
-;(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))        
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))        
 
 (use-package helm-flycheck
   :ensure t
@@ -959,8 +960,41 @@ If SUBMODE is not provided, use `LANG-mode' by default."
       (linum-mode 0)
       )
     
+ (defun yl/setup-semantic-mode ()
+   (interactive)
+  
+  (use-package semantic
+	:ensure t
+	:init
+	(semantic-mode 1)
+	:config
+	(progn
+	  (setq semantic-default-submodes
+			'(global-semantic-idle-scheduler-mode
+			  global-semanticdb-minor-mode
+			  global-semantic-idle-summary-mode
+			  global-semantic-stickyfunc-mode
+			  global-semantic-idle-breadcrumbs-mode
+			  global-semantic-mru-bookmark-mode))
+	  )
+	:bind
+	(	("M-g c" . semantic-ia-describe-class)
+		("M-g g" . semantic-ia-fast-jump)
+		("M-g t" . semantic-ia-complete-tip)
+		("M-g m" . semantic-ia-complete-symbol-menu)
+		("M-g s" . semantic-ia-show-summary)
+		("M-g b" . semantic-mrub-switch-tags)
+		("M-g f" . semantic-force-refresh)
+		
+		)
+	)
+  )
 
-;;(semantic-mode 1);keeps parsing repeatedly for large c files. 
+ (add-hook 'c-mode-hook 'yl/setup-semantic-mode)
+ (add-hook 'c++-mode-hook 'yl/setup-semantic-mode)
+ (add-hook 'emacs-lisp-mode-hook 'yl/setup-semantic-mode)
+ (add-hook 'python-mode-hook 'yl/setup-semantic-mode)
+ (add-hook 'prog-mode-hook 'yl/setup-semantic-mode)
 
  
 (use-package helm-gtags
