@@ -996,6 +996,21 @@ If SUBMODE is not provided, use `LANG-mode' by default."
  (add-hook 'python-mode-hook 'yl/setup-semantic-mode)
  (add-hook 'prog-mode-hook 'yl/setup-semantic-mode)
 
+(use-package function-args
+  :defer t
+  :ensure t
+  :init
+  (add-hook 'prog-mode-hook '(lambda() (fa-config-default)))
+  :bind
+  (
+   ("M-g h" . fa-show)
+   ("M-g j" . fa-jump)
+   ("M-g o" . moo-complete)
+   ("M-g v" . moo-propose-virtual)
+   ("M-g r" . moo-propose-override)
+   ("M-g p" . moo-jump-local)
+   )
+  )
  
 (use-package helm-gtags
   :ensure t
