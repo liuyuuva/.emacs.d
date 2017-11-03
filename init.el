@@ -985,6 +985,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 		("M-g s" . semantic-ia-show-summary)
 		("M-g b" . semantic-mrub-switch-tags)
 		("M-g f" . semantic-force-refresh)
+		("M-g y" . semantic-complete-analyze-inline)
 		
 		)
 	)
@@ -1042,7 +1043,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package cedet
   :defer t
-  :ensure t)
+  :ensure t
+    )
 
 ;(require 'smart-compile)
 (use-package smart-compile
