@@ -1717,6 +1717,62 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
   
 
+(use-package hydra
+  :ensure t
+  :defer t
+  :bind
+  (
+   ("C-M-g" . hydra-projectile/body)
+   )
+  :config
+  (defhydra hydra-projectile (:color blue :columns 4)
+	"Projectile"
+	("a" counsel-git-grep "ag")
+	("b" projectile-switch-to-buffer "switch to buffer")
+	("d" projectile-find-dir "dir")
+	("i" projectile-ibuffer "Ibuffer")
+	("K" projectile-kill-buffers "Kill all buffers")
+	("p" projectile-switch-project "switch")
+	("r" projectile-run-async-shell-command-in-root "run shell command")
+	("x" projectile-remove-known-project "remove known")
+	("X" projectile-cleanup-known-projects "cleanup non-existing")
+	("z" projectile-cache-current-file "cache current")
+	("q" nil "cancel")
+	  )
+	 )
+
+(use-package smartparens
+  :ensure t
+  :defer t
+  :bind
+  (
+   ("M-K" . hydra-smartparens/body)
+   )
+  :config
+  (defhydra hydra-smartparens (:color blue :columns 6)
+	"Smartparens"
+	("a" sp-beginning-of-sexp "Beginning")
+	("e" sp-end-of-sexp "End")
+	("<down>" sp-down-sexp "Down")
+	("<up>" sp-up-sexp "Up")
+	("M-<down>" sp-backward-down-sexp "Backward down")
+	("M-<up>" sp-backward-up-sexp "Backward up")
+	("f" sp-foward-sexp "Forward")
+	("b" sp-backward-sexp "Backward")
+	("n" sp-next-sexp "Next")
+	("p" sp-previous-sexp "Prev")
+	("C-f" sp-forward-symbol "Forward symbol")
+	("C-b" sp-backward-symbol "Back symbol")
+	("C-<right>" sp-forward-slurp-sexp "Forward slurp")
+	("M-<right>" sp-forward-barf-sexp "Forward barf")
+	("C-<left>"  sp-backward-slurp-sexp "Backward slurp")
+	("M-<left>"  sp-backward-barf-sexp "Backward barf")
+	("t" sp-transpose-sexp "Transpose")
+	("k" sp-kill-sexp "Kill")
+	("w" sp-copy-sexp "Copy")
+	)
+  )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
