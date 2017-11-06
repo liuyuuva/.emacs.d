@@ -1772,7 +1772,19 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	("w" sp-copy-sexp "Copy")
 	)
   )
-
+(use-package windmove
+  ;; :defer 4
+  :ensure t
+  :config
+  (setq windmove-wrap-around t)
+  :bind
+  (
+   ("C-c <left>" . windmove-left)
+   ("C-c <right>" . windmove-right)
+   ("C-c <up>" . windmove-up)
+   ("C-c <down>" . windmove-down)
+   )
+  )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
