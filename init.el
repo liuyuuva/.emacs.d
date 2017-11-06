@@ -340,6 +340,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 ("M-h g" . rgrep)
 	 ("M-h d" . helm-do-ag)
 	 ("M-h r" . helm-resume)
+	 ("M-h c" . yas-describe-tables)
 	 )
   )
 
@@ -766,7 +767,9 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (use-package flycheck
 	   :ensure t
        :bind (
-               ("M-g M-l" . flycheck-list-errors)
+			  ("M-g M-l" . flycheck-list-errors)
+			  ("M-p" . flycheck-previous-error)
+			  ("M-n" . flycheck-next-error)
               )
        :init
        (require 'flycheck)
@@ -1000,8 +1003,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (use-package function-args
   :defer t
   :ensure t
-  :init
-  (add-hook 'prog-mode-hook '(lambda() (fa-config-default)))
+;  :init
+;  (add-hook 'prog-mode-hook '(lambda() (fa-config-default)))
   :bind
   (
    ("M-g h" . fa-show)
