@@ -151,8 +151,8 @@
   :init
   (setq bm-restore-repository-on-load t)
   :bind
-  ("M-<f2>" . hydra-bm/body)
-  ("<f2>" . bm-next)
+  ("<f2>" . hydra-bm/body)
+  ("M-<f2>" . bm-next)
   ("C-<f2>" . bm-toggle)
   ("S-<f2>" . bm-previous)
   :config
@@ -175,6 +175,8 @@
 	  ("t" bm-toggle "Toggle")
 	  ("n" bm-next "Next")
 	  ("p" bm-previous "Prev")
+	  ("l" bm-show-all "list")
+	  ("d" bm-remove-all-current-buffer "remove all")
 	  ("q" nil "quit")
 	  )
    )
