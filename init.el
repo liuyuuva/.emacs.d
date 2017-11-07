@@ -2128,3 +2128,13 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (define-key yas-keymap (kbd "TAB") 'tab-complete-or-next-field)
 (define-key yas-keymap [(control tab)] 'yas-next-field)
 (define-key yas-keymap (kbd "C-g") 'abort-company-or-yas)
+
+(defun my-mark-sexp ()
+  "My own mark sexp fun"
+  (interactive)
+  (progn
+	(backward-sexp)
+	(mark-sexp)
+	))
+
+(global-set-key (kbd "C-M-;") 'my-mark-sexp)
