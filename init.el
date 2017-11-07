@@ -147,12 +147,36 @@
 
 (use-package bm
   :ensure t
+  :demand
+  :init
+  (setq bm-restore-repository-on-load t)
+  :bind
+  ("M-<f2>" . hydra-bm/body)
+  ("<f2>" . bm-next)
+  ("C-<f2>" . bm-toggle)
+  ("S-<f2>" . bm-previous)
   :config
   (progn
-    (global-set-key (kbd "<C-f2>") 'bm-toggle)
-    (global-set-key (kbd "<f2>")   'bm-next)
-    (global-set-key (kbd "<S-f2>") 'bm-previous)
-    )
+	(setq bm-cycle-all-buffers t)
+	(setq bm-repository-file "~/.emacs.d/.bm-repository")
+	(setq-default bm-buffer-persistence t)
+	(add-hook 'after-init-hook 'bm-repository-load)
+	(add-hook 'find-file-hooks 'bm-buffer-restore)
+	(add-hook 'kill-buffer-hook #'bm-buffer-save)
+	(add-hook 'kill-emacs-hook #'(lambda nil
+								   (bm-buffer-save-all)
+								   (bm-repository-save)))
+	(add-hook 'after-save-hook #'bm-buffer-save)
+	(add-hook 'find-file-hooks   #'bm-buffer-restore)
+	(add-hook 'after-revert-hook #'bm-buffer-restore)
+
+	(defhydra hydra-bm (:color red :columns 4)
+	  "bm mode"
+	  ("t" bm-toggle "Toggle")
+	  ("n" bm-next "Next")
+	  ("p" bm-previous "Prev")
+	  )
+   )
   )
 
 (use-package vlf
@@ -551,12 +575,24 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package breadcrumb
   ;:commands bc-set bc-previous bc-next bc-list bc-local-next bc-local-previous
-  :bind (("C-c m" . bc-set)
+  :bind (("C-!" . hydra-breadcrumb/body)
+		 ("C-c m" . bc-set)
 	 ("M-j" . bc-previous)
 	 ("S-M-j" . bc-next)
 	 ("M-<up>" . bc-local-previous)
 	 ("M-<down>" . bc-local-next)
-	 ("C-c C-l" . bc-list)))
+	 ("C-c C-l" . bc-list))
+  :config
+  (defhydra hydra-breadcrumb (:color blue :column 4)
+	"Breadcrumb"
+	("s" bc-set "Set")
+	("p" bc-previous "Prev")
+	("n" bc-next "Next")
+	("<up>" bc-local-previous "Local Prev")
+	("<down>" bc-local-next "Local Next")
+	("l" bc-list "List")
+	)
+  )
 
  (use-package undo-tree
    :defer t
