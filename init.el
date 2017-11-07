@@ -50,7 +50,7 @@
     )
   )
 
-(server-start)
+(global-set-key (kbd "C-M-!") 'eval-buffer)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
 ;; Instant Access to Init File
@@ -141,8 +141,8 @@
   (progn
     (global-unset-key (kbd "<C-f1>"))
     (define-key global-map (kbd "<C-f1>") 'bookmark-set)
-    (define-key global-map (kbd "<f1>") 'bookmark-jump)
-    (define-key global-map (kbd "M-L") 'bookmark-bmenu-list)
+    (define-key global-map (kbd "<M-f1>") 'bookmark-jump)
+    (define-key global-map (kbd "<S-f1>") 'bookmark-bmenu-list)
     ))
 
 (use-package bm
@@ -175,6 +175,7 @@
 	  ("t" bm-toggle "Toggle")
 	  ("n" bm-next "Next")
 	  ("p" bm-previous "Prev")
+	  ("q" nil "quit")
 	  )
    )
   )
@@ -446,10 +447,16 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;;     ))
 
 (global-unset-key (kbd "C-M-z"))
- (use-package ace-window
+(global-unset-key (kbd "M-a"))
+(use-package ace-window
    :ensure t
-   :config (global-set-key (kbd "C-M-z") 'ace-window))
+   :config (global-set-key (kbd "M-a") 'ace-window))
 
+(defhydra hydra-zoom (global-map "C-M-z")
+  "zoom in and out"
+  ("i" text-scale-increase "in")
+  ("o" text-scale-decrease "out")
+  )
 
 (use-package evil
   :ensure t
@@ -574,8 +581,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   )
 
 (use-package breadcrumb
-  ;:commands bc-set bc-previous bc-next bc-list bc-local-next bc-local-previous
-  :bind (("C-!" . hydra-breadcrumb/body)
+  :demand t
+  :bind (("<f1>" . hydra-breadcrumb/body)
 		 ("C-c m" . bc-set)
 	 ("M-j" . bc-previous)
 	 ("S-M-j" . bc-next)
@@ -583,7 +590,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 ("M-<down>" . bc-local-next)
 	 ("C-c C-l" . bc-list))
   :config
-  (defhydra hydra-breadcrumb (:color blue :column 4)
+  (defhydra hydra-breadcrumb (:color red :columns 4)
 	"Breadcrumb"
 	("s" bc-set "Set")
 	("p" bc-previous "Prev")
@@ -591,6 +598,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	("<up>" bc-local-previous "Local Prev")
 	("<down>" bc-local-next "Local Next")
 	("l" bc-list "List")
+	("q" nil "quit")
 	)
   )
 
@@ -1765,7 +1773,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
    ("C-M-g" . hydra-projectile/body)
    )
   :config
-  (defhydra hydra-projectile (:color blue :columns 4)
+  (defhydra hydra-projectile (:color red :columns 4)
 	"Projectile"
 	("a" counsel-git-grep "ag")
 	("b" projectile-switch-to-buffer "switch to buffer")
@@ -1789,7 +1797,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
    ("M-K" . hydra-smartparens/body)
    )
   :config
-  (defhydra hydra-smartparens (:color blue :columns 6)
+  (defhydra hydra-smartparens (:color red :columns 6)
 	"Smartparens"
 	("a" sp-beginning-of-sexp "Beginning")
 	("e" sp-end-of-sexp "End")
@@ -1884,8 +1892,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "C-<f7>") 'org-archive-subtree)
 	(define-key org-mode-map (kbd "M-<f7>") 'org-toggle-archive-tag)
 	;;F8
-	(define-key org-mode-map (kbd "<f8>") 'add-sublevel-plainitem);'add-sublevel-todo)
-
+;	(define-key org-mode-map (kbd "<f8>") 'add-sublevel-plainitem);'add-sublevel-todo)
+;	(define-key org-mode-map (kbd "<f8>") 'hydra-org-structural/body);'add-sublevel-todo)
 	;;F9
 	(define-key org-mode-map (kbd "<f9> i") 'org-clock-in)
 	(define-key org-mode-map (kbd "<f9> o") 'org-clock-out)
@@ -1922,6 +1930,30 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "<f9> t") 'jump-to-today-report)
 	
 	) )
+
+(defhydra hydra-org-structural (org-mode-map "<f8>" :color red :columns 4)
+	"Org Structural Edit and Movement"
+	("s" add-sublevel-plainitem "new sub")
+	("<up>" org-backward-heading-same-level "back same level")
+	("<down>" org-forward-heading-same-level "forward same level")
+	("u" outline-up-heading "up level")
+	("<left>" org-promote-subtree "promote tree")
+	("<right>" org-demote-subtree "demote tree")
+	("M-<up>" org-move-subtree-up "move tree up")
+	("M-<down>" org-move-subtree-sown "move tree down")
+	("@" org-mark-subtree "mark tree")
+	("m" org-mark-element "mark element")
+	("x" org-cut-subtree "cut tree")
+	("c" org-copy-subtree "copy tree")
+	("y" org-paste-subtree "yank tree (level adapt)")
+	("r" org-refile "refile")
+	("^" org-sort "sort")
+	("*" org-toggle-heading "toggle heading")
+	("n" org-narrow-to-subtree "narrow")
+	("w" widen "widen")
+	("q" nil "quit")
+	)
+
 (add-hook 'org-agenda-mode-hook
       (lambda()
         (define-key org-agenda-mode-map
