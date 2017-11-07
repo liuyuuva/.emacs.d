@@ -101,6 +101,7 @@
     (require 'benchmark-init)
   )
 
+(setq use-package-verbose t)
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; open recent directory, requires ivy (part of swiper)
 ;; borrows from http://stackoverflow.com/questions/23328037/in-emacs-how-to-maintain-a-list-of-recent-directories
@@ -156,6 +157,7 @@
 
 (use-package vlf
   :ensure t
+  :defer t
   :config (progn
             (require 'vlf-setup)))
 
@@ -218,6 +220,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package mmm-mode
   :ensure t
+  :defer t
   :config
   (progn
     (setq mmm-global-mode 'maybe)
@@ -341,6 +344,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 ("M-h d" . helm-do-ag)
 	 ("M-h r" . helm-resume)
 	 ("M-h c" . yas-describe-tables)
+	 ("M-h l" . helm-recentf)
 	 )
   )
 
