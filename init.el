@@ -1046,9 +1046,9 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (add-hook 'c-mode-hook 'yl/setup-semantic-mode)
 (add-hook 'c++-mode-hook 'yl/setup-semantic-mode)
-(add-hook 'emacs-lisp-mode-hook 'yl/setup-semantic-mode)
+;(add-hook 'emacs-lisp-mode-hook 'yl/setup-semantic-mode)
 (add-hook 'python-mode-hook 'yl/setup-semantic-mode)
-(add-hook 'prog-mode-hook 'yl/setup-semantic-mode)
+;(add-hook 'prog-mode-hook 'yl/setup-semantic-mode)
 
 
 (use-package function-args
