@@ -817,7 +817,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (use-package flycheck
 	   :ensure t
        :bind (
-			  ("M-g M-l" . flycheck-list-errors)
+			  
 			  ("M-p" . flycheck-previous-error)
 			  ("M-n" . flycheck-next-error)
               )
@@ -1013,16 +1013,16 @@ If SUBMODE is not provided, use `LANG-mode' by default."
       (linum-mode 0)
       )
     
- (defun yl/setup-semantic-mode ()
+(defun yl/setup-semantic-mode ()
    (interactive)
-  
-  (use-package semantic
-	:ensure t
-	:init
-	(semantic-mode 1)
-	:config
-	(progn
-	  (setq semantic-default-submodes
+   
+   (use-package semantic
+	 :ensure t
+	 :init
+	 (semantic-mode 1)
+	 :config
+	 (progn
+	  (setq emantic-default-submodes
 			'(global-semantic-idle-scheduler-mode
 			  global-semanticdb-minor-mode
 			  global-semantic-idle-summary-mode
@@ -1030,25 +1030,26 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 			  global-semantic-idle-breadcrumbs-mode
 			  global-semantic-mru-bookmark-mode))
 	  )
-	:bind
-	(	("M-g c" . semantic-ia-describe-class)
-		("M-g g" . semantic-ia-fast-jump)
-		("M-g t" . semantic-ia-complete-tip)
-		("M-g m" . semantic-ia-complete-symbol-menu)
-		("M-g s" . semantic-ia-show-summary)
-		("M-g b" . semantic-mrub-switch-tags)
-		("M-g f" . semantic-force-refresh)
-		("M-g y" . semantic-complete-analyze-inline)
+	;; :bind
+	;; (	("M-g c" . semantic-ia-describe-class)
+	;; 	("M-g g" . semantic-ia-fast-jump)
+	;; 	("M-g t" . semantic-ia-complete-tip)
+	;; 	("M-g m" . semantic-ia-complete-symbol-menu)
+	;; 	("M-g s" . semantic-ia-show-summary)
+	;; 	("M-g b" . semantic-mrub-switch-tags)
+	;; 	("M-g f" . semantic-force-refresh)
+	;; 	("M-g y" . semantic-complete-analyze-inline)
 		
-		)
-	)
-  )
+	;; 	)
+	 )
+   )
 
- (add-hook 'c-mode-hook 'yl/setup-semantic-mode)
- (add-hook 'c++-mode-hook 'yl/setup-semantic-mode)
- (add-hook 'emacs-lisp-mode-hook 'yl/setup-semantic-mode)
- (add-hook 'python-mode-hook 'yl/setup-semantic-mode)
- (add-hook 'prog-mode-hook 'yl/setup-semantic-mode)
+(add-hook 'c-mode-hook 'yl/setup-semantic-mode)
+(add-hook 'c++-mode-hook 'yl/setup-semantic-mode)
+(add-hook 'emacs-lisp-mode-hook 'yl/setup-semantic-mode)
+(add-hook 'python-mode-hook 'yl/setup-semantic-mode)
+(add-hook 'prog-mode-hook 'yl/setup-semantic-mode)
+
 
 (use-package function-args
   :defer t
@@ -1056,16 +1057,58 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;  :init
 ;  (add-hook 'prog-mode-hook '(lambda() (fa-config-default)))
   :bind
-  (
-   ("M-g h" . fa-show)
-   ("M-g j" . fa-jump)
-   ("M-g o" . moo-complete)
-   ("M-g v" . moo-propose-virtual)
-   ("M-g r" . moo-propose-override)
-   ("M-g p" . moo-jump-local)
-   )
+  ("M-g" . hydra-semantic-fa/body)
+  ;; (
+  ;;  ("M-g h" . fa-show)
+  ;;  ("M-g j" . fa-jump)
+  ;;  ("M-g o" . moo-complete)
+  ;;  ("M-g v" . moo-propose-virtual)
+  ;;  ("M-g r" . moo-propose-override)
+  ;;  ("M-g p" . moo-jump-local)
+  ;;  )
   )
- 
+
+
+(defhydra hydra-semantic-fa (:color blue :columns 4)
+  "Semantic and FunctionArgs"
+  ("c" semantic-ia-describe-class "descibe class")
+  ("g" semantic-ia-fast-jump "fast jump")
+  ("t" semantic-ia-complete-tip "tip")
+  ("m" semantic-ia-complete-symbol-menu "symbol menu")
+  ("s" semantic-ia-show-summary "show summary")
+  ("b" semantic-mrub-switch-tags "switch tags")
+  ("f" semantic-force-refresh "force refresh")
+  ("y" semantic-complete-analyze-inline "analyze inline")
+  ("h" fa-show "fa show")
+  ("j" fa-jump "fa jump")
+  ("o" moo-complete "moo complete")
+  ("v" moo-propose-virtual "moo virtual")
+  ("r" moo-propose-override "moo override")
+  ("p" moo-jump-local "moo local jump")
+  ("M-l" flycheck-list-errors "flycheck error list")
+  ("q" nil "quit")
+  )
+
+(use-package hideshow
+  :bind
+  ("C-," . hydra-hs/body)
+  :config
+  (defhydra hydra-hs (:color red :columns 4)
+	"Hide Show"
+	("h" hs-hide-all "hide all")
+	("s" hs-show-all "show all")
+	("l" hs-hide-level "hide level")
+	("b" hs-hide-block "hide block")
+	("o" hs-show-block "show block")
+	("t" hs-toggle-hiding "toggle")
+	("q" nil "quit")
+	)
+  )
+
+(add-hook 'prog-mode-hook 'hs-minor-mode)
+(add-hook 'c-mode-common-hook 'hs-minor-mode)
+
+		
 (use-package helm-gtags
   :ensure t
   :init
