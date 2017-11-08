@@ -262,10 +262,10 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;;   )
 
 (use-package magit
-  :defer t
   :ensure t
-  :init
-  (global-set-key (kbd "C-x g") 'magit-status)
+  :bind
+  ("C-x g" . magit-status)
+   
   )
 
 (use-package pandoc-mode
