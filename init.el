@@ -1141,7 +1141,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   (tool-bar-mode 0)               ;; Toolbars were only cool with XEmacs
   (when (fboundp 'horizontal-scroll-bar-mode)
     (horizontal-scroll-bar-mode -1))
-  (scroll-bar-mode -1))            ;; Scrollbars are waste screen estate
+  (scroll-bar-mode 1))            ;; Scrollbars are waste screen estate
 
  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
