@@ -1283,6 +1283,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org Mode Setting;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2251,3 +2252,5 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	))
 
 (global-set-key (kbd "C-M-;") 'my-mark-sexp)
+(load-theme 'afternoon t)
+(set-face-attribute 'mode-line nil :font "Courier New")
