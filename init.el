@@ -1180,12 +1180,16 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (setq initial-scratch-message "") ;; Uh, I know what Scratch is for
 	
 
-(when (window-system)
-  (tool-bar-mode 0)               ;; Toolbars were only cool with XEmacs
+;(when (window-system)
+;  (progn
+	(tool-bar-mode -1)               ;; Toolbars were only cool with XEmacs
+	(setq default-frame-alist '((tool-bar-lines . 0))
+		  )
+;	)
   (when (fboundp 'horizontal-scroll-bar-mode)
     (horizontal-scroll-bar-mode -1))
-  (scroll-bar-mode 1))            ;; Scrollbars are waste screen estate
-
+  (scroll-bar-mode 1)            ;; Scrollbars are waste screen estate
+;)
  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dired
