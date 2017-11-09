@@ -1874,6 +1874,12 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	("w" sp-copy-sexp "Copy")
 	)
   )
+
+(global-unset-key (kbd "C-x <left>"))
+(global-unset-key (kbd "C-x <right>"))
+(global-unset-key (kbd "C-x <up>"))
+(global-unset-key (kbd "C-x <down>"))
+				  
 (use-package windmove
   ;; :defer 4
   :ensure t
@@ -1881,10 +1887,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (setq windmove-wrap-around t)
   :bind
   (
-   ("C-c <left>" . windmove-left)
-   ("C-c <right>" . windmove-right)
-   ("C-c <up>" . windmove-up)
-   ("C-c <down>" . windmove-down)
+   ("C-x <left>" . windmove-left)
+   ("C-x <right>" . windmove-right)
+   ("C-x <up>" . windmove-up)
+   ("C-x <down>" . windmove-down)
    )
   )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
