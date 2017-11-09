@@ -767,6 +767,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     (add-to-list 'company-backends
 	  '(company-irony
 		company-gtags
+		company-ispell
 	    )
 	  )
     
@@ -1022,13 +1023,16 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 (semantic-mode 1)
 	 :config
 	 (progn
-	  (setq emantic-default-submodes
-			'(global-semantic-idle-scheduler-mode
+	  (setq semantic-default-submodes
+			'(
+			  global-semantic-idle-scheduler-mode
 			  global-semanticdb-minor-mode
 			  global-semantic-idle-summary-mode
 			  global-semantic-stickyfunc-mode
 			  global-semantic-idle-breadcrumbs-mode
-			  global-semantic-mru-bookmark-mode))
+			  global-semantic-mru-bookmark-mode
+			  )
+			)
 	  )
 	;; :bind
 	;; (	("M-g c" . semantic-ia-describe-class)
@@ -1046,16 +1050,16 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (add-hook 'c-mode-hook 'yl/setup-semantic-mode)
 (add-hook 'c++-mode-hook 'yl/setup-semantic-mode)
-;(add-hook 'emacs-lisp-mode-hook 'yl/setup-semantic-mode)
+(add-hook 'emacs-lisp-mode-hook 'yl/setup-semantic-mode)
 (add-hook 'python-mode-hook 'yl/setup-semantic-mode)
 ;(add-hook 'prog-mode-hook 'yl/setup-semantic-mode)
 
 
 (use-package function-args
-  :defer t
   :ensure t
+  :demand
 ;  :init
-;  (add-hook 'prog-mode-hook '(lambda() (fa-config-default)))
+;  (add-hook 'prog-mode-hook 'function-args-mode)
   :bind
   ("M-g" . hydra-semantic-fa/body)
   ;; (
