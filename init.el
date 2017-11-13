@@ -15,6 +15,9 @@
 		(add-to-list 'exec-path "c:/glo653wb/bin");; for global.exe
 		(setq preview-gs-command "gswin64c")
 		(setq doc-view-ghostscript-program "gswin64c")
+		(set-fontset-font t 'han (font-spec :family "Microsoft Yahei" :size 12))
+		(setq face-font-rescale-alist '(("Microsoft Yahei" . 1.2) ("WenQuanYi Zen Hei" . 1.2)))
+
 		)
   )
   
@@ -50,6 +53,7 @@
     )
   )
 
+(set-language-environment "UTF-8")
 (global-set-key (kbd "C-M-!") 'eval-buffer)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
@@ -2315,3 +2319,5 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (global-set-key (kbd "C-M-;") 'my-mark-sexp)
 (load-theme 'afternoon t)
 (set-face-attribute 'mode-line nil :font "Courier New")
+
+
