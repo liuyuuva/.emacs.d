@@ -1,22 +1,22 @@
 (if (eq system-type 'windows-nt)
     (progn
       	(let ((default-directory "~/.emacs.d/"))
-	(normal-top-level-add-subdirs-to-load-path))
-	(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
-	(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves" t)))
-	(setq default-directory "~/")
-	(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
-	(setq ispell-dictionary "~/Softwares/Aspell/dict/")
-	(setq myprojectfile "~/Notes/Projects_2017.org")
-	(load-file "~/.emacs.d/init_proxy.el")
-;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
-	(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
-	(add-to-list 'exec-path "c:/msys64/usr/bin");;added for find.exe and grep.exe
-	(add-to-list 'exec-path "c:/glo653wb/bin");; for global.exe
-	(setq preview-gs-command "gswin64c")
-	(setq doc-view-ghostscript-program "gswin64c")
-	)
-	)
+		  (normal-top-level-add-subdirs-to-load-path))
+		(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
+		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves" t)))
+		(setq default-directory "~/")
+		(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
+		(setq ispell-dictionary "~/Softwares/Aspell/dict/")
+		(setq myprojectfile "~/Notes/Projects_2017.org")
+		(load-file "~/.emacs.d/init_proxy.el")
+		;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
+		(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
+		(add-to-list 'exec-path "c:/msys64/usr/bin");;added for find.exe and grep.exe
+		(add-to-list 'exec-path "c:/glo653wb/bin");; for global.exe
+		(setq preview-gs-command "gswin64c")
+		(setq doc-view-ghostscript-program "gswin64c")
+		)
+  )
   
 
 (if (eq system-type 'darwin)
@@ -26,14 +26,14 @@
     (add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
     (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
     (setq ispell-program-name "aspell"
-      ispell-dictionary "english"
-      ispell-dictionary-alist
-      (let ((default '("[A-Za-z]" "[^A-Za-z]" "[']" nil
-                       ("-B" "-d" "english" "--dict-dir"
-                        "/Library/Application Support/cocoAspell/aspell6-en-6.0-0")
-                       nil iso-8859-1)))
-        `((nil ,@default)
-          ("english" ,@default))))
+		  ispell-dictionary "english"
+		  ispell-dictionary-alist
+		  (let ((default '("[A-Za-z]" "[^A-Za-z]" "[']" nil
+						   ("-B" "-d" "english" "--dict-dir"
+							"/Library/Application Support/cocoAspell/aspell6-en-6.0-0")
+						   nil iso-8859-1)))
+			`((nil ,@default)
+			  ("english" ,@default))))
 ;With the above apsell config for mac os, i also edited
 ;/usr/local/etc/aspell.conf to change the string after "dict-dir" to
 ;"/Library/Application Support/cocoAspell/aspell6-en-6.0-0". Flyspell
@@ -70,7 +70,7 @@
 ;(defvaralias 'c-basic-offset 'tab-width)
 
 ;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-
+(winner-mode 1) ;save window configuration
 (require 'package)
 ;; Avoid multiple initialization of installed packages.
 (setq package-enable-at-startup nil)
@@ -1893,6 +1893,33 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
    ("C-x <down>" . windmove-down)
    )
   )
+
+
+
+(use-package elfeed
+  :ensure t
+  ;; :config
+  ;; (setq elfeed-feeds
+  ;; 		'("http://www.autonomousvehicletech.com/rss/topic/108-autonomous-vehicle-news"
+  ;; 		  "http://jalopnik.com/rss"
+  ;; 		  "http://gizmodo.com/rss"
+  ;; 		  "http://lifehacker.com/rss"
+  ;; 		  "http://planet.emacsen.org/atom.xml")
+  ;; 		)
+  )
+
+(use-package elfeed-org
+  :ensure t
+  :config
+  (setq rmh-org-files (list "~/.emacs.d/elfeed.org"))
+  (elfeed-org)
+  )
+
+ 
+
+  
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1953,7 +1980,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "M-<f7>") 'org-toggle-archive-tag)
 	;;F8
 ;	(define-key org-mode-map (kbd "<f8>") 'add-sublevel-plainitem);'add-sublevel-todo)
-;	(define-key org-mode-map (kbd "<f8>") 'hydra-org-structural/body);'add-sublevel-todo)
+	(define-key org-mode-map (kbd "<f8>") 'hydra-org-structural/body);'add-sublevel-todo)
 	;;F9
 	(define-key org-mode-map (kbd "<f9> i") 'org-clock-in)
 	(define-key org-mode-map (kbd "<f9> o") 'org-clock-out)
@@ -1991,7 +2018,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	
 	) )
 
-(defhydra hydra-org-structural (org-mode-map "<f8>" :color red :columns 4)
+(defhydra hydra-org-structural (:color red :columns 4)
 	"Org Structural Edit and Movement"
 	("s" add-sublevel-plainitem "new sub")
 	("<up>" org-backward-heading-same-level "back same level")
@@ -2013,6 +2040,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	("w" widen "widen")
 	("q" nil "quit")
 	)
+
 
 (add-hook 'org-agenda-mode-hook
       (lambda()
