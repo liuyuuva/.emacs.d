@@ -1,0 +1,317 @@
+\documentclass[11pt,onecolumn,draftclsnofoot,letterpaper]{IEEEtran}
+\usepackage{graphicx}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{fixltx2e}
+
+\usepackage{longtable}
+%\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{geometry}
+%\usepackage{subfig}
+\usepackage{subcaption}
+\usepackage{tabularx}
+
+\usepackage{floatrow}
+
+\usepackage{listings}
+\usepackage{xcolor}
+% \lstset { %
+%     language=C,
+%     backgroundcolor=\color{black!5}, % set backgroundcolor
+%     basicstyle=\footnotesize,% basic font setting
+%                    keywordstyle=\color{blue}\ttfamily,
+%                 stringstyle=\color{red}\ttfamily,
+%                 commentstyle=\color{green}\ttfamily,
+%                 morecomment=[l][\color{magenta}]{\#}
+%               }
+
+              \definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize\scriptsize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+}
+
+\begin{document}
+
+
+\newtheorem{lem}{\bf Lemma}%[section]
+\newtheorem{rem}{\bf Remark}%[section]
+\newtheorem{pro}{\bf Proposition}%[section]
+\newtheorem{defn}{\bf Definition}%[section]
+\newtheorem{thm}{\bf Theorem}%[section]
+\newtheorem{assu}{Assumption}%[section]
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\ts}{& \hspace{-0.05in}}
+\newcommand{\nn}{\nonumber}
+\newtheorem{ex}{Example}[section]
+\newcommand{\bp}{\bigskip}
+\newcommand{\slp}{\smallskip}
+\newcommand{\diag}{{\rm diag}}
+\newcommand{\sign}{{\rm sign}}
+
+\newcommand{\rank}{{\rm rank}}
+\newcommand{\qed}{\hfill \ensuremath{\Box}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+
+\title{\bf \LARGE }
+
+\author{Yu Liu}
+
+\date{}
+\maketitle
+
+
+\begin{abstract}
+
+
+\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+
+
+\section{\bf Introduction}
+
+\begin{lstlisting}[language=c]
+  F32 low_pass_filter(F32 in, F32 w, F32 *last_in, F32 last_out)
+{
+	F32 out = ((in + *last_in) * (0.5F) * w) + ((1.0F - w) * (last_out));
+	*last_in = in;
+	return out;
+}
+\end{lstlisting}
+
+
+% \begin{figure}[htbp]
+% \centerline{\includegraphics[width=5in]{powersplit_diagram}}
+% \caption{Model of Power Split HEV Powertrain and Driveline.}
+% \label{powersplit_diagram}
+% \end{figure}
+
+
+
+% \begin{table}
+% \begin{center}
+% \caption{Characteristics of technical metrics.}
+% \label{tab:techmetrics}
+% \begin{tabular}{|l|p{11cm}|}
+% \hline
+% Technical Metrics & Characteristics \\ \hline
+% VDV               & Vibration value measured on seat track. Represent
+%                     vibration level created via both powertrain mouth
+%                     path and half shaft path. \\ \hline
+% TDV               & Vibration value measured on half shaft. Represent
+%                     vibration level via half shaft path only. \\ \hline
+% mVDV              & Vibration value measured in powertrain. Represent
+%                     vibration level that is high similar to half shaft
+%                     torque vibration. \\ \hline
+% \end{tabular}
+% \end{center}
+% \end{table}
+
+
+% \begin{figure}[thb]
+%     \centering
+%     \begin{subfigure}[t]{0.5\textwidth}
+%         \centering
+%         \includegraphics[width=3in]{EngStartPowerLow}
+%         \caption{Smaller power (4 kW). ECT 30$^{\circ}$C, SOC 60\%.}
+% \label{fig:EngStartPowerLow}
+%     \end{subfigure}%
+%     ~ 
+%     \begin{subfigure}[t]{0.5\textwidth}
+%         \centering
+%         \includegraphics[width=3in]{EngStartPowerRegular}
+%         \caption{Regular power (6.6 kW). ECT 32$^{\circ}$C, SOC 42\%.}
+% \label{fig:EngStartPowerRegular}
+%     \end{subfigure}
+%     \caption{Impact of start power on engine start smoothness.}
+% \label{EngStartPower}
+% \end{figure}
+
+
+
+
+% \begin{table}[thpb]
+% \caption{Relevant signals in engine stop event.}
+% \label{tab:engstopsignals}
+% \begin{center}
+%   \begin{tabular}{|l|p{5cm}|p{6cm}|}
+% \hline
+% Signal & Description & Comments
+%     \\ \hline
+% \verb;OMP_GEN_MODE; &  Generator mode  & Generator mode switches from
+%                                          Speed mode (\verb;MG_SPEED;) to
+%                                          Engine Stop mode
+%                                          (\verb;MG_ENGSTOP;) when engine
+%                                          stop events occur. It then
+%                                          switches to Torque mode
+%                                          (\verb;MG_TORQUE;) when engine
+%                                          stop events finish.  
+%     \\ \hline
+% \verb;PVP_ENG_POS; &  Engine position      & Engine position is
+%                                              calculated in the Hybrid
+%                                              Transaxle Physical Variable
+%     Process (HTPVP).\\ \hline
+% \verb;TRP_ESTP_TPOS; & Engine stop target position      & Values come
+%                                                           from the
+%                                                           calibration
+%                                                           array
+%                                                           \verb;TRP_ESTP_POS;
+%                                                           (Possible
+%                                                           engine
+%                                                           prepositioning
+%     target positions). The final target position is the nearest possible
+%     target position to reach, which is calculated from the current
+%                                                          engine
+%                                                           position,
+%                                                           engine speed,
+%                                                           and an engine
+%                                                           stop speed profile.\\ \hline
+% \verb;TRP_ESTP_EXPOS; &  Engine stop expected position    & Expected
+%                                                             engine stop
+%                                                             position
+%                                                             calculated
+%                                                             from the
+%                                                             engine
+%                                                             position at
+%                                                             the
+%                                                             beginning of
+%                                                             the engine
+%                                                             stop event
+%                                                             as well as
+%                                                             the engine
+%                                                             stop speed profile. \\ \hline
+% \verb;TRP_ESTP_TQ;   &   Engine stop controller command    & PI
+%                                                              controller
+%                                                              output
+%                                                              that is
+%                                                              calculated
+%                                                              from engine
+%     position error between engine position (\verb;PVP_ENG_POS;) and
+%                                                              expected
+%                                                              engine
+%                                                              position (\verb;TRP_ESTP_EXPOS;).\\ \hline
+% \verb;TRP_TQ_GEN_CMD; & Arbitrated generator torque command     &
+%                                                                   Selected
+%     rate-limited generator torque command based on generator mode.\\ \hline
+% \verb;TRP_GENTQ_PI;  &    Generator PI controller output   & Final generator
+%                                                              torque
+%                                                              command
+%                                                              from both
+%                                                              PI controllers. \\ \hline
+%   \end{tabular}
+% \end{center}
+% \end{table}
+
+
+% \begin{figure}
+% \begin{floatrow}
+% \ffigbox{%
+% \centerline{\includegraphics[width=3in]{EngStopErrorD0}}
+% }
+% {
+
+% \caption{Engine stop position errors for Case I.}%
+% \label{fig:engstoperrord0}
+% }
+% \capbtabbox{%
+%   \begin{tabular}{|c|c|} \hline
+%   Target Position & Error (degree) \\ \hline
+%  0                & 30.05 \\ \hline
+% 30                & 31.89 \\ \hline
+% 60                & 23.11 \\ \hline
+% 90                & 18.71 \\ \hline
+% 120               & 23.38 \\ \hline
+% 150               & 24.94 \\ \hline
+% Average           & 25.35 \\ \hline
+
+%   \end{tabular}
+
+% \vspace{1cm}
+% }{%
+%   \caption{Engine stop position errors and the average error for Case I}%
+% \label{table:engstoperrord0}
+% }
+% \end{floatrow}
+% \end{figure}
+
+
+ 
+
+\section{\bf Conclusions}
+
+% \section*{Acknowledgment}
+% This research was supported by the National Aeronautics and Space Administration under the grant
+
+%\bibliography{mybib}
+%\bibliographystyle{IEEEtran} % Include this if you use bibtex
+
+\begin{thebibliography}{199}
+%\setlength{\itemsep}{-2mm}
+
+
+
+\bibitem{Miller_eCVT} J. M. Miller, ``Hybrid electric vehicle propulsion system
+  architectures of the e-cvt type,'' {\it IEEE Transactions on Power
+    Electronics}, vol. 21, no. 3, pp. 756--767, May 2006.
+
+\bibitem{Kuang_HEV101_08} M. Kuang, ``Power split system HEV 101,'' Ford
+  Internal Presentation, 2008.
+
+
+\bibitem{Liang_etal_ELDModelingControl_12} W. Liang, X. Wang, T.
+  Chrostowski, R. McGee, J. Doering, and M. Kuang, ``Modeling and control of power
+  split hybrid vehicle transaxle system using enhanced lever diagram,''
+  Ford Technical Report, SRR-2012-0155, 2012.
+
+\bibitem{LiangEtAlEngSpdCtrl12} W. Liang, C. Okubo, T. Chrostowski, and
+  M. Kuang, ``Engine speed control of a power split HEV,'' Ford
+  Technical Report, SRR-2012-0156, 2012.
+
+\bibitem{MeyerAPSTCR2Presentation} J. Meyer, et al., ``Advanced Power
+  Split Transaxle Controls R2 Review,'' APSTC project TDR presentation. 
+
+
+\bibitem{MeyerAPSTCR3Presentation} W. Liang, et al., ``Advanced Power
+  Split Transaxle Controls R3 Review,'' APSTC project TDR presentation. 
+
+\bibitem{AlcantarCrankingComp15} J. V. Alcantar, R. Johri, and M. Kuang,
+  ``Minimizing Vibration of the Power Split Drivetrain During Engine
+  Starts and Stops via Cranking Torque Estimation and Compensation,''
+  Ford Technical Report, SRR-2015¡V0151.
+
+
+\end{thebibliography}
+
+
+
+
+
+
+\end{document}

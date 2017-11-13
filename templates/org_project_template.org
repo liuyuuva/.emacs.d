@@ -1,0 +1,57 @@
+#+STARTUP: overview
+#+STARTUP: hideblocks
+#+STARTUP: latexpreview
+#+OPTIONS: tex:dvipng
+
+*Time Table for Today*
+#+BEGIN: clocktable :maxlevel 5 :scope file :block today
+#+CAPTION: Clock summary at [2017-05-10 Wed 14:09], for Wednesday, May 10, 2017.
+| Headline                               | Time   |      |      |
+|----------------------------------------+--------+------+------|
+| *Total time*                           | *0:08* |      |      |
+|----------------------------------------+--------+------+------|
+| Further Study of Cranking Torque FF    | 0:08   |      |      |
+| -Data Processing                       |        | 0:08 |      |
+| ---INPROGRESS calculate true engine... |        |      | 0:08 |
+#+END:
+
+
+
+* *Time Table for This Week*
+#+BEGIN: clocktable :maxlevel 5 :scope file :block thisweek
+#+CAPTION: Clock summary at [2017-08-03 Thu 11:28], for week 2017-W31.
+| Headline                                   | Time |      |      |
+|--------------------------------------------+------+------+------|
+| *Total time*                                 | *4:07* |      |      |
+|--------------------------------------------+------+------+------|
+| Power Split HEV Engine Start Smoothness    | 4:07 |      |      |
+| -Software Development                      |      | 4:07 |      |
+| ---DONE Inform Ming to renew SharedPoint   |      |      | 0:09 |
+| ---NEXTACTION Review H-inf concept         |      |      | 2:20 |
+| ---DONE add motor speed control to hold... |      |      | 1:38 |
+#+END:
+
+* *Time Table for Last Week*
+#+BEGIN: clocktable :maxlevel 5 :scope file :block lastweek
+#+CAPTION: Clock summary at [2017-05-10 Wed 14:09], for week 2017-W18.
+| Headline     | Time   |
+|--------------+--------|
+| *Total time* | *0:00* |
+#+END:
+
+* *Time Table for This Month*
+#+BEGIN: clocktable :maxlevel 5 :scope file :block thismonth
+#+CAPTION: Clock summary at [2017-08-02 Wed 09:49], for August 2017.
+| Headline     | Time   |
+|--------------+--------|
+| *Total time* | *0:00* |
+#+END:
+
+* *Time Table for Last Month*
+#+BEGIN: clocktable :maxlevel 5 :scope file :block lastmonth
+#+CAPTION: Clock summary at [2017-05-10 Wed 14:09], for April 2017.
+| Headline     | Time   |
+|--------------+--------|
+| *Total time* | *0:00* |
+#+END:
+

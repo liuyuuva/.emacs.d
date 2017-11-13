@@ -1,0 +1,21 @@
+# Set the article class
+#+LaTeX_CLASS: ieeeconf
+#+LaTeX_CLASS_OPTIONS: [letterpaper, 10pt, conferrence]
+
+# No need for a table of contents, unless your paper is quite long.
+#+OPTIONS: toc:nil
+
+
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{amssymb}
+#+LATEX_HEADER: \usepackage{graphicx}
+
+#+LATEX_HEADER: \oddsidemargin -0.2in
+
+# Fix the margins
+#+LATEX_HEADER: \usepackage[margin=1in]{geometry}
+
+
+#+TITLE: An Example Title
+#+AUTHOR: Yu Liu
+#+DATE: October 26, 2014

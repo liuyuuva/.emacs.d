@@ -1,0 +1,107 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{rose}
+\setbeamertemplate{background canvas}[vertical
+shading][bottom=white,top=structure.fg!25]
+\usenavigationsymbolstemplate{}
+\usefonttheme[onlysmall]{structurebold}
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usefonttheme{professionalfonts}
+\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps}
+\usepackage{amsmath,amssymb}
+\usepackage{color}
+
+\newtheorem{lem}{\bf Lemma}%[section]
+\newtheorem{rem}{\bf Remark}%[section]
+\newtheorem{pro}{\bf Proposition}%[section]
+\newtheorem{defn}{\bf Definition}%[section]
+\newtheorem{thm}{\bf Theorem}%[section]
+\newtheorem{assu}{Assumption}%[section]
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\ts}{& \hspace{-0.07in}}
+\newcommand{\nn}{\nonumber}
+\newcommand{\mdp}{\medskip}
+\newtheorem{ex}{Example}[section]
+\newcommand{\bp}{ }
+\newcommand{\slp}{\smallskip}
+\newcommand{\diag}{{\rm diag}}
+\newcommand{\sign}{{\rm sign}}
+\newcommand{\rank}{{\rm rank}}
+\setbeamercovered{transparent}
+
+\title[]{}
+\author[]{}
+\institute[NIA]{National Institute of Aerospace}
+\date[May, 2010]{\small PhD Dissertation Final Examination\\  August 27, 2009 }
+\begin{document}
+
+
+\frame{\titlepage}
+\frame{
+  \frametitle{Outline}
+  \tableofcontents[subsectionstyle=hide]
+  }
+
+\AtBeginSection[]{\frame{\frametitle{Outline}\tableofcontents[current,subsectionstyle=hide]}}
+
+\section{Introduction}
+
+\frame{ \frametitle{Introduction}
+\begin{itemize}
+%  \item Failures in control systems
+%     \begin{itemize}
+%     \item Frequent occurrence
+%     \item Catastrophic consequences
+%     \end{itemize}
+%\medskip
+\item Failures in aircraft systems
+\medskip
+    \begin{itemize}
+      \item Actuator failures: failures of control surfaces and engines
+      \medskip
+      \item Dynamics failures: airframe damages, icing
+      \end{itemize}
+   \medskip
+%\item Fault-tolerant design methods for aircraft flight control
+% \begin{itemize}
+%    \item Multiple models, switching and tuning
+%    \item Fault detection and diagnosis
+%    \item Robust control
+%    \item Adaptive control
+%   \end{itemize}
+ \item Direct adaptive control approach
+\medskip
+    \begin{itemize}
+    \item Direct adaptation of controller parameters
+\medskip
+    \item Accommodation of large system
+      uncertainties
+    \end{itemize}
+\medskip
+\item Advantages of direct adaptive control in
+  aircraft applications
+\medskip
+     \begin{itemize}
+     \item Compensation of uncertain system
+       failures
+\medskip
+     \item No explicit identification
+\medskip
+     \item Guarantee of asymptotic tracking
+     \end{itemize}
+ \end{itemize}
+
+
+}
+
+\end{document}
+
+\setbeamertemplate{background canvas}[vertical
+shading][bottom=white,top=white]
+\begin{center}
+\pgfimage[width=\textwidth]{f2b}
+\end{center}
+\setbeamertemplate{background canvas}[vertical
+shading][bottom=white,top=structure.fg!25]
