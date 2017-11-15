@@ -130,12 +130,17 @@
 
 
 ;; remember cursor position
-(if (version< emacs-version "25.0")
-    (progn
-      (use-package saveplace
-	:config (setq-default save-place t))
-      (setq-default save-place t))
-  (save-place-mode 1))
+
+(use-package saveplace
+  :ensure t
+  :config
+  (progn
+	(setq-default save-place t)
+	(save-place-mode 1)
+	)
+  )
+
+
 
 ;(run-at-time (current-time) 300 'recentf-save-list)
 
