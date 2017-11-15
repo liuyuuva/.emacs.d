@@ -1115,8 +1115,54 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
+(use-package try
+  :ensure t
+  )
 
-		
+(use-package multiple-cursors
+  :ensure t
+  :bind
+  (("C-=" . hydra-mc/body))
+  
+  )
+
+(defhydra hydra-mc (:hint nil)
+  "
+      ^Up^            ^Down^        ^All^                ^Lines^               ^Edit^                 ^Other^
+----------------------------------------------------------------------------------------------------
+[_p_]   Next    [_n_]   Next    [_a_] All like this  [_l_] Edit lines      [_i_] Insert numbers   [_t_] Tag pair
+[_P_]   Skip    [_N_]   Skip    [_r_] All by regexp  [_L_] Edit line beg.  [_s_] Sort regions      ^ ^
+[_M-p_] Unmark  [_M-n_] Unmark  [_d_] All DWIM        ^ ^                  [_R_] Reverse regions  [_q_] Quit
+"
+  ("p" mc/mark-previous-like-this)
+  ("P" mc/skip-to-previous-like-this)
+  ("M-p" mc/unmark-previous-like-this)
+
+  ("n" mc/mark-next-like-this)
+  ("N" mc/skip-to-next-like-this)
+  ("M-n" mc/unmark-next-like-this)
+
+  ("a" mc/mark-all-like-this :exit t)
+  ("r" mc/mark-all-in-region-regexp :exit t)
+  ("d" mc/mark-all-dwim :exit t)
+
+  ("l" mc/edit-lines :exit t)
+  ("L" mc/edit-beginnings-of-lines :exit t)
+
+  ("i" mc/insert-numbers)
+  ("s" mc/sort-regions)
+  ("R" mc/reverse-regions)
+
+  ("t" mc/mark-sgml-tag-pair)
+  ("q" nil)
+
+  ("<mouse-1>" mc/add-cursor-on-click)
+  ("<down-mouse-1>" ignore)
+  ("<drag-mouse-1>" ignore))
+
+
+
+
 (use-package helm-gtags
   :ensure t
   :init
@@ -1902,6 +1948,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (use-package elfeed
   :ensure t
+  :defer t
   ;; :config
   ;; (setq elfeed-feeds
   ;; 		'("http://www.autonomousvehicletech.com/rss/topic/108-autonomous-vehicle-news"
@@ -1914,6 +1961,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (use-package elfeed-org
   :ensure t
+  :defer t
   :config
   (setq rmh-org-files (list "~/.emacs.d/elfeed.org"))
   (elfeed-org)
