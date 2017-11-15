@@ -553,7 +553,10 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   :ensure t
   :defer t
   :init (progn (ido-mode 1)
-               (ido-everywhere 1))
+               (ido-everywhere 1)
+			   (use-package ido-vertical-mode
+				 :ensure t
+				 :init (ido-vertical-mode 1)))
   :config
   (progn
     (setq ido-case-fold t)
