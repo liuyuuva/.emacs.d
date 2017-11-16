@@ -131,14 +131,8 @@
 
 ;; remember cursor position
 
-(use-package saveplace
-  :ensure t
-  :config
-  (progn
-	(setq-default save-place t)
-	(save-place-mode 1)
-	)
-  )
+(save-place-mode 1)
+
 
 
 
@@ -424,6 +418,52 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 				  filename-and-process)))	
 	(setq mp/ibuffer-collapsed-groups (list "Helm" "*Internal*"))
 
+	(setq ibuffer-saved-filter-groups
+		  (quote (("default"
+				   ("dired" (mode . dired-mode))
+				   ("org" (mode . org-mode))
+
+				   ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
+				   ("mu4e" (name . "\*mu4e\*"))
+				   ("programming" (or
+								   (mode . emacs-lisp-mode)
+								   (mode . elisp-mode)
+								   (mode . octave-mode)
+								   (mode . cc-mode)
+								   (mode . c-mode)
+								   (mode . python-mode)
+								   (mode . c++-mode)
+								   (name . "^\\*Compile-Log\\*$")
+								   ))
+				   ("emacs" (or
+							 (name . "^\\*scratch\\*$")
+							 (name . "^\\*Messages\\*$")
+							 ))
+					("Magit"  (or (name . "\\*magit-.*\\*")
+								  (mode . magit-mode)))
+					("Help" (or (name . "\*Help\*")
+								(name . "\*Apropos\*")
+								(name . "\*info\*")
+								)
+					 )
+					 ("latex" (or (mode . latex-mode)
+                      (mode . LaTeX-mode)
+                      (mode . bibtex-mode)
+                      (mode . reftex-mode)))
+					)
+				   )))
+
+	(add-hook 'ibuffer-mode-hook
+			  (lambda ()
+				(ibuffer-auto-mode 1)
+				(ibuffer-switch-to-saved-filter-groups "default")))
+
+;; don't show these
+					;(add-to-list 'ibuffer-never-show-predicates "zowie")
+;; Don't show filter groups if there are no buffers in that group
+(setq ibuffer-show-empty-filter-groups nil)
+
+	
 	(defadvice ibuffer (after collapse-helm)
 	  (dolist (group mp/ibuffer-collapsed-groups)
 		(progn
