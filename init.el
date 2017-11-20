@@ -650,7 +650,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
      (global-set-key (kbd "S-SPC") 'avy-goto-line)
 	 (global-set-key (kbd "M-s") 'avy-goto-char-timer)
 	 (global-set-key (kbd "C-.") 'avy-goto-char-timer)
-	 
+
 	 
 	 )
    )
@@ -662,9 +662,10 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
    (setq key-chord-one-key-delay 0.2)
    (key-chord-mode 1)
    :config
-  (key-chord-define-global "jj" 'avy-goto-char-timer)
-  
-  )
+   (key-chord-define-global "jj" 'avy-goto-char-timer)
+   (key-chord-define-global "ss" 'helm-swoop)
+   (key-chord-define-global "sb" 'helm-swoop-back-to-last-point)
+   )
 ;; (use-package ace-jump-mode
 ;;   :ensure t
 
