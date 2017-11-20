@@ -174,7 +174,7 @@
 
 	(defhydra hydra-bm (:color red :columns 4)
 	  "bm mode"
-	  ("t" bm-toggle "Toggle")
+	  ("s" bm-toggle "Set")
 	  ("n" bm-next "Next")
 	  ("p" bm-previous "Prev")
 	  ("l" bm-show-all "list")
@@ -350,6 +350,22 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
     (custom-set-variables
      '(helm-follow-mode-persistent t))
+
+	(defun fu/helm-find-files-navigate-forward (orig-fun &rest args)
+	  (if (and (equal "Find Files" (assoc-default 'name (helm-get-current-source)))
+			   (equal args nil)
+			   (stringp (helm-get-selection))
+			   (not (file-directory-p (helm-get-selection))))
+		  (helm-maybe-exit-minibuffer)
+		(apply orig-fun args)))
+	(advice-add 'helm-execute-persistent-action :around #'fu/helm-find-files-navigate-forward)
+	(define-key helm-find-files-map (kbd "<return>") 'helm-execute-persistent-action)
+
+	(defun fu/helm-find-files-navigate-back (orig-fun &rest args)
+	  (if (= (length helm-pattern) (length (helm-find-files-initial-input)))
+		  (helm-find-files-up-one-level 1)
+		(apply orig-fun args)))
+	(advice-add 'helm-ff-delete-char-backward :around #'fu/helm-find-files-navigate-back)
      )
   :bind  (("M-h m" . helm-mini)
          ("M-h a" . helm-apropos)
@@ -793,10 +809,10 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   (defhydra hydra-breadcrumb (:color red :columns 4)
 	"Breadcrumb"
 	("s" bc-set "Set")
-	("<up>" bc-previous "Prev")
-	("<down>" bc-next "Next")
-	("S-<up>" bc-local-previous "Local Prev")
-	("S-<down>" bc-local-next "Local Next")
+	("p" bc-previous "Prev")
+	("n" bc-next "Next")
+	("<up>" bc-local-previous "Local Prev")
+	("<down>" bc-local-next "Local Next")
 	("l" bc-list "List")
 	("c" bc-clear "Clear")
 	("q" nil "quit")
@@ -1222,6 +1238,9 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	 (semantic-mode 1)
 	 :config
 	 (progn
+	   (setq semantic-idle-scheduler-idle-time 30)
+	   (setq semantic-idle-scheduler-work-idle-time 120)
+	   (setq semantic-idle-scheduler-max-buffer-size 150000) ;do not parse really large file
 	  (setq semantic-default-submodes
 			'(
 			  global-semantic-idle-scheduler-mode
