@@ -152,6 +152,7 @@
   :demand
   :init
   (setq bm-restore-repository-on-load t)
+ 
   :bind
   ("<f2>" . hydra-bm/body)
   ("M-<f2>" . bm-next)
@@ -171,6 +172,9 @@
 	(add-hook 'after-save-hook #'bm-buffer-save)
 	(add-hook 'find-file-hooks   #'bm-buffer-restore)
 	(add-hook 'after-revert-hook #'bm-buffer-restore)
+	(add-hook 'kill-emacs-hook #'(lambda nil
+								   (bm-buffer-save-all)
+								   (bm-repository-save)))
 
 	(defhydra hydra-bm (:color red :columns 4)
 	  "bm mode"
@@ -344,7 +348,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     (helm-mode)
     (define-key helm-map (kbd "C-r") 'helm-follow-action-backward)
     (define-key helm-map (kbd "C-s") 'helm-follow-action-forward)
-    (define-key helm-map (kbd "C-'") 'ace-jump-helm-line)
+    (define-key helm-map (kbd "C-'") 'ace--helm-line)
     ;; When doing isearch, hand the word over to helm-swoop
     (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
 
@@ -645,11 +649,22 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
    (progn
      (global-set-key (kbd "S-SPC") 'avy-goto-line)
 	 (global-set-key (kbd "M-s") 'avy-goto-char-timer)
+	 (global-set-key (kbd "C-.") 'avy-goto-char-timer)
+	 
 	 
 	 )
    )
 
-
+(use-package key-chord
+  :ensure t
+  :init
+   (setq key-chord-two-keys-delay 0.1)
+   (setq key-chord-one-key-delay 0.2)
+   (key-chord-mode 1)
+   :config
+  (key-chord-define-global "jj" 'avy-goto-char-timer)
+  
+  )
 ;; (use-package ace-jump-mode
 ;;   :ensure t
 
@@ -931,7 +946,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 	 
 ;; Some bindings for hi-lock mode that will be very convenient for C code reading
-(global-set-key (kbd "C-.") 'highlight-symbol-at-point)
+;;(global-set-key (kbd "C-.") 'highlight-symbol-at-point)
 (global-set-key (kbd "C->") 'highlight-phrase)
 (add-hook 'c-mode-common-hook
 	  (lambda()
@@ -1240,7 +1255,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	 (progn
 	   (setq semantic-idle-scheduler-idle-time 30)
 	   (setq semantic-idle-scheduler-work-idle-time 120)
-	   (setq semantic-idle-scheduler-max-buffer-size 150000) ;do not parse really large file
+	   ;(setq semantic-idle-scheduler-max-buffer-size 150000) ;do not parse really large file
 	  (setq semantic-default-submodes
 			'(
 			  global-semantic-idle-scheduler-mode
