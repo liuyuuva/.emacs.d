@@ -2102,9 +2102,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   :config
   (defhydra hydra-smartparens (:color red :hint nil)
   "
-  _B_ backward-sexp            -----
-  _F_ forward-sexp               _s_ splice-sexp
-  _L_ backward-down-sexp         _df_ splice-sexp-killing-forward
+  _B_ backward-sexp            -----                                       
+  _F_ forward-sexp               _s_ splice-sexp                              
+  _L_ backward-down-sexp         _df_ splice-sexp-killing-forward              
   _H_ backward-up-sexp           _db_ splice-sexp-killing-backward
 ^^------                         _da_ splice-sexp-killing-around
   _k_ down-sexp                -----
@@ -2188,7 +2188,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   ("AN" sp-add-to-next-sexp )
   ;;
   ("_" sp-join-sexp ) ;;Good
-  ("|" sp-split-sexp )) 
+  ("|" sp-split-sexp )
+  ;;
+
+  ) 
   ;; (defhydra hydra-smartparens (:color red :columns 6)
   ;; 	"Smartparens"
   ;; 	("a" sp-beginning-of-sexp "Beginning")
@@ -2654,9 +2657,75 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(backward-sexp)
 	(mark-sexp)
 	))
-
 (global-set-key (kbd "C-M-;") 'my-mark-sexp)
+
+;;   (defun ibuffer-previous-line ()
+;;     (interactive) (previous-line)
+;;     (if (<= (line-number-at-pos) 2)
+;;         (goto-line (- (count-lines (point-min) (point-max)) 2))))
+
+;;   (defun ibuffer-next-line ()
+;;     (interactive) (next-line)
+;;     (if (>= (line-number-at-pos) (- (count-lines (point-min) (point-max)) 1))
+;;         (goto-line 3)))
+;;   (define-key ibuffer-mode-map (kbd "<up>") 'ibuffer-previous-line)
+;; (define-key ibuffer-mode-map (kbd "<down>") 'ibuffer-next-line)
+
+
 (load-theme 'afternoon t)
 (set-face-attribute 'mode-line nil :font "Courier New")
 
 
+  (defun ibuffer-advance-motion (direction)
+        (forward-line direction)
+        (beginning-of-line)
+        (if (not (get-text-property (point) 'ibuffer-filter-group-name))
+            t
+          (ibuffer-skip-properties '(ibuffer-filter-group-name)
+                                   direction)
+          nil))
+  (defun ibuffer-previous-line (&optional arg)
+    "Move backwards ARG lines, wrapping around the list if necessary."
+    (interactive "P")
+    (or arg (setq arg 1))
+    (let (err1 err2)
+      (while (> arg 0)
+        (cl-decf arg)
+        (setq err1 (ibuffer-advance-motion -1)
+              err2 (if (not (get-text-property (point) 'ibuffer-title)) 
+                       t
+                     (goto-char (point-max))
+                     (beginning-of-line)
+                     (ibuffer-skip-properties '(ibuffer-summary 
+                                                ibuffer-filter-group-name) 
+                                              -1)
+                     nil)))
+      (and err1 err2)))
+  (defun ibuffer-next-line (&optional arg)
+    "Move forward ARG lines, wrapping around the list if necessary."
+    (interactive "P")
+    (or arg (setq arg 1))
+    (let (err1 err2)
+      (while (> arg 0)
+        (cl-decf arg)
+        (setq err1 (ibuffer-advance-motion 1)
+              err2 (if (not (get-text-property (point) 'ibuffer-summary)) 
+                       t
+                     (goto-char (point-min))
+                     (beginning-of-line)
+                     (ibuffer-skip-properties '(ibuffer-summary 
+                                                ibuffer-filter-group-name
+                                                ibuffer-title)
+                                              1)
+                     nil)))
+      (and err1 err2)))
+;; (defun brust/ibuffer-next-header ()
+;;     (interactive)
+;;     (while (ibuffer-next-line)))
+;;   (defun brust/ibuffer-previous-header ()
+;;     (interactive)
+;;     (while (ibuffer-previous-line)))
+ (define-key ibuffer-mode-map (kbd "<up>") 'ibuffer-previous-line)
+  (define-key ibuffer-mode-map (kbd "<down>") 'ibuffer-next-line)
+  ;; (define-key ibuffer-mode-map (kbd "<right>") 'ibuffer-previous-header)
+  ;; (define-key ibuffer-mode-map (kbd "<left>") 'ibuffer-next-header)
