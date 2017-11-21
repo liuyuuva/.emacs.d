@@ -3,7 +3,7 @@
       	(let ((default-directory "~/.emacs.d/"))
 		  (normal-top-level-add-subdirs-to-load-path))
 		(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
-		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves" t)))
+		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/backup" t)))
 		(setq default-directory "~/")
 		(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
 		(setq ispell-dictionary "~/Softwares/Aspell/dict/")
@@ -2428,6 +2428,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   ("p" org-set-property "property")
   ("P" yl-insert-project-template "insert project template")
   ("B" yl-insert-beamer-template "insert beamer template")
+  ("q" nil "quit")
   )
 
 (defun yl-insert-project-template ()
