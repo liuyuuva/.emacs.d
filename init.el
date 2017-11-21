@@ -3,7 +3,7 @@
       	(let ((default-directory "~/.emacs.d/"))
 		  (normal-top-level-add-subdirs-to-load-path))
 		(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
-		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/backup" t)))
+		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 		(setq default-directory "~/")
 		(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
 		(setq ispell-dictionary "~/Softwares/Aspell/dict/")
@@ -658,13 +658,21 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (use-package key-chord
   :ensure t
   :init
-   (setq key-chord-two-keys-delay 0.1)
+   (setq key-chord-two-keys-delay 0.15)
    (setq key-chord-one-key-delay 0.2)
    (key-chord-mode 1)
    :config
    (key-chord-define-global "jj" 'avy-goto-char-timer)
    (key-chord-define-global "ss" 'helm-swoop)
    (key-chord-define-global "sb" 'helm-swoop-back-to-last-point)
+   (key-chord-define-global "qq" 'keyboard-quit)
+   (key-chord-define-global "dm" 'delete-minibuffer-contents)
+   (key-chord-define-global ";;" 'end-of-line)
+   (key-chord-define-global "aa" 'beginning-of-line)
+   (key-chord-define-global "hh" 'backward-sexp)
+   (key-chord-define-global "ll" 'forward-sexp)
+   (key-chord-define-global "zz" 'set-mark-command)
+   (key-chord-define-global "kk" 'hydra-smartparens/body)
    )
 ;; (use-package ace-jump-mode
 ;;   :ensure t
@@ -2137,9 +2145,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   :config
   (defhydra hydra-smartparens (:color red :hint nil)
   "
-  _B_ backward-sexp            -----                                       
-  _F_ forward-sexp               _s_ splice-sexp                              
-  _L_ backward-down-sexp         _df_ splice-sexp-killing-forward              
+  _B_ backward-sexp            -----                                   -----        
+  _F_ forward-sexp               _s_ splice-sexp                        _m_ sp-mark-sexp              
+  _L_ backward-down-sexp         _df_ splice-sexp-killing-forward       
   _H_ backward-up-sexp           _db_ splice-sexp-killing-backward
 ^^------                         _da_ splice-sexp-killing-around
   _k_ down-sexp                -----
@@ -2162,6 +2170,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   _C-l_ forward-barf-sexp      -----
   _C-S-h_ backward-slurp-sexp    _ join-sexp
   _C-S-l_ backward-barf-sexp     _|_ split-sexp
+-^^--
+  _q_  Quit
 "
   ;; TODO: Use () and [] - + * | <space>
   ("B" sp-backward-sexp );; similiar to VIM b
@@ -2225,7 +2235,11 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   ("_" sp-join-sexp ) ;;Good
   ("|" sp-split-sexp )
   ;;
+  ("m" sp-mark-sexp)
 
+
+  ;;
+  ("q" nil)
   ) 
   ;; (defhydra hydra-smartparens (:color red :columns 6)
   ;; 	"Smartparens"
