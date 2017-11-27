@@ -654,26 +654,33 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	 
 	 )
    )
+(defun yl/setup-key-chord ()
+  (interactive)
+  (use-package key-chord
+	:ensure t
+	:init
+	(setq key-chord-two-keys-delay 0.2)
+	(setq key-chord-one-key-delay 0.2)
+	(key-chord-mode 1)
+	:config
+	(key-chord-define-global "jj" 'avy-goto-char-timer)
+	(key-chord-define-global "ww" 'helm-swoop)
+	(key-chord-define-global "bb" 'helm-swoop-back-to-last-point)
+	(key-chord-define-global "qq" 'keyboard-quit)
+	(key-chord-define-global "dm" 'delete-minibuffer-contents)
+	(key-chord-define-global ";;" 'end-of-line)
+	(key-chord-define-global "aa" 'beginning-of-line)
+	(key-chord-define-global "zz" 'set-mark-command)
+	(key-chord-define-global "kk" 'hydra-smartparens/body)
+	)
+  )
 
-(use-package key-chord
-  :ensure t
-  :init
-   (setq key-chord-two-keys-delay 0.15)
-   (setq key-chord-one-key-delay 0.2)
-   (key-chord-mode 1)
-   :config
-   (key-chord-define-global "jj" 'avy-goto-char-timer)
-   (key-chord-define-global "ss" 'helm-swoop)
-   (key-chord-define-global "sb" 'helm-swoop-back-to-last-point)
-   (key-chord-define-global "qq" 'keyboard-quit)
-   (key-chord-define-global "dm" 'delete-minibuffer-contents)
-   (key-chord-define-global ";;" 'end-of-line)
-   (key-chord-define-global "aa" 'beginning-of-line)
-   (key-chord-define-global "hh" 'backward-sexp)
-   (key-chord-define-global "ll" 'forward-sexp)
-   (key-chord-define-global "zz" 'set-mark-command)
-   (key-chord-define-global "kk" 'hydra-smartparens/body)
-   )
+(add-hook 'c-mode-hook 'yl/setup-key-chord)
+(add-hook 'c++-mode-hook 'yl/setup-key-chord)
+(add-hook 'emacs-lisp-mode-hook 'yl/setup-key-chord)
+(add-hook 'python-mode-hook 'yl/setup-key-chord)
+;(add-hook 'prog-mode-hook 'yl/setup-key-chord)
+
 ;; (use-package ace-jump-mode
 ;;   :ensure t
 
