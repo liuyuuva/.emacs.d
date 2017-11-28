@@ -152,7 +152,7 @@
   :demand
   :init
   (setq bm-restore-repository-on-load t)
- 
+  (setq bm-repository-file "~/.emacs.d/.bm-repository")
   :bind
   ("<f2>" . hydra-bm/body)
   ("M-<f2>" . bm-next)
@@ -161,7 +161,7 @@
   :config
   (progn
 	(setq bm-cycle-all-buffers t)
-	(setq bm-repository-file "~/.emacs.d/.bm-repository")
+	
 	(setq-default bm-buffer-persistence t)
 	(add-hook 'after-init-hook 'bm-repository-load)
 	(add-hook 'find-file-hooks 'bm-buffer-restore)
@@ -169,12 +169,13 @@
 	(add-hook 'kill-emacs-hook #'(lambda nil
 								   (bm-buffer-save-all)
 								   (bm-repository-save)))
-	(add-hook 'after-save-hook #'bm-buffer-save)
+	(add-hook 'after-save-hook #'(lambda nil
+								   (bm-buffer-save)
+								   (bm-repository-save)))
+	
 	(add-hook 'find-file-hooks   #'bm-buffer-restore)
 	(add-hook 'after-revert-hook #'bm-buffer-restore)
-	(add-hook 'kill-emacs-hook #'(lambda nil
-								   (bm-buffer-save-all)
-								   (bm-repository-save)))
+
 
 	(defhydra hydra-bm (:color red :columns 4)
 	  "bm mode"
@@ -961,6 +962,31 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	)
   )
 
+ (use-package google-c-style
+   :ensure t
+   :init
+   (add-hook 'c-mode-common-hook 'google-set-c-style)
+   (add-hook 'c-mode-common-hook 'google-make-newline-indent)
+   )
+
+
+;; The package below is removed from melpa
+;;   (use-package flycheck-google-cpplint
+;;     :ensure t
+;;     :config
+;; ;    (flycheck-add-next-checker 'c/c++-gcc ;; change if you don't use 'gcc'
+;; 					;			       'c/c++-googlelint)
+;;     (add-to-list 'flycheck-checkers 'c/c++-googlelint)
+;;     (custom-set-variables
+;;      '(flycheck-c/c++-googlelint-executable "cpplint");"~/.emacs.d/scripts/cpplint.py")
+;;      '(flycheck-google-cpplint-verbose "3")
+;;      '(flycheck-google-cpplint-filter "-whitespace,+whitespace/braces")
+;;      '(flycheck-google-cpplint-linelength "120"))
+;;     ;; This requires that google cpplint be installed
+;;     ;; See: https://github.com/flycheck/flycheck-google-cpplint
+    
+;;     )
+;;   )
 	 
 ;; Some bindings for hi-lock mode that will be very convenient for C code reading
 ;;(global-set-key (kbd "C-.") 'highlight-symbol-at-point)
