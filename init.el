@@ -958,16 +958,21 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   :ensure t
   :config
   (progn
-	(setq c-default-style "bsd" c-basic-offset 4)
+    (setq-default c-basic-offset 4)
+	(setq c-default-style "linux" c-basic-offset 4)
 	)
   )
 
- (use-package google-c-style
-   :ensure t
-   :init
-   (add-hook 'c-mode-common-hook 'google-set-c-style)
-   (add-hook 'c-mode-common-hook 'google-make-newline-indent)
-   )
+;; (use-package google-c-style
+;;   :ensure t
+;;   :init
+;;   (add-hook 'c-mode-common-hook 'google-set-c-style)
+;;   (add-hook 'c-mode-common-hook 'google-make-newline-indent)
+;;   (add-hook 'c++-mode-hook 'google-set-c-style)
+;;   (add-hook 'c++-mode-hook 'google-make-newline-indent)
+;;    )
+
+(setq indent-tabs-mode nil)
 
 
 ;; The package below is removed from melpa
