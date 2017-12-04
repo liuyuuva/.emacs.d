@@ -5,14 +5,14 @@
 		(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
 		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 		(setq default-directory "~/")
-		(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
-		(setq ispell-dictionary "~/Softwares/Aspell/dict/")
-		(setq myprojectfile "~/Notes/Projects_2017.org")
-		(load-file "~/.emacs.d/init_proxy.el")
+;		(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
+;		(setq ispell-dictionary "~/Softwares/Aspell/dict/")
+;		(setq myprojectfile "~/Notes/Projects_2017.org")
+;		(load-file "~/.emacs.d/init_proxy.el")
 		;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 		(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
 		(add-to-list 'exec-path "c:/msys64/usr/bin");;added for find.exe and grep.exe
-		(add-to-list 'exec-path "c:/glo653wb/bin");; for global.exe
+;		(add-to-list 'exec-path "c:/glo653wb/bin");; for global.exe
 		(setq preview-gs-command "gswin64c")
 		(setq doc-view-ghostscript-program "gswin64c")
 		(set-fontset-font t 'han (font-spec :family "Microsoft Yahei" :size 12))
@@ -78,7 +78,7 @@
 ;; Avoid multiple initialization of installed packages.
 (setq package-enable-at-startup nil)
 ;; Add Melpa to the list of package archives.
-;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
              '("elpy" . "https://jorgenschaefer.github.io/packages/"))
@@ -100,14 +100,22 @@
 (eval-when-compile
   (require 'use-package))
 
-(if (eq system-type 'windows-nt)
-    (require 'benchmark-init)
-  )
+;(if (eq system-type 'windows-nt)
+;    (require 'benchmark-init)
+;  )
+
 
 (setq use-package-verbose t)
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; open recent directory, requires ivy (part of swiper)
 ;; borrows from http://stackoverflow.com/questions/23328037/in-emacs-how-to-maintain-a-list-of-recent-directories
+(use-package benchmark-init
+  :ensure t
+  :config
+   (add-hook 'after-init-hook 'benchmark-init/deactivate))
+  
+
+
 (defun bjm/ivy-dired-recent-dirs ()
   "Present a list of recently used directories and open the selected one in dired"
   (interactive)
