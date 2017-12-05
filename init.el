@@ -10,7 +10,7 @@
 		(setq my_org_main_file "C:/org/main.org")
 		(setq my_org_capture_file "C:/org/capture.org")
         (setq my_org_memo_file "C:/org/memo.org")
-        (setq my_org_journal_file "C:/org/journal.org")
+
 		(setq org_directory "C:/org/")
 		;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 		(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
@@ -1639,10 +1639,10 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (org-agenda-to-appt)
 
 (use-package org-journal
-  :defer t
+  
   :ensure t
   :init
-  (setq org-journal-dir "~/work_journal")
+  (setq org-journal-dir "C:/org/work_journal")
   )
 
 
@@ -1689,7 +1689,12 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
       '(("t" "Todo" entry (file+headline my_org_capture_file "Tasks" )
 		 "* TODO %?\n  ")
         ("n" "Notes" entry (file+headline my_org_capture_file "Notes" )
-		 "* %?\nEntered on %U\n "))
+		 "* %?\nEntered on %U\n ")
+        ("m" "Meeting Note" entry (file "c:/org/meeting_notes.org")
+         "* Meeting with %? on %U\n")
+		 ("j" "Journal" entry (file+datetree "C:/org/journal.org")
+         "* %?\nEntered on %U\n %i\n ")
+        )
 	  )
 
 										;(use-package org-ref
@@ -1767,7 +1772,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-log-done 'time)
 
 (setq org-refile-targets 
-	  '((org-agenda-files :maxlevel . 6 )
+	  '((my_org_main_file :maxlevel . 6 )
+		(my_org_memo_file :maxlevel . 3)
         
 		))
 (setq org-refile-use-outline-path t)
