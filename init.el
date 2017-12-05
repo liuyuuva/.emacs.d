@@ -1,18 +1,21 @@
 (if (eq system-type 'windows-nt)
     (progn
-      	(let ((default-directory "~/.emacs.d/"))
+      	(let ((default-directory "C:/org/"))
 		  (normal-top-level-add-subdirs-to-load-path))
 		(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
 		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
-		(setq default-directory "~/")
-;		(add-to-list 'exec-path "~/Softwares/Aspell/bin/")
-;		(setq ispell-dictionary "~/Softwares/Aspell/dict/")
-;		(setq myprojectfile "~/Notes/Projects_2017.org")
-;		(load-file "~/.emacs.d/init_proxy.el")
+		(setq default-directory "C:/org/")
+		(add-to-list 'exec-path "C:/bin/Aspell/bin/")
+		(setq ispell-dictionary "C:/bin//Aspell/dict/")
+		(setq my_org_main_file "C:/org/main.org")
+		(setq my_org_capture_file "C:/org/capture.org")
+        (setq my_org_memo_file "C:/org/memo.org")
+        (setq my_org_journal_file "C:/org/journal.org")
+		(setq org_directory "C:/org/")
 		;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 		(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
 		(add-to-list 'exec-path "c:/msys64/usr/bin");;added for find.exe and grep.exe
-;		(add-to-list 'exec-path "c:/glo653wb/bin");; for global.exe
+		(add-to-list 'exec-path "c:/bin/glo656wb/bin");; for global.exe
 		(setq preview-gs-command "gswin64c")
 		(setq doc-view-ghostscript-program "gswin64c")
 		(set-fontset-font t 'han (font-spec :family "Microsoft Yahei" :size 12))
@@ -1250,12 +1253,12 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
 (setq flyspell-issue-welcome-flag nil) ;; fix flyspell problem
 
-(use-package org-bullets
-  :defer t
-  :config (setcdr org-bullets-bullet-map nil)
-  )
+;; (use-package org-bullets
+;;   :defer t
+;;   :config (setcdr org-bullets-bullet-map nil)
+;;   )
 
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))    
+;(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))    
 
 
 (require 'recentf)
@@ -1683,10 +1686,10 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 ;;;;Org Capture
 (setq org-capture-templates
-      '(("t" "Todo" entry (file myprojectfile )
+      '(("t" "Todo" entry (file+headline my_org_capture_file "Tasks" )
 		 "* TODO %?\n  ")
-        ("n" "Notes" entry (file myprojectfile)
-		 "* %?\nEntered on %U\n  "))
+        ("n" "Notes" entry (file+headline my_org_capture_file "Notes" )
+		 "* %?\nEntered on %U\n "))
 	  )
 
 										;(use-package org-ref
@@ -1764,28 +1767,37 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-log-done 'time)
 
 (setq org-refile-targets 
-	  '((nil :maxlevel . 6 )
+	  '((org-agenda-files :maxlevel . 6 )
+        
 		))
+(setq org-refile-use-outline-path t)
+(setq org-outline-path-complete-in-steps nil)
+(setq org-refile-allow-creating-parent-nodes (quote confirm))
+(defun bh/verify-refile-target ()
+  "Exclude todo keywords with a done state from refile targets"
+  (not (member (nth 2 (org-heading-components)) (quote "DONE")))) ;Note - "org-done-keywords"?
+
+(setq org-refile-target-verify-function 'bh/verify-refile-target)
 
 
-(defun open-notes ()
-  (interactive)
-  (find-file "C:/Users/yliu193/Notes/Notes.org")
-  )
+;(defun open-notes ()
+;  (interactive)
+;  (find-file "C:/Users/yliu193/Notes/Notes.org")
+;  )
 
-(defun open-projects ()
-  (interactive)
-  (find-file myprojectfile)
-  )
+;(defun open-projects ()
+;  (interactive)
+;  (find-file my_org_capture_file "Notes" )
+;  )
 
 
-(defun open-notes-projects ()
-  (interactive)
-  (split-window-horizontally)
-  (open-projects)
-  (other-window 1)
-  (open-notes)
-  )
+;(defun open-notes-projects ()
+;  (interactive)
+;  (split-window-horizontally)
+;  (open-projects)
+;  (other-window 1)
+;  (open-notes)
+ ; )
 
 (defun mark-tofile ()
   (interactive)
