@@ -1638,12 +1638,12 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (org-agenda-to-appt)
 
-(use-package org-journal
-  
-  :ensure t
-  :init
-  (setq org-journal-dir "C:/org/work_journal")
-  )
+;(use-package org-journal
+;  
+;  :ensure t
+;  :init
+;  (setq org-journal-dir "C:/org/work_journal")
+;  )
 
 
 (setq org-latex-create-formula-image-program 'dvipng)
@@ -1693,7 +1693,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
         ("m" "Meeting Note" entry (file "c:/org/meeting_notes.org")
          "* Meeting with %? on %U\n")
 		 ("j" "Journal" entry (file+datetree "C:/org/journal.org")
-         "* %?\nEntered on %U\n %i\n ")
+		  "* %?\nEntered on %U\n %i\n ")
+		 
         )
 	  )
 
@@ -2844,3 +2845,19 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (define-key ibuffer-mode-map (kbd "<down>") 'ibuffer-next-line)
   ;; (define-key ibuffer-mode-map (kbd "<right>") 'ibuffer-previous-header)
   ;; (define-key ibuffer-mode-map (kbd "<left>") 'ibuffer-next-header)
+
+(defun package-menu-find-marks ()
+  "Find packages marked for action in *Packages*."
+  (interactive)
+  (occur "^[A-Z]"))
+
+;; Only in Emacs 25.1+
+(defun package-menu-filter-by-status (status)
+  "Filter the *Packages* buffer by status."
+  (interactive
+   (list (completing-read
+          "Status: " '("new" "installed" "dependency" "obsolete"))))
+  (package-menu-filter (concat "status:" status)))
+
+(define-key package-menu-mode-map "s" #'package-menu-filter-by-status)
+(define-key package-menu-mode-map "a" #'package-menu-find-marks)
