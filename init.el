@@ -2355,26 +2355,26 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 
 
-(use-package elfeed
-  :ensure t
-  :defer t
-  ;; :config
-  ;; (setq elfeed-feeds
-  ;; 		'("http://www.autonomousvehicletech.com/rss/topic/108-autonomous-vehicle-news"
-  ;; 		  "http://jalopnik.com/rss"
-  ;; 		  "http://gizmodo.com/rss"
-  ;; 		  "http://lifehacker.com/rss"
-  ;; 		  "http://planet.emacsen.org/atom.xml")
-  ;; 		)
-  )
+;; (use-package elfeed
+;;   :ensure t
+;;   :defer t
+;;   ;; :config
+;;   ;; (setq elfeed-feeds
+;;   ;; 		'("http://www.autonomousvehicletech.com/rss/topic/108-autonomous-vehicle-news"
+;;   ;; 		  "http://jalopnik.com/rss"
+;;   ;; 		  "http://gizmodo.com/rss"
+;;   ;; 		  "http://lifehacker.com/rss"
+;;   ;; 		  "http://planet.emacsen.org/atom.xml")
+;;   ;; 		)
+;;   )
 
-(use-package elfeed-org
-  :ensure t
-  :defer t
-  :config
-  (setq rmh-org-files (list "~/.emacs.d/elfeed.org"))
-  (elfeed-org)
-  )
+;; (use-package elfeed-org
+;;   :ensure t
+;;   :defer t
+;;   :config
+;;   (setq rmh-org-files (list "~/.emacs.d/elfeed.org"))
+;;   (elfeed-org)
+;;   )
 
  
 
@@ -2403,6 +2403,20 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (progn
 	;; (add-hook 'org-mode-hook 'nolinum)
 	(add-hook 'org-mode-hook #'visual-line-mode)
+	(add-hook 'org-mode-hook
+			  '(lambda ()
+				 (setq org-file-apps
+					   (append '(
+								 ("\\.png\\'" . default)
+								 ("\\.jpg\\'" . default)
+								 ("\\.gif\\'" . default)
+								 ) org-file-apps )
+					   )
+				 )
+			  )
+	
+
+		   
     (define-key org-mode-map (kbd "<C-f1>") nil)
     (define-key org-mode-map (kbd "M-h") nil)
 	;;F1
