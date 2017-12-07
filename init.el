@@ -10,7 +10,8 @@
 		(setq my_org_main_file "C:/org/main.org")
 		(setq my_org_capture_file "C:/org/capture.org")
         (setq my_org_memo_file "C:/org/memo.org")
-
+		(setq my_org_journal_file "c:/org/journal.org")
+		(setq my_org_meeting_notes_file "c:/org/meeting_notes.org")
 		(setq org_directory "C:/org/")
 		;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 		(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
@@ -26,7 +27,7 @@
 
 (if (eq system-type 'darwin)
   (progn
-    (let ((default-directory "~/.emacs.d/"))
+    (let ((default-directory "~/"))
       (normal-top-level-add-subdirs-to-load-path))
     (add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
     (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
@@ -38,20 +39,36 @@
 							"/Library/Application Support/cocoAspell/aspell6-en-6.0-0")
 						   nil iso-8859-1)))
 			`((nil ,@default)
-			  ("english" ,@default))))
+			  ("english" ,@default)
+			  )
+			)
+		  )
+	(setq my_org_main_file "~/Dropbox/org/personal_main.org")
+	(setq my_org_capture_file "~/Dropbox/org/personal_capture.org")
+	(setq my_org_memo_file "~/Dropbox/org/personal_memo.org")
+	(setq my_org_journal_file "~/Dropbox/org/personal_journal.org")
+	(setq my_org_meeting_notes_file "~/Dropbox/org/personal_meeting_notes.org")
+	(setq org_directory "~/Dropbox/org/")
+	)
 ;With the above apsell config for mac os, i also edited
 ;/usr/local/etc/aspell.conf to change the string after "dict-dir" to
 ;"/Library/Application Support/cocoAspell/aspell6-en-6.0-0". Flyspell
 ;mode now works fine.
     )
-  )
+  
 
 (if (eq system-type 'gnu/linux)
     (progn
-      (let ((default-directory "~/.emacs.d/"))
+      (let ((default-directory "~/"))
 	  (normal-top-level-add-subdirs-to-load-path))
     (add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
     (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+	(setq my_org_main_file "~/Dropbox/org/personal_main.org")
+	(setq my_org_capture_file "~/Dropbox/org/personal_capture.org")
+	(setq my_org_memo_file "~/Dropbox/org/personal_memo.org")
+	(setq my_org_journal_file "~/Dropbox/org/personal_journal.org")
+	(setq my_org_meeting_notes_file "~/Dropbox/org/personal_meeting_notes.org")
+	(setq org_directory "~/Dropbox/org/")
     )
   )
 
@@ -1610,7 +1627,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (make-variable-buffer-local 'my-mode-line-buffer-line-count)
 
 (setq-default mode-line-format
-              '("  " mode-line-modified
+              '(
+				("  " mode-line-modified
                 (list 'line-number-mode "  ")
                 (:eval (when line-number-mode
                          (let ((str "L%l"))
@@ -1620,7 +1638,13 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
                 "  %p"
                 (list 'column-number-mode "  C%c")
                 "  " mode-line-buffer-identification
-                "  " mode-line-modes))
+                "  " mode-line-modes)
+				(:propertize
+				 (t org-mode-line-string)
+				 face (:foreground "cyan" :weight bold)
+				 )
+				)
+			  )
 
 (defun my-mode-line-count-lines ()
   (setq my-mode-line-buffer-line-count (int-to-string (count-lines (point-min) (point-max)))))
@@ -1637,14 +1661,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;; Org Mode Setting;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (org-agenda-to-appt)
-
-;(use-package org-journal
-;  
-;  :ensure t
-;  :init
-;  (setq org-journal-dir "C:/org/work_journal")
-;  )
-
 
 (setq org-latex-create-formula-image-program 'dvipng)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
@@ -1685,14 +1701,15 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 
 ;;;;Org Capture
+
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline my_org_capture_file "Tasks" )
 		 "* TODO %?\n  ")
         ("n" "Notes" entry (file+headline my_org_capture_file "Notes" )
 		 "* %?\nEntered on %U\n ")
-        ("m" "Meeting Note" entry (file "c:/org/meeting_notes.org")
+        ("m" "Meeting Note" entry (file my_org_meeting_notes_file)
          "* Meeting with %? on %U\n")
-		 ("j" "Journal" entry (file+datetree "C:/org/journal.org")
+		 ("j" "Journal" entry (file+datetree my_org_journal_file)
 		  "* %?\nEntered on %U\n %i\n ")
 		 
         )
@@ -1746,7 +1763,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-clock-report-include-clocking-task t)
 (setq org-pretty-entities nil)
 
-(setq org-clock-modeline-total #'current)
+(setq org-clock-mode-line-total #'current)
 
 
 (defun my-org-clocktable-indent-string (level)
@@ -2464,10 +2481,12 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "<f9> x") 'org-clock-select-task)
 	(define-key org-mode-map (kbd "<f9> s") 'org-resolve-clocks)
 	(define-key org-mode-map (kbd "<f9> a") 'org-update-all-dblocks)
+	(define-key org-mode-map (kbd "<f9> h") 'org-hide-block-all)
 
 	(define-key org-mode-map (kbd "<f9> p") 'org-pomodoro)
 	(define-key org-mode-map (kbd "<f9> k")	'org-pomodoro-kill)
 
+    (define-key org-mode-map (kbd "<f10>") 'add-sublevel-plainitem)
 	
 	(define-key org-mode-map (kbd "C-<f12>") 'org-overview)
 	(define-key org-mode-map (kbd "M-<f12>") 'org-forward-same-level)
@@ -2500,6 +2519,13 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	("w" widen "widen")
 	("q" nil "quit")
 	)
+
+(defun yl-org-add-subheading ()
+  (interactive)
+  (end-of-line)
+  (org-insert-heading-respect-content)
+  (org-do-demote)
+  )
 
 (defhydra hydra-org-edit-insert (:color red :columns 4)
   "Org Insert and Edit"

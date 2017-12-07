@@ -1,4 +1,4 @@
-#+STARTUP: overview
+#+STARTUP: content
 #+STARTUP: hideblocks
 #+STARTUP: latexpreview
 #+OPTIONS: tex:dvipng
