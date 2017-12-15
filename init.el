@@ -2829,7 +2829,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 
 (load-theme 'afternoon t)
-(set-face-attribute 'mode-line nil :font "Courier New")
+(if (eq system-type 'windows-nt)
+	(set-face-attribute 'mode-line nil :font "Courier New")
+  )
+
 
 
   (defun ibuffer-advance-motion (direction)
