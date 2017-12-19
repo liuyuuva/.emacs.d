@@ -13,6 +13,8 @@
 		(setq my_org_journal_file "c:/org/journal.org")
 		(setq my_org_meeting_notes_file "c:/org/meeting_notes.org")
 		(setq org_directory "C:/org/")
+
+        (setq my_ipython_path "c:/bin/Anaconda3/Scripts/ipython.exe")
 		;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 		(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
 		(add-to-list 'exec-path "c:/msys64/usr/bin");;added for find.exe and grep.exe
@@ -163,7 +165,7 @@
 
 
 
-;(run-at-time (current-time) 300 'recentf-save-list)
+
 
 (use-package bookmark
   :ensure t
@@ -706,9 +708,9 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (add-hook 'c-mode-hook 'yl/setup-key-chord)
 (add-hook 'c++-mode-hook 'yl/setup-key-chord)
-(add-hook 'emacs-lisp-mode-hook 'yl/setup-key-chord)
+;; (add-hook 'emacs-lisp-mode-hook 'yl/setup-key-chord)
 (add-hook 'python-mode-hook 'yl/setup-key-chord)
-;(add-hook 'prog-mode-hook 'yl/setup-key-chord)
+
 
 ;; (use-package ace-jump-mode
 ;;   :ensure t
@@ -720,10 +722,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;;     ))
 
 (global-unset-key (kbd "C-M-z"))
-(global-unset-key (kbd "M-a"))
-(use-package ace-window
-   :ensure t
-   :config (global-set-key (kbd "M-a") 'ace-window))
 
 (defhydra hydra-zoom (global-map "C-M-z")
   "zoom in and out"
@@ -929,7 +927,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
        (add-hook 'elpy-mode-hook 'flycheck-mode))
       (diminish 'elpy-mode "elpy")
       (elpy-enable)
-      (elpy-use-ipython)
+      (elpy-use-ipython my_ipython_path)
       (setq elpy-rpc-backend "jedi")
       ))
 
@@ -1278,7 +1276,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))    
 
 
-(require 'recentf)
+
 (require 'calendar)
 
 (use-package iedit
@@ -1670,6 +1668,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (setq org-use-speed-commands 1)
 
+(setq org-src-fontify-natively t)
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 
@@ -1746,9 +1745,10 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 
 
-										;Org Clock 
+;;Org Clock 
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
+
 (setq org-clock-out-remove-zero-time-clocks t)
 
 
@@ -2431,11 +2431,11 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 					   )
 				 )
 			  )
-	
+	(define-key org-mode-map (kbd "M-a") nil) ;; reserve for ace-window
 
 		   
     (define-key org-mode-map (kbd "<C-f1>") nil)
-    (define-key org-mode-map (kbd "M-h") nil)
+    (define-key org-mode-map (kbd "M-h") nil) ;; reserve for helm
 	;;F1
 	;;(define-key org-mode-map (kbd "C-<f1>") 'org-back-to-top-level-heading)
 	;;F5
@@ -2508,6 +2508,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "<f9> t") 'jump-to-today-report)
 	
 	) )
+
+(use-package org-habit)
 
 (defhydra hydra-org-structural-move-search (:color red :columns 4)
 	"Org Structural Movement and Search"
@@ -2693,10 +2695,19 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (global-set-key (kbd "C-M-m") 'delete-minibuffer-contents)
 
-(setq recentf-max-saved-items 200
-      recentf-max-menu-items 15)
-(recentf-mode)
-(global-set-key "\C-x\ \C-r" 'recentf-open-files)
+(use-package recentf
+  :ensure t
+  :config
+  (progn
+	(setq recentf-max-saved-items 200
+		  recentf-max-menu-items 15)
+	(recentf-mode 1)
+	(global-set-key "\C-x\ \C-r" 'recentf-open-files)
+	(run-at-time (current-time) 600 'recentf-save-list)
+	)
+  )
+
+
 
 
 (put 'upcase-region 'disabled nil)
@@ -2901,3 +2912,19 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (define-key package-menu-mode-map "s" #'package-menu-filter-by-status)
 (define-key package-menu-mode-map "a" #'package-menu-find-marks)
+
+
+(use-package ace-window
+   :ensure t
+   :config
+   (progn
+	 (global-unset-key (kbd "M-a"))
+	 (global-set-key (kbd "M-a") 'ace-window)
+
+	  )
+	 )
+   
+   
+(use-package free-keys
+  :ensure t
+  )
