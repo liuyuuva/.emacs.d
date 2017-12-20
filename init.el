@@ -71,6 +71,7 @@
 	(setq my_org_journal_file "~/Dropbox/org/personal_journal.org")
 	(setq my_org_meeting_notes_file "~/Dropbox/org/personal_meeting_notes.org")
 	(setq org_directory "~/Dropbox/org/")
+	(setq my_ipython_path "~/anaconda3/bin/ipython")
     )
   )
 
