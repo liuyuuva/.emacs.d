@@ -19,6 +19,7 @@
 		(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
 		(add-to-list 'exec-path "c:/msys64/usr/bin");;added for find.exe and grep.exe
 		(add-to-list 'exec-path "c:/bin/glo656wb/bin");; for global.exe
+		(add-to-list 'exec-path "C:/bin/Anaconda3/Scripts")
 		(setq preview-gs-command "gswin64c")
 		(setq doc-view-ghostscript-program "gswin64c")
 		(set-fontset-font t 'han (font-spec :family "Microsoft Yahei" :size 12))
@@ -838,7 +839,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
     (add-to-list 'ido-ignore-files "appspec.yml")))
 
 (use-package anzu
-  :defer t
+  :ensure t
   :commands (isearch-foward isearch-backward)
   :config
   (progn
