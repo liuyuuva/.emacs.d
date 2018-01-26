@@ -1,3 +1,19 @@
+(require 'package)
+;; Avoid multiple initialization of installed packages.
+(setq package-enable-at-startup nil)
+;; Add Melpa to the list of package archives.
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+
+(add-to-list 'load-path "~/.emacs.d/elpa/pyvenv-1.9")
+;; Do package initiazation.
+(package-initialize)
+
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
 (if (eq system-type 'windows-nt)
     (progn
       	(let ((default-directory "C:/org/"))
@@ -24,7 +40,8 @@
 		(setq doc-view-ghostscript-program "gswin64c")
 		(set-fontset-font t 'han (font-spec :family "Microsoft Yahei" :size 12))
 		(setq face-font-rescale-alist '(("Microsoft Yahei" . 1.2) ("WenQuanYi Zen Hei" . 1.2)))
-
+		(prefer-coding-system 'utf-8-unix)
+		(pdf-tools-install)
 		)
   )
 
@@ -77,7 +94,7 @@
     )
   )
 
-(set-language-environment "UTF-8")
+;(set-language-environment "UTF-8")
 (global-set-key (kbd "C-M-!") 'eval-buffer)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
@@ -99,21 +116,7 @@
 
 ;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (winner-mode 1) ;save window configuration
-(require 'package)
-;; Avoid multiple initialization of installed packages.
-(setq package-enable-at-startup nil)
-;; Add Melpa to the list of package archives.
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
 
-(add-to-list 'load-path "~/.emacs.d/elpa/pyvenv-1.9")
-;; Do package initiazation.
-(package-initialize)
-
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
 
 
 ;; Install use-package.  It is the only one explicitly installed, all the others
@@ -1305,14 +1308,14 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (which-function-mode 1)
 
-(use-package linum
-  :ensure t
+; (use-package linum
+  ; :ensure t
 
-  :config
-  (progn
-    (global-linum-mode 1)
-    )
-  )
+  ; :config
+  ; (progn
+    ; (global-linum-mode 1)
+    ; )
+  ; )
 
 (defun nolinum()
       (interactive)
