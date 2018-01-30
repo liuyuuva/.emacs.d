@@ -828,7 +828,20 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
                (ido-everywhere 1)
 			   (use-package ido-vertical-mode
 				 :ensure t
-				 :init (ido-vertical-mode 1)))
+				 :init (ido-vertical-mode 1)
+				 :config
+				 (progn
+				   (setq ido-use-faces t)
+                   (set-face-attribute 'ido-vertical-first-match-face nil
+                    :background nil
+                    :foreground "orange")
+                   (set-face-attribute 'ido-vertical-only-match-face nil
+                                       :background nil
+                                       :foreground nil)
+                   (set-face-attribute 'ido-vertical-match-face nil
+                                       :foreground nil)
+				   ))
+			   )
   :config
   (progn
     (setq ido-case-fold t)
@@ -1630,25 +1643,25 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (defvar my-mode-line-buffer-line-count nil)
 (make-variable-buffer-local 'my-mode-line-buffer-line-count)
 
-(setq-default mode-line-format
-              '(
-				("  " mode-line-modified
-                (list 'line-number-mode "  ")
-                (:eval (when line-number-mode
-                         (let ((str "L%l"))
-                           (when (and (not (buffer-modified-p)) my-mode-line-buffer-line-count)
-                             (setq str (concat str "/" my-mode-line-buffer-line-count)))
-                           str)))
-                "  %p"
-                (list 'column-number-mode "  C%c")
-                "  " mode-line-buffer-identification
-                "  " mode-line-modes)
-				(:propertize
-				 (t org-mode-line-string)
-				 face (:foreground "cyan" :weight bold)
-				 )
-				)
-			  )
+;; (setq-default mode-line-format
+;;               '(
+;; 				("  " mode-line-modified
+;;                 (list 'line-number-mode "  ")
+;;                 (:eval (when line-number-mode
+;;                          (let ((str "L%l"))
+;;                            (when (and (not (buffer-modified-p)) my-mode-line-buffer-line-count)
+;;                              (setq str (concat str "/" my-mode-line-buffer-line-count)))
+;;                            str)))
+;;                 "  %p"
+;;                 (list 'column-number-mode "  C%c")
+;;                 "  " mode-line-buffer-identification
+;;                 "  " mode-line-modes)
+;; 				(:propertize
+;; 				 (t org-mode-line-string)
+;; 				 face (:foreground "cyan" :weight bold)
+;; 				 )
+;; 				)
+;; 			  )
 
 (defun my-mode-line-count-lines ()
   (setq my-mode-line-buffer-line-count (int-to-string (count-lines (point-min) (point-max)))))
@@ -2954,7 +2967,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
     :ensure t
     :config
     (pdf-tools-install)
-    (setq-default pdf-view-display-size 'fit-page)
+    (setq-default pdf-view-display-size 'fit-width)
+    ;(define-pdf-cache-function outline)
+    ;(pdf-cache-outline)
     (bind-keys :map pdf-view-mode-map
         ("t" . hydra-pdftools/body)
         ("<s-spc>" .  pdf-view-scroll-down-or-next-page)
