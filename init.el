@@ -2032,6 +2032,15 @@ last month."
 
  (use-package ox-latex
    :ensure nil
+   :config
+   (add-to-list 'org-latex-classes
+				'("ieeeconf"
+				  "\\documentclass{ieeeconf}"
+				  ("\\section{%s}" . "\\section*{%s}")
+				  ("\\subsection{%s}" . "\\subsection*{%s}")
+				  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+				  )
+				)
    )
 
  ;;   (add-to-list 'org-latex-classes

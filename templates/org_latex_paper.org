@@ -1,6 +1,6 @@
 # Set the article class
 #+LaTeX_CLASS: ieeeconf
-#+LaTeX_CLASS_OPTIONS: [letterpaper, 10pt, conferrence]
+#+LaTeX_CLASS_OPTIONS: [letterpaper, 10pt]
 
 # No need for a table of contents, unless your paper is quite long.
 #+OPTIONS: toc:nil
@@ -11,6 +11,10 @@
 #+LATEX_HEADER: \usepackage{graphicx}
 
 #+LATEX_HEADER: \oddsidemargin -0.2in
+
+# Set the spacing to double, as required in most papers.
+#+LATEX_HEADER: \usepackage{setspace}
+#+LATEX_HEADER: \doublespacing
 
 # Fix the margins
 #+LATEX_HEADER: \usepackage[margin=1in]{geometry}
