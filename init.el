@@ -3041,3 +3041,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
         ("N" pdf-history-forward :color red)
         ("l" image-forward-hscroll :color red)
         ("h" image-backward-hscroll :color red))
+
+(use-package org-ref
+  :ensure t
+  )
