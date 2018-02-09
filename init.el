@@ -700,7 +700,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	(setq key-chord-one-key-delay 0.2)
 	(key-chord-mode 1)
 	:config
-	(key-chord-define-local"nn" 'avy-goto-char-timer)
+	(key-chord-define-local"jj" 'avy-goto-char-timer)
 	(key-chord-define-local "ww" 'helm-swoop)
 	(key-chord-define-local "bb" 'helm-swoop-back-to-last-point)
 	(key-chord-define-local "qq" 'keyboard-quit)
