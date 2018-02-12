@@ -1083,14 +1083,14 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   :config
   (progn
     (add-hook 'after-init-hook 'global-company-mode)
-    
+    (setq company-idle-delay 0)
     ;; (setq company-idle-delay nil
 	;;   company-show-numbers t
 	;;   company-async-timeout 50)
     (add-to-list 'company-backends
 	  '(company-irony
 		company-gtags
-		company-ispell
+		;company-ispell
 	    )
 	  )
     
