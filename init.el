@@ -7,6 +7,7 @@
 (add-to-list 'package-archives
              '("elpy" . "https://jorgenschaefer.github.io/packages/"))
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+
 (add-to-list 'load-path "~/.emacs.d/elpa/pyvenv-1.9")
 ;; Do package initiazation.
 (package-initialize)
@@ -2032,8 +2033,7 @@ last month."
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((R . t)
-   (python . t)
+ '((python . t)
    (emacs-lisp . t)
    (C . t)
    (dot . t)
@@ -2447,7 +2447,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (with-eval-after-load "org"
   (progn
 	;; (add-hook 'org-mode-hook 'nolinum)
-	
+	(let ((current-prefix-arg 1))
+	  (call-interactively 'org-reload)) ;; remove the export issue 
 	(add-hook 'org-mode-hook #'visual-line-mode)
 	(add-hook 'org-mode-hook
 			  '(lambda ()
@@ -3045,3 +3046,11 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (use-package org-ref
   :ensure t
   )
+
+ (use-package org-pdfview
+   :ensure t
+   )
+ (eval-after-load 'org '(require 'org-pdfview))
+ (add-to-list 'org-file-apps 
+              '("\\.pdf\\'" . (lambda (file link)
+                                      (org-pdfview-open link))))
