@@ -90,7 +90,7 @@
 	(setq my_org_journal_file "~/Dropbox/org/personal_journal.org")
 	(setq my_org_meeting_notes_file "~/Dropbox/org/personal_meeting_notes.org")
 	(setq org_directory "~/Dropbox/org/")
-	(setq my_ipython_path "~/anaconda3/bin/ipython")
+	(setq my_ipython_path "~/local/bin/ipython")
 	;(pdf-tools-install)
     )
   )
@@ -935,7 +935,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
      )
    )
 
- (use-package elpy
+(use-package elpy
+  :diminish elpy
    :ensure t
     :defer t
     :config
@@ -945,7 +946,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
        (remove-hook 'elpy-modules 'elpy-module-yasnippet)
        (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
        (add-hook 'elpy-mode-hook 'flycheck-mode))
-      (diminish 'elpy-mode "elpy")
       (elpy-enable)
       (elpy-use-ipython my_ipython_path)
       (setq elpy-rpc-backend "jedi")
