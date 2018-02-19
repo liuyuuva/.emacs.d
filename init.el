@@ -134,7 +134,7 @@
 ;  )
 
 
-(setq use-package-verbose t)
+(setq use-package-verbose nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; open recent directory, requires ivy (part of swiper)
 ;; borrows from http://stackoverflow.com/questions/23328037/in-emacs-how-to-maintain-a-list-of-recent-directories
@@ -947,7 +947,9 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
        (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
        (add-hook 'elpy-mode-hook 'flycheck-mode))
       (elpy-enable)
-      (elpy-use-ipython my_ipython_path)
+	  ;;(elpy-use-ipython my_ipython_path)
+	  (setq python-shell-interpreter "ipython"
+			python-shell-interpreter-args "-i --simple-prompt")
       (setq elpy-rpc-backend "jedi")
       ))
 
@@ -3049,8 +3051,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
  (use-package org-pdfview
    :ensure t
+   :after org
    )
- (eval-after-load 'org '(require 'org-pdfview))
+
+
  (add-to-list 'org-file-apps 
               '("\\.pdf\\'" . (lambda (file link)
                                       (org-pdfview-open link))))
