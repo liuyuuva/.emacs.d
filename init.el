@@ -30,7 +30,7 @@
 		(setq my_org_journal_file "c:/org/journal.org")
 		(setq my_org_meeting_notes_file "c:/org/meeting_notes.org")
 		(setq org_directory "C:/org/")
-
+		(setq my_python_command "c:/bin/Anaconda3/python.exe")
         (setq my_ipython_path "c:/bin/Anaconda3/Scripts/ipython.exe")
 		;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 		(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
@@ -963,6 +963,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
  ;;if windows redefine M-TAB to TAB since M-TAB is used for switching applications
  (if (eq system-type 'windows-nt)
      (progn
+	   (setq elpy-rpc-python-command my_python_command)
        (add-hook 'elpy-mode-hook
  		(lambda ()
  		  (local-unset-key (kbd "M-TAB"))
