@@ -937,21 +937,28 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package elpy
   :diminish elpy
-   :ensure t
-    :defer t
-    :config
-    (progn
-      (when (require 'flycheck nil t)
-       (remove-hook 'elpy-modules 'elpy-module-flymake)
-       (remove-hook 'elpy-modules 'elpy-module-yasnippet)
-       (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
-       (add-hook 'elpy-mode-hook 'flycheck-mode))
-      (elpy-enable)
-	  ;;(elpy-use-ipython my_ipython_path)
-	  (setq python-shell-interpreter "ipython"
-			python-shell-interpreter-args "-i --simple-prompt")
-      (setq elpy-rpc-backend "jedi")
-      ))
+  :ensure t
+  :config
+  (progn
+	(when (require 'flycheck nil t)
+	  (remove-hook 'elpy-modules 'elpy-module-flymake)
+	  (remove-hook 'elpy-modules 'elpy-module-yasnippet)
+	  (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
+	  (add-hook 'elpy-mode-hook 'flycheck-mode))
+	(elpy-enable)
+	(setq elpy-rpc-backend "jedi")
+	;;(elpy-use-ipython my_ipython_path)
+	(setq python-shell-interpreter "ipython"
+		  python-shell-interpreter-args "-i --simple-prompt")
+	
+	(add-to-list 'company-backends 'elpy-compand-backend)
+	))
+
+(if (eq system-type 'gnu/linux)
+	(progn
+	  (setq elpy-rpc-python-command "python3")
+	  )
+  )
 
  ;;if windows redefine M-TAB to TAB since M-TAB is used for switching applications
  (if (eq system-type 'windows-nt)
