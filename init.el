@@ -1058,6 +1058,10 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 		
 	    )
 	  )
+
+(use-package counsel
+  :ensure t
+  )
 ;; in addition to cmake to obtain compile_commands.json, should also
 ;; manually get a .clang_complete file in root folder of project include
 ;; "-I/.../" where /.../ is the folder structure, such as /src/,
@@ -1076,9 +1080,9 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;; irony-mode's buffers by irony-mode's function
 (defun my-irony-mode-hook ()
   (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
+    'counsel-irony );'irony-completion-at-point-async)
   (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
+    'counsel-irony ));'irony-completion-at-point-async))
 (add-hook 'irony-mode-hook 'my-irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 	
@@ -1143,7 +1147,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package company-irony-c-headers
   :ensure t
-  :defer t
   :after company
   :config
   (add-to-list 'company-backends 'company-irony-c-headers)
