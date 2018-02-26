@@ -1104,13 +1104,14 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	;;   company-async-timeout 50)
     (add-to-list 'company-backends
 	  '(company-irony
-		company-gtags
+		;company-gtags
 		;company-ispell
 	    )
 	  )
     
     (setq company-backends (delete 'company-semantic company-backends))
 
+	
   
 ;    (define-key company-active-map 'company-complete-common nil)
 ;    (define-key company-active-map "C-'" 'company-complete-common)
