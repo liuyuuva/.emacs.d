@@ -432,6 +432,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 ("M-h r" . helm-resume)
 	 ("M-h c" . yas-describe-tables)
 	 ("M-h l" . helm-recentf)
+	 ("M-h h" . helm-multi-swoop-all)
 	 )
   )
 
