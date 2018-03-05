@@ -3093,3 +3093,5 @@ buffer in current window."
    (current-buffer)))
 
 (global-set-key (kbd "C-c t") 'toggle-window-dedicated)
+
+(setq auto-window-vscroll nil) ;;improve cursor movement speed
