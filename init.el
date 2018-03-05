@@ -2147,9 +2147,18 @@ BEG and END (region to sort)."
 
 (setq TeX-source-correlate-mode t)
 (setq TeX-source-correlate-start-server t)
-;;(setq TeX-source-correlate-method 'synctex)
-(setq TeX-source-correlate-method 'source-specials)
+(setq TeX-source-correlate-method 'synctex)
+;(setq TeX-source-correlate-method 'source-specials)
 ;;(setq TeX-PDF-mode t)
+
+;; to use pdfview with auctex
+ (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+    TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+    TeX-source-correlate-start-server t) ;; not sure if last line is neccessary
+
+ ;; to have the buffer refresh after compilation
+ (add-hook 'TeX-after-compilation-finished-functions
+		   #'TeX-revert-document-buffer)
 
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'reftex-mode) 
@@ -3071,3 +3080,16 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
  (add-to-list 'org-file-apps 
               '("\\.pdf\\'" . (lambda (file link)
                                       (org-pdfview-open link))))
+
+(defun toggle-window-dedicated ()
+  "Control whether or not Emacs is allowed to display another
+buffer in current window."
+  (interactive)
+  (message
+   (if (let (window (get-buffer-window (current-buffer)))
+         (set-window-dedicated-p window (not (window-dedicated-p window))))
+       "%s: Can't touch this!"
+     "%s is up for grabs.")
+   (current-buffer)))
+
+(global-set-key (kbd "C-c t") 'toggle-window-dedicated)
