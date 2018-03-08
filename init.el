@@ -3018,7 +3018,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
         ("b"  . pdf-view-set-slice-from-bounding-box)
         ("r"  . pdf-view-reset-slice)
 		("D" . pdf-annot-delete)
-)
+		)
+	)
+
+	
 
 (defhydra hydra-pdftools (:color blue :hint nil)
         "
@@ -3074,13 +3077,13 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   :ensure t
   )
 
- (use-package org-pdfview
+(use-package org-pdfview
    :ensure t
    :after org
    )
 
 
- (add-to-list 'org-file-apps 
+(add-to-list 'org-file-apps 
               '("\\.pdf\\'" . (lambda (file link)
                                       (org-pdfview-open link))))
 
