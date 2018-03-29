@@ -3113,3 +3113,10 @@ buffer in current window."
 (use-package academic-phrases
   :ensure t
   )
+
+(use-package super-save
+  :ensure t
+  :init
+  (progn
+	(setq super-save-auto-save-when-idle t)
+	))
