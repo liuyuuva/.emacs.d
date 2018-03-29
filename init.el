@@ -3120,3 +3120,14 @@ buffer in current window."
   (progn
 	(setq super-save-auto-save-when-idle t)
 	))
+
+(defun smart-open-line-above ()
+  "Insert an empty line above the current line.
+Position the cursor at it's beginning, according to the current mode."
+  (interactive)
+  (move-beginning-of-line nil)
+  (newline-and-indent)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(global-set-key (kbd "M-o") 'smart-open-line-above)
