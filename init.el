@@ -1711,7 +1711,13 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (setq org-icalendar-use-scheduled '(todo-start event-if-todo))
 (setq org-archive-mark-done nil)
-(setq org-archive-location "%s_archive::* Archived Tasks")
+;; (setq org-archive-location "%s_archive::* Archived Tasks")
+(setq org-archive-location "%s_archive::datetree/* Archived Tasks")
+(defun my-org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries 'org-archive-subtree "/DONE" 'file))
+
+
 (setq org-startup-indented 1)
 (setq org-tags-column -100)
 (setq org-icalendar-include-todo t) 
@@ -3103,3 +3109,7 @@ buffer in current window."
 (global-set-key (kbd "C-c t") 'toggle-window-dedicated)
 
 (setq auto-window-vscroll nil) ;;improve cursor movement speed
+
+(use-package academic-phrases
+  :ensure t
+  )
