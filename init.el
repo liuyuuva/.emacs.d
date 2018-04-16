@@ -95,6 +95,7 @@
     )
   )
 
+
 ;(set-language-environment "UTF-8")
 (global-set-key (kbd "C-M-!") 'eval-buffer)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
@@ -143,7 +144,8 @@
   :config
    (add-hook 'after-init-hook 'benchmark-init/deactivate))
   
-
+(use-package afternoon
+	     :ensure t)
 
 (defun bjm/ivy-dired-recent-dirs ()
   "Present a list of recently used directories and open the selected one in dired"
