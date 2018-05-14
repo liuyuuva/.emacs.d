@@ -144,8 +144,6 @@
   :config
    (add-hook 'after-init-hook 'benchmark-init/deactivate))
   
-(use-package afternoon
-	     :ensure t)
 
 (defun bjm/ivy-dired-recent-dirs ()
   "Present a list of recently used directories and open the selected one in dired"
@@ -2616,6 +2614,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   ("p" org-set-property "property")
   ("P" yl-insert-project-template "insert project template")
   ("B" yl-insert-beamer-template "insert beamer template")
+  ("t" org-toggle-latex-fragment "toggle latex fragment")
   ("q" nil "quit")
   )
 
@@ -2904,6 +2903,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;;   (define-key ibuffer-mode-map (kbd "<up>") 'ibuffer-previous-line)
 ;; (define-key ibuffer-mode-map (kbd "<down>") 'ibuffer-next-line)
 
+(use-package afternoon-theme
+	     :ensure t)
 
 (load-theme 'afternoon t)
 (if (eq system-type 'windows-nt)
