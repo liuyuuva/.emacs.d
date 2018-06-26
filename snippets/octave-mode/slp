@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: Simulink_Parameter
+# key: slp
+# --
+
+${1:parameter} = Simulink.Parameter;
+$1.Value = $2;
+$1.CoderInfo.StorageClass = '${3:ExportedGlobal}';
+$1.Description = '$4';
+$1.DataType = '$5';
+$1.Min = $6;
+$1.Max = $7;
+$1.Unit = '$8';
+$1.Dimensions = [$9	$10];
+$0
+
