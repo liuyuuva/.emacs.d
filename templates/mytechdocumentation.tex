@@ -1,0 +1,545 @@
+\documentclass[11pt,letterpaper]{report}
+\usepackage{graphicx}
+
+%\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{fixltx2e}
+
+\usepackage{longtable}
+%\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{geometry}
+%\usepackage{subfig}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{fullpage}
+
+\usepackage{floatrow}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=blue,
+    linkcolor=blue,
+    urlcolor=blue
+}
+\usepackage{listings}
+\usepackage{xcolor}
+% \lstset { %
+%     language=C,
+%     backgroundcolor=\color{black!5}, % set backgroundcolor
+%     basicstyle=\footnotesize,% basic font setting
+%                    keywordstyle=\color{blue}\ttfamily,
+%                 stringstyle=\color{red}\ttfamily,
+%                 commentstyle=\color{green}\ttfamily,
+%                 morecomment=[l][\color{magenta}]{\#}
+%               }
+
+              \definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize\scriptsize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+}
+
+\begin{document}
+
+
+\newtheorem{lem}{\bf Lemma}%[section]
+\newtheorem{rem}{\bf Remark}%[section]
+\newtheorem{pro}{\bf Proposition}%[section]
+\newtheorem{defn}{\bf Definition}%[section]
+\newtheorem{thm}{\bf Theorem}%[section]
+\newtheorem{assu}{Assumption}%[section]
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\ts}{& \hspace{-0.05in}}
+\newcommand{\nn}{\nonumber}
+\newtheorem{ex}{Example}[section]
+\newcommand{\bp}{\bigskip}
+\newcommand{\slp}{\smallskip}
+\newcommand{\diag}{{\rm diag}}
+\newcommand{\sign}{{\rm sign}}
+
+\newcommand{\rank}{{\rm rank}}
+\newcommand{\qed}{\hfill \ensuremath{\Box}}
+%\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+
+\title{\bf \LARGE Lateral Controller Specification}
+
+\author{Yu Liu}
+
+\date{}
+\maketitle
+
+\chapter*{Revision Record}
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{|p{3cm}| p{3cm}| p{3cm}| p{7cm}|}
+    \hline
+    {\bf Revision}& {\bf Date}& {\bf Author}& {\bf Content} \\
+    \hline
+    V1      & 9/24/2018 & Yu Liu & Lateral controller design at
+                                   Conception Ready on September 20,
+                                   2018\\
+    \hline
+                                
+  \end{tabular}
+\end{table}
+
+
+\newpage
+\tableofcontents
+\newpage
+
+\chapter{ Introduction}
+This documentation is to detail the design of the Lateral Controller
+Module for the Traffic Jam Pilot (TJP) project. The primary purpose of
+this system is to provide steering control requests to the vehicle
+steering system in order to achieve desired autonomous driving
+maneuvers. This system obtains the vehicle's current status in the
+lateral direction and its respective path planned to tread. The output
+is converted to vehicle interface scaling in another subsystem for
+direct steering control of vehicle.
+
+\section{Purpose}
+The purpose of this document is to provide a detailed overview of the
+Lateral Control Library. The audience for this documentation are
+engineers who are intending on creating steering control targets to
+control vehicle's headway and steering state. This document should
+provide an understanding of the benefits and also detail some of the
+heuristic nuances and current problems with the controller and overall
+strategy.
+
+\section{Scope}
+\label{sec:scope}
+
+\begin{enumerate}
+\item The software system created by this system shall be referred to as
+  the Lateral Control Module.
+\item This software system shall perform feed forward and closed loop
+  vehicle control.
+\item The primary objective of this system is to take the trajectory,
+  vehicle state and the feedback from the brake and steering sensors and
+  then determine the desired steering needed to move the vehicle as per
+  the next waypoint. The output from this controller is then sent to the
+  user interface for implementing the heading of the vehicle.
+\end{enumerate}
+\section{Definitions, Acronyms, and Abbreviations}
+\begin{table}[!htbp]
+  \begin{center}
+    \caption{Definitions, Acronyms, and Abbreviations.}
+    \label{tab:acronyms}
+    \begin{tabular}{|p{3cm}|p{10cm}|}
+      \hline
+      {\bf Abbreviations} & {\bf Description} \\
+      \hline
+      ACC & Adaptive Cruise Control\\
+      \hline
+      CAN & Controller Area Network\\
+      \hline
+      AEB & Automatic Emergency Braking\\
+      \hline
+      CIPV & Closest In-Path Vehicle \\
+      \hline
+      ECM & Engine Control Module \\
+      \hline
+      HV  & Host Vehicle \\
+      \hline
+      ISO & International Standards Organization\\
+      \hline
+      RX  & Receive \\
+      \hline
+      SAS & Steering Angle Sensor \\
+      \hline
+      TBD & To Be Determined \\
+      \hline
+      TJP & Traffic Jam Pilot \\
+      \hline
+      TX  & Transmit \\
+      \hline
+      
+    \end{tabular}
+    \end{center}
+\end{table}
+
+\chapter{System Design}
+
+\section{System Overview}
+\begin{figure}[htbp]
+  \centerline{\includegraphics[width=6in]{Lateral_Control_Architecture.jpg}}
+  \caption{Lateral Control Architecture.}
+  \label{lateral_control_architecture}
+\end{figure}
+The system architecture of the lateral control system is shown in Figure
+\ref{lateral_control_architecture}.
+
+This lateral controller determines the targeted steering depending on
+the path to be followed. For this controller geometric path tracking
+using a non-linear functions for the lateral distance error is used.
+This lateral error distance is measured from the center of the front
+wheel to the nearest path point and the heading error with respect to
+the target point. The main subsystems for this lateral control can be
+described as follows.
+
+% \subsection{Target and Error Determination}
+% The {\it Target and Error Determination} module calculates target and
+% error variables needed for lateral control calculation. This module
+% consists of two subsystems, Vehicle State Generator and Yaw Rate Target
+% Subsystem, and their functions are described briefly below.
+
+% \subsubsection{Vehicle State Generator}
+% Vehicle State Generator calculates a set of look-ahead values,
+% namely look-ahead distance, look-ahead lateral offset, look-ahead
+% heading offset based on the current desirable path information. The
+% look-ahead values describe the path characteristics at the look-ahead
+% distance and will support the control signal calculation for a smoother
+% steering commanding. The inputs and outputs of the module of Vehicle
+% State Generator are summarized in Table \ref{tab:vehicle_state_generator}.
+% \begin{table}[hpbt]
+%   \caption{Inputs and Outputs of Vehicle State Generator}
+%   \label{tab:vehicle_state_generator}
+%   \begin{tabular}{|p{4.5cm}|p{1.5cm}|p{1.5cm}|p{7cm}|}
+%     \hline
+%     {\bf Signal} & {\bf I/O} & {\bf Unit} & {\bf Description} \\
+%     \hline
+%     LateralCtrlActive           & Input  & Boolean   & Flag for activating lateral
+%                                                        control calculation \\
+%     \hline
+%     HostVehclSPD\_mps           & Input  & m/s       & Host vehicle speed. \\
+%     \hline 
+%     LateralOffset\_Current      & Input  & m         & Coefficient $a_0$
+%                                                        of the path at
+%                                                        vehicle location
+%     \\
+%     \hline
+%     HeadingOffset\_Current      & Input  & rad       & Coefficient $a_1$
+%                                                        of the path at vehicle\\
+%     \hline
+%     Curvature\_Current          & Input  & 1/m       & Coefficient $a_2$
+%                                                        of the path at
+%                                                        vehicle \\
+%     \hline
+%     CurvRate\_Current           & Input  & 1/(m$\cdot$ s) & Coefficient
+%                                                             $a_3$ of the
+%                                                             path at
+%                                                             vehicle \\
+%     \hline
+%     LateralOffset\_LookAhead    &Output   & m         & Coefficient
+%                                                         $a_0$ of the
+%                                                         path at the
+%                                                         look-ahead
+%                                                         distance\\
+%     \hline
+%     HeadingOffset\_LookAhead     & Output  & rad       & Coefficent
+%                                                          $a_1$ of the
+%                                                          path at the
+%                                                          look-ahead
+%                                                          distance\\
+%     \hline
+%     LookAheadDistance            & Output   & m         &Look-ahead
+%                                                           distance\\
+%     \hline
+                                                     
+%   \end{tabular}
+% \end{table}
+
+
+% \subsubsection{Yaw Rate Target Sub}
+% The module of {\it Yaw Rate Target Sub} calculates a target vehicle yaw
+% rate based on the current curvature of the path and vehicle speed. The
+% target yaw rate is also used for calculating a yaw rate error. The
+% calculation is filtered to reduce the noise level resultant from yaw
+% sensor measurement. The inputs and outputs of Yaw Rate Target Sub are
+% summarized in Table \ref{tab:yaw_rate_target_sub}.
+
+% \begin{table}[hpbt]
+%   \caption{Inputs and Outputs of Yaw Rate Target Sub}
+%   \label{tab:yaw_rate_target_sub}
+%   \begin{tabular}{|p{4.5cm}|p{1.5cm}|p{1.5cm}|p{7cm}|}
+%     \hline
+%     {\bf Signal} & {\bf I/O} & {\bf Unit} & {\bf Description} \\
+%     \hline
+%     Curvature\_Current          & Input  & 1/m       & Coefficient $a_2$
+%                                                        of the path at
+%                                                        vehicle \\
+%     \hline
+%     HostVehclSPD\_mps           & Input  & m/s       & Host vehicle
+%                                                        speed \\
+%     \hline
+%     Yaw\_Rate\_Host             & Input  & rad/s     & Host vehicle yaw
+%                                                        rate \\
+%     \hline
+%     Path\_Valid                 & Input  & Boolean   & Flag indicating
+%                                                        that the path is
+%                                                        valid\\
+%     \hline
+%     LateralCtrlActive           & Input  & Boolean   & Flag for activating lateral
+%                                                        control
+%                                                        calculation \\
+%     \hline
+%     Yaw\_Rate\_Target\_rad      & Output  & rad/s    & Target vehicle
+%                                                        yaw rate under
+%                                                        current curvature
+%                                                        and vehicle
+%                                                        velocity\\
+%     \hline
+%     Yaw\_Rate\_Error\_rad       & Output & rad/s     & Yaw rate error
+%                                                        between current
+%                                                        vehicle yaw rate
+%                                                        and yaw rate
+%                                                        target\\
+%     \hline
+    
+%   \end{tabular}
+% \end{table}
+
+% \subsection{Steering Feed Forward Control}
+% Steering Feed Forward Control determines a feed forward steering command
+% signal based on the vehicle speed and the target yaw rate. 
+
+% \begin{table}[hpbt]
+%   \caption{Steering Feed Forward Control}
+%   \label{tab:feed_forward_control}
+%   \begin{tabular}{|p{5.5cm}|p{1.5cm}|p{1.5cm}|p{7cm}|}
+%     \hline
+%     {\bf Signal} & {\bf I/O} & {\bf Unit} & {\bf Description} \\
+%     \hline
+%     HostVehclSPD\_mps           & Input  & m/s       & Host vehicle
+%                                                        speed \\
+%     \hline
+%     Yaw\_Rate\_Target\_rad      & Input  & rad/s    & Target vehicle
+%                                                       yaw rate under
+%                                                       current curvature
+%                                                       and vehicle
+%                                                       velocity\\
+%     \hline
+%     SCMD\_YawRate\_FeedForward  & Output & rad     & Feed Forward
+%                                                      Steering Command to
+%                                                      achieve desired yaw rate at current vehicle speed\\
+%     \hline
+    
+%   \end{tabular}
+% \end{table}
+
+
+% \subsection{Heading Error Feedback Control}
+
+% \subsection{Yaw Rate Error Feedback Control}
+
+% \subsection{Lateral Error Feedback Control}
+
+% \subsection{Steering Command Limits}
+% \section{Software Interface}
+
+% \section{Calibrations}
+
+
+
+% \begin{figure}[htbp]
+% \centerline{\includegraphics[width=5in]{powersplit_diagram}}
+% \caption{Model of Power Split HEV Powertrain and Driveline.}
+% \label{powersplit_diagram}
+% \end{figure}
+
+
+
+% \begin{table}
+% \begin{center}
+% \caption{Characteristics of technical metrics.}
+% \label{tab:techmetrics}
+% \begin{tabular}{|l|p{11cm}|}
+% \hline
+% Technical Metrics & Characteristics \\ \hline
+% VDV               & Vibration value measured on seat track. Represent
+%                     vibration level created via both powertrain mouth
+%                     path and half shaft path. \\ \hline
+% TDV               & Vibration value measured on half shaft. Represent
+%                     vibration level via half shaft path only. \\ \hline
+% mVDV              & Vibration value measured in powertrain. Represent
+%                     vibration level that is high similar to half shaft
+%                     torque vibration. \\ \hline
+% \end{tabular}
+% \end{center}
+% \end{table}
+
+
+% \begin{figure}[thb]
+%     \centering
+%     \begin{subfigure}[t]{0.5\textwidth}
+%         \centering
+%         \includegraphics[width=3in]{EngStartPowerLow}
+%         \caption{Smaller power (4 kW). ECT 30$^{\circ}$C, SOC 60\%.}
+% \label{fig:EngStartPowerLow}
+%     \end{subfigure}%
+%     ~ 
+%     \begin{subfigure}[t]{0.5\textwidth}
+%         \centering
+%         \includegraphics[width=3in]{EngStartPowerRegular}
+%         \caption{Regular power (6.6 kW). ECT 32$^{\circ}$C, SOC 42\%.}
+% \label{fig:EngStartPowerRegular}
+%     \end{subfigure}
+%     \caption{Impact of start power on engine start smoothness.}
+% \label{EngStartPower}
+% \end{figure}
+
+
+
+
+% \begin{table}[thpb]
+% \caption{Relevant signals in engine stop event.}
+% \label{tab:engstopsignals}
+% \begin{center}
+%   \begin{tabular}{|l|p{5cm}|p{6cm}|}
+% \hline
+% Signal & Description & Comments
+%     \\ \hline
+% \verb;OMP_GEN_MODE; &  Generator mode  & Generator mode switches from
+%                                          Speed mode (\verb;MG_SPEED;) to
+%                                          Engine Stop mode
+%                                          (\verb;MG_ENGSTOP;) when engine
+%                                          stop events occur. It then
+%                                          switches to Torque mode
+%                                          (\verb;MG_TORQUE;) when engine
+%                                          stop events finish.  
+%     \\ \hline
+% \verb;PVP_ENG_POS; &  Engine position      & Engine position is
+%                                              calculated in the Hybrid
+%                                              Transaxle Physical Variable
+%     Process (HTPVP).\\ \hline
+% \verb;TRP_ESTP_TPOS; & Engine stop target position      & Values come
+%                                                           from the
+%                                                           calibration
+%                                                           array
+%                                                           \verb;TRP_ESTP_POS;
+%                                                           (Possible
+%                                                           engine
+%                                                           prepositioning
+%     target positions). The final target position is the nearest possible
+%     target position to reach, which is calculated from the current
+%                                                          engine
+%                                                           position,
+%                                                           engine speed,
+%                                                           and an engine
+%                                                           stop speed profile.\\ \hline
+% \verb;TRP_ESTP_EXPOS; &  Engine stop expected position    & Expected
+%                                                             engine stop
+%                                                             position
+%                                                             calculated
+%                                                             from the
+%                                                             engine
+%                                                             position at
+%                                                             the
+%                                                             beginning of
+%                                                             the engine
+%                                                             stop event
+%                                                             as well as
+%                                                             the engine
+%                                                             stop speed profile. \\ \hline
+% \verb;TRP_ESTP_TQ;   &   Engine stop controller command    & PI
+%                                                              controller
+%                                                              output
+%                                                              that is
+%                                                              calculated
+%                                                              from engine
+%     position error between engine position (\verb;PVP_ENG_POS;) and
+%                                                              expected
+%                                                              engine
+%                                                              position (\verb;TRP_ESTP_EXPOS;).\\ \hline
+% \verb;TRP_TQ_GEN_CMD; & Arbitrated generator torque command     &
+%                                                                   Selected
+%     rate-limited generator torque command based on generator mode.\\ \hline
+% \verb;TRP_GENTQ_PI;  &    Generator PI controller output   & Final generator
+%                                                              torque
+%                                                              command
+%                                                              from both
+%                                                              PI controllers. \\ \hline
+%   \end{tabular}
+% \end{center}
+% \end{table}
+
+
+% \begin{figure}
+% \begin{floatrow}
+% \ffigbox{%
+% \centerline{\includegraphics[width=3in]{EngStopErrorD0}}
+% }
+% {
+
+% \caption{Engine stop position errors for Case I.}%
+% \label{fig:engstoperrord0}
+% }
+% \capbtabbox{%
+%   \begin{tabular}{|c|c|} \hline
+%   Target Position & Error (degree) \\ \hline
+%  0                & 30.05 \\ \hline
+% 30                & 31.89 \\ \hline
+% 60                & 23.11 \\ \hline
+% 90                & 18.71 \\ \hline
+% 120               & 23.38 \\ \hline
+% 150               & 24.94 \\ \hline
+% Average           & 25.35 \\ \hline
+
+%   \end{tabular}
+
+% \vspace{1cm}
+% }{%
+%   \caption{Engine stop position errors and the average error for Case I}%
+% \label{table:engstoperrord0}
+% }
+% \end{floatrow}
+% \end{figure}
+\begin{thebibliography}{199}
+%\setlength{\itemsep}{-2mm}
+
+
+
+\bibitem{Miller_eCVT} J. M. Miller, ``Hybrid electric vehicle propulsion system
+  architectures of the e-cvt type,'' {\it IEEE Transactions on Power
+    Electronics}, vol. 21, no. 3, pp. 756--767, May 2006.
+
+\bibitem{Kuang_HEV101_08} M. Kuang, ``Power split system HEV 101,'' Ford
+  Internal Presentation, 2008.
+
+
+\bibitem{Liang_etal_ELDModelingControl_12} W. Liang, X. Wang, T.
+  Chrostowski, R. McGee, J. Doering, and M. Kuang, ``Modeling and control of power
+  split hybrid vehicle transaxle system using enhanced lever diagram,''
+  Ford Technical Report, SRR-2012-0155, 2012.
+
+\bibitem{LiangEtAlEngSpdCtrl12} W. Liang, C. Okubo, T. Chrostowski, and
+  M. Kuang, ``Engine speed control of a power split HEV,'' Ford
+  Technical Report, SRR-2012-0156, 2012.
+
+\bibitem{MeyerAPSTCR2Presentation} J. Meyer, et al., ``Advanced Power
+  Split Transaxle Controls R2 Review,'' APSTC project TDR presentation. 
+
+
+\bibitem{MeyerAPSTCR3Presentation} W. Liang, et al., ``Advanced Power
+  Split Transaxle Controls R3 Review,'' APSTC project TDR presentation. 
+
+\bibitem{AlcantarCrankingComp15} J. V. Alcantar, R. Johri, and M. Kuang,
+  ``Minimizing Vibration of the Power Split Drivetrain During Engine
+  Starts and Stops via Cranking Torque Estimation and Compensation,''
+  Ford Technical Report, SRR-2015ยกV0151.
+
+
+\end{thebibliography}
+\end{document}

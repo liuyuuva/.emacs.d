@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: Simulink_Signal
+# key: sls
+# --
+
+${1:signal} = Simulink.Signal;
+$1.Description = '$2';
+$1.CoderInfo.StorageClass = '${3:ExportedGlobal}';
+$1.DataType = '${4:auto}';
+$1.Min = $5;
+$1.Max = $6;
+$1.Unit = '$7';
+$1.Dimensions = $8;
+$1.SampleTime = $9;
+$1.InitialValue = '$10';
+$0

@@ -2822,7 +2822,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (let ((yas/fallback-behavior 'return-nil))
     (yas/expand)))
 
-(defun tab-indent-or-complete ()
+ (defun tab-indent-or-complete ()
   (interactive)
   (cond
    ((minibufferp)
@@ -2867,8 +2867,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
       (yas-abort-snippet)
     (company-abort)))
 
-(global-set-key [tab] 'tab-indent-or-complete)
-(global-set-key (kbd "TAB") 'tab-indent-or-complete)
+;(global-set-key [tab] 'tab-indent-or-complete)
+;(global-set-key (kbd "TAB") 'tab-indent-or-complete)
 (global-set-key [(control return)] 'company-complete-common)
 
 (define-key company-active-map [tab] 'expand-snippet-or-complete-selection)
