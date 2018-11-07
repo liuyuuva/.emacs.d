@@ -2064,7 +2064,10 @@ last month."
    (lisp . t)
    (sh . t)
    (matlab . t)
+   (plantuml . t)
    ))
+(setq org-plantuml-jar-path
+      (expand-file-name "~/.emacs.d/plantuml.jar"))
 
  (use-package ox-latex
    :ensure nil
