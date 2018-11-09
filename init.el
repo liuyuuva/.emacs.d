@@ -2498,6 +2498,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 			  )
 	(define-key org-mode-map (kbd "M-a") nil) ;; reserve for ace-window
 
+	(defun org-insert-link-with-prefix ()
+    (interactive)
+    (let ((current-prefix-arg '(4))) (call-interactively 'org-insert-link))
+)
 		   
     (define-key org-mode-map (kbd "<C-f1>") nil)
     (define-key org-mode-map (kbd "M-h") nil) ;; reserve for helm
@@ -2607,6 +2611,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   ("M-<up>" org-move-subtree-up "move tree up")
   ("M-<down>" org-move-subtree-sown "move tree down")
   ("l" org-insert-link "insert link")
+  ("f" org-insert-link-with-prefix "insert link to file")
   ("m" org-mark-element "mark element")
   ("x" org-cut-subtree "cut tree")
   ("c" org-copy-subtree "copy tree")
