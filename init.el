@@ -952,7 +952,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	(setq python-shell-interpreter "ipython"
 		  python-shell-interpreter-args "-i --simple-prompt")
 	
-	(add-to-list 'company-backends 'elpy-compand-backend)
+	(add-to-list 'company-backends 'elpy-company-backend)
 	))
 
 (if (eq system-type 'gnu/linux)
@@ -1318,7 +1318,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   :ensure t
   :defer t
   :init
-  (global-set-key  (kbd "C-;") 'iedit-mode)
+  (global-set-key  (kbd "C-:") 'iedit-mode)
   ) ;; iedit can edit multiple occurrence at the same time.
 
 
@@ -1723,7 +1723,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-icalendar-include-todo t) 
 
 (setq org-todo-keywords
-	  '((sequence "TODO(t)" "WAITING(w@)"  "REPORT(r)" "NEXTACTION(n)"  "INPROGRESS(p)" "TOFILE(f)"  "|" "DONE(d!)" "CANCELED(c@/i)" "MEMO(m)" "LOG(l)" )
+	  '((sequence "TODO(t)" "WAITING(w@)"  "REPORT(r)" "NEXTACTION(n)"  "INPROGRESS(p)" "TOFILE(f)" "FollowUp(o)" "Delegate(e)"  "|" "DONE(d!)" "CANCELED(c@/i)" "MEMO(m)" "LOG(l)" )
 		))
 
 (setq org-todo-keyword-faces
@@ -1917,10 +1917,16 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   (interactive)
   (org-todo "INPROGRESS")
   )
-(defun show-nextaction ()
+
+(defun mark-followup ()
   (interactive)
-  (setq current-prefix-arg 4)
-  (call-interactively 'org-show-todo-tree))
+  (org-todo "FollowUp")
+  )
+(defun mark-delegate ()
+  (interactive)
+  (org-todo "Delegate")
+  )
+
 
 (defun org-set-line-checkbox (arg)
   (interactive "P")
@@ -1953,10 +1959,14 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;;    (message "%d NEXTACTION entries found"
 ;;            (org-occur (concat "^" outline-regexp " +" kwd-re )))))
 
+(defun show-nextaction ()
+  (interactive)
+  (setq current-prefix-arg 4)
+  (call-interactively 'org-show-todo-tree))
 
 (defun show-done ()
   (interactive)
-  (setq current-prefix-arg 7)
+  (setq current-prefix-arg 9)
   (call-interactively 'org-show-todo-tree))
 
 (defun show-report ()
@@ -1971,12 +1981,12 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (defun show-memo ()
   (interactive)
-  (setq current-prefix-arg 9)
+  (setq current-prefix-arg 11)
   (call-interactively 'org-show-todo-tree))
 
 (defun show-log()
   (interactive)
-  (setq current-prefix-arg 10)
+  (setq current-prefix-arg 12)
   (call-interactively 'org-show-todo-tree))
 
 (defun show-waiting ()
@@ -1986,13 +1996,24 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (defun show-canceled ()
   (interactive)
-  (setq current-prefix-arg 8)
+  (setq current-prefix-arg 10)
   (call-interactively 'org-show-todo-tree))
 
 (defun show-todo-keyword ()
   (interactive)
   (setq current-prefix-arg 1)
   (call-interactively 'org-show-todo-tree))
+
+(defun show-followup ()
+  (interactive)
+  (setq current-prefix-arg 7)
+  (call-interactively 'org-show-todo-tree))
+
+(defun show-delegate ()
+  (interactive)
+  (setq current-prefix-arg 8)
+  (call-interactively 'org-show-todo-tree))
+
 
 (defun run-infinite-macro ()
   (interactive)
@@ -2520,18 +2541,22 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "<f5> p") 'mark-inprogress)
 	(define-key org-mode-map (kbd "<f5> i") 'mark-inprogress)
 	(define-key org-mode-map (kbd "<f5> r") 'mark-report)
+	(define-key org-mode-map (kbd "<f5> o") 'mark-followup)
+	(define-key org-mode-map (kbd "<f5> e") 'mark-delegate)
 	(define-key org-mode-map (kbd "C-<f5>") 'org-time-stamp-inactive)
 	;; F6
 	(define-key org-mode-map (kbd "<f6> n") 'show-nextaction)
 	(define-key org-mode-map (kbd "<f6> p") 'show-inprogress)
 	(define-key org-mode-map (kbd "<f6> i") 'show-inprogress)
 	(define-key org-mode-map (kbd "<f6> m") 'show-memo)
-		(define-key org-mode-map (kbd "<f6> l") 'show-log)
+	(define-key org-mode-map (kbd "<f6> l") 'show-log)
 	(define-key org-mode-map (kbd "<f6> w") 'show-waiting)
 	(define-key org-mode-map (kbd "<f6> c") 'show-canceled)
 	(define-key org-mode-map (kbd "<f6> d") 'show-done)
 	(define-key org-mode-map (kbd "<f6> r") 'show-report)
 	(define-key org-mode-map (kbd "<f6> t") 'show-todo-keyword)
+	(define-key org-mode-map (kbd "<f6> o") 'show-followup)
+	(define-key org-mode-map (kbd "<f6> e") 'show-delegate)
 	(define-key org-mode-map (kbd "M-<f6>") (kbd "C-c a n"))
 	(define-key org-mode-map (kbd "<f6> L") 'jtc-tasks-last-month)
 	;;F7
