@@ -1459,11 +1459,15 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (use-package try
   :ensure t
   )
+(use-package expand-region
+  :ensure t
+  :commands er/expand-region
+  :bind ("C-=" . er/expand-region))
 
 (use-package multiple-cursors
   :ensure t
   :bind
-  (("C-=" . hydra-mc/body))
+  (("C-M-=" . hydra-mc/body))
   
   )
 
@@ -3021,8 +3025,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
    :ensure t
    :config
    (progn
-	 (global-unset-key (kbd "M-a"))
-	 (global-set-key (kbd "M-a") 'ace-window)
+	 (global-set-key (kbd "M-W") 'ace-window)
 
 	  )
 	 )
