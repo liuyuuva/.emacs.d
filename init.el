@@ -677,18 +677,13 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   )
 
 
-;; (use-package color-theme
-;;    :init (color-theme-initialize)
-;;    :config (color-theme-vim-colors)
-;;    )
-
  (use-package avy
    :ensure t
    :config
    (progn
      (global-set-key (kbd "S-SPC") 'avy-goto-line)
 	 (global-set-key (kbd "M-s") 'avy-goto-char-timer)
-	 (global-set-key (kbd "C-.") 'avy-goto-char-timer)
+	 ;(global-set-key (kbd "C-.") 'avy-goto-char-timer)
 
 	 
 	 )
@@ -879,12 +874,13 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (use-package breadcrumb
   :demand t
   :bind (("<f1>" . hydra-breadcrumb/body)
-		 ("C-c m" . bc-set)
-	 ("M-j" . bc-previous)
-	 ("S-M-j" . bc-next)
-	 ("M-<up>" . bc-local-previous)
-	 ("M-<down>" . bc-local-next)
-	 ("C-c C-l" . bc-list))
+		 ;("C-c m" . bc-set)
+	 ;("M-j" . bc-previous)
+	 ;("S-M-j" . bc-next)
+	 ("M-<up>" . bc-previous)
+	 ("M-<down>" . bc-next)
+	;("C-c C-l" . bc-list)
+	 )
   :config
   (defhydra hydra-breadcrumb (:color red :columns 4)
 	"Breadcrumb"
@@ -904,10 +900,11 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
    :diminish undo-tree-mode
    :config
    (progn
+	 (unbind-key "C-/" undo-tree-map)
      (global-undo-tree-mode)
      (setq undo-tree-visualizer-timestamps t)
      (setq undo-tree-visualizer-diff t)))
-
+(global-unset-key (kbd "C-/"))
 ;; (use-package guide-key
 ;;   :ensure t
 ;;   :defer t
@@ -1837,7 +1834,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-log-done 'time)
 
 (setq org-refile-targets 
-	  '((my_org_main_file :maxlevel . 6 )
+	  '((nil :maxlevel . 6)
+		(my_org_main_file :maxlevel . 6 )
 		(my_org_memo_file :maxlevel . 3)
         
 		))
@@ -2768,9 +2766,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 								(kill-line 0)
 								(indent-according-to-mode)))
 
-
-
-(global-set-key (kbd "C-/") 'flyspell-check-previous-highlighted-word)
+(global-set-key (kbd "C-M-/") 'flyspell-check-previous-highlighted-word)
 (global-set-key (kbd "C-1") 'jump-back-local-mark) ;jump back mark in local mark ring
 (global-set-key (kbd "C-2") 'pop-global-mark) ; jump back to global mark ring
 

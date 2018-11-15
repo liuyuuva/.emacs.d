@@ -1,0 +1,233 @@
+* Org
+** Keywords Set and View
+| Function          | Key |
+| Set ToDo Keywords | F5  |
+| Show ToDo Keywords| F6 |
+
+** templates: <"" TAB
+| s| source block|
+| e| example|
+| q| quote|
+| v| verse|
+| V| verbatim|
+| c| center|
+| C| comment|
+| l| export latex|
+| L| #+LaTeX:| 
+| h| export html|
+| H| #+HTML:|
+| i| #+INDEX:|
+| I| #+INCLUDE: %file| 
+** Misc
+| Clock       | F9             |
+| Capture     | C-c r OR C-c c |
+| Inactive Time Stamps |   C-F5         |
+|Org Edit and Insert|  F7|
+| Org Structural Move Search| F8|
+|Add sublevel| F10|
+|org-overview| C-F12|
+|org-copy| C-F11|
+* Marking and highlighting
+** Bookmark
+| bookmark-set        | C-F1 |
+| bookmark-jump       | M-F1 |
+| bookmark-bmenu-list | S-F1 |
+** BM
+| hydra-bm/body | F2   |
+| bm-next       | M-F2 |
+| bm-toggle     | C-F2 |
+| bm-previous   | S-F2 |
+** Highlight
+| highlight-phrase          | C-> |
+| highlight-symbol-at-point | M-H |
+| highlight-symbol-next     | M-N |
+| highlight-symbol-previous | M-P |
+** Breadcrumb
+| breadcrumb hydra    | F1     |
+| breadcrumb previous | M-up   |
+| breadcrumb next     | M-down |
+* Moving in file, between files, or between windows
+** iBuffer
+| ibuffer       | C-x C-b           |
+| ibuffer hydra | . in iBuffer mode |
+** Avy
+| avy-goto-line| S-SPC|
+| avy-goto-char-timer| M-s|
+** Mark ring
+| jump-back-local-mark| C-1|
+| pop-global-mark| C-2|
+| unpop-to-mark-command| C-3|
+| push-mark-command| C-0|
+** Ace-Window: M-W
+** Windmove
+| Move left| C-x left|
+| Move right| C-x right|
+| Move up| C-x up|
+| Move down| C-x down|
+** pdf-tools
+| hydra         | t                                          |
+| ("<s-spc>"    | pdf-view-scroll-down-or-next-page)         |
+| ("g"          | pdf-view-first-page)                       |
+| ("G"          | pdf-view-last-page)                        |
+| ("l"          | image-forward-hscroll)                     |
+| ("h"          | image-backward-hscroll)                    |
+| ("j"          | pdf-view-next-page)                        |
+| ("k"          | pdf-view-previous-page)                    |
+| ("e"          | pdf-view-goto-page)                        |
+| ("u"          | pdf-view-revert-buffer)                    |
+| ("al"         | pdf-annot-list-annotations)                |
+| ("ad"         | pdf-annot-delete)                          |
+| ("aa"         | pdf-annot-attachment-dired)                |
+| ("am"         | pdf-annot-add-markup-annotation)           |
+| ("at"         | pdf-annot-add-text-annotation)             |
+| 		("ah" | pdf-annot-add-highlight-markup-annotation) |
+| ("y"          | pdf-view-kill-ring-save)                   |
+| ("i"          | pdf-misc-display-metadata)                 |
+| ("s"          | pdf-occur)                                 |
+| ("b"          | pdf-view-set-slice-from-bounding-box)      |
+| ("r"          | pdf-view-reset-slice)                      |
+| 		("D"  | pdf-annot-delete)                          |
+	
+
+* Searching
+** Helm
+| Turn on Helm| M-h|
+| helm-follow-action-backward| C-r|
+| helm-follow-action-forward| C-s|
+| ace--helm-line| C-'|
+| helm-swoop-from-isearch| M-i|
+** Ivy
+| Turn on Ivy| M-i|
+* File open, search
+|Recent Dir| C-x M-r|
+| Recent Opened Files| C-x C-r|
+* Editing and Replacing
+| Whack-whitespace        | M-h SPC       |
+| IEdit Mode              | C-:           |
+| iMenu                   | C-c i         |
+| Autofill Mode           | C-c q         |
+| replace-regexp          | F11           |
+| repeat-complex-command  | C-x z         |
+| Backward kill word      | C-<Backspace> |
+| Backward kill line      | M-<Backspace> |
+| Redo                    | C-+           |
+| Minibuffer delete       | C-M-m         |
+| mark-sexp               | C-M-;         |
+| toggle-window-dedicated | C-c t         |
+| Open line above         | M-o           |
+| Multi Cursor            | C-M-=         |
+| query replace           | M-%           |
+| query replace regexp    | C-M-%         |
+* Python
+* C/C++
+| Neotree toggle           | C-F12      |
+| Indent buffer            | C-x \      |
+| ff-find-other-file       | C-c o      |
+| smart-compile            | F12        |
+| flycheck-list-errors     | F7         |
+| flycheck-previous-errors | F8 or M-p  |
+| flycheck-next-error      | F9 or M-n  |
+| helm-flycheck            | M-h c      |
+| gtags in this function   | C-c g a    |
+| gtags select             | C-j        |
+| gtags dwim               | M-.        |
+| gtags pop stack          | M-,        |
+| gtags previous           | C-c <      |
+| gtags next               | C-c >      |
+| semantic-fa hydra        | M-g        |
+| hideshow hydra           | C-,        |
+| expandregion             | C-=        |
+| projectile hydra         | C-M-g      |
+| smartparens hydra        | M-K or C-( |
+* Emacs Lisp
+| Load Init       | C-c I |
+| Evaluate buffer | C-M-! |
+* Macro
+| apply-macro-to-region-lines | M-F4 |
+| run-infinite-macro          | S-F4 |
+* Magit
+| Magic status | C-x g |
+* LaTeX
+** CDLaTeX
+| beg	    | Complete an environment name and insert template                               |
+| env	    | Complete an environment name and insert template                               |
+| it	     | New item in current environment                                                |
+| ite	    | Insert an ITEMIZE environment template                                         |
+| enu	    | Insert an ENUMERATE environment template                                       |
+| equ	    | Insert an EQUATION environment template                                        |
+| eqn	    | Insert an EQUATION environment template                                        |
+| ali	    | Insert an ALIGN environment template                                           |
+| ali*	   | Insert an ALIGN* environment template                                          |
+| alit	   | Insert an ALIGNAT environment template                                         |
+| alit*	  | Insert an ALIGNAT* environment template                                        |
+| xal	    | Insert a XALIGNAT environment template                                         |
+| xal*	   | Insert a XALIGNAT* environment template                                        |
+| xxa	    | Insert a XXALIGNAT environment template                                        |
+| xxa*	   | Insert a XXALIGNAT environment template                                        |
+| mul	    | Insert a MULTINE environment template                                          |
+| mul*	   | Insert a MULTINE* environment template                                         |
+| gat	    | Insert a GATHER environment template                                           |
+| gat*	   | Insert a GATHER* environment template                                          |
+| fla	    | Insert a FLALIGN environment template                                          |
+| fla*	   | Insert a FLALIGN* environment template                                         |
+| fg	     | Insert a FIGURE environment template                                           |
+| sn	     | Insert a \section{} statement                                                  |
+| ss	     | Insert a \subsection{} statement                                               |
+| sss	    | Insert a \subsubsection{} statement                                            |
+| pf	     | Insert a \paragraph{} statement                                                |
+| sp	     | Insert a \subparagraph{} statement                                             |
+| ssp	    | Insert a \subsubparagraph{} statement                                          |
+| cl	     | Insert \centerline                                                             |
+| inc	    | Insert \includegraphics with file name                                         |
+| lr(	    | Insert a \left( \right) pair                                                   |
+| lr[	    | Insert a \left[ \right] pair                                                   |
+| lr{	    | Insert a \left{ \right} pair                                                   |
+| lr<	    | Insert a \left\langle \right\rangle pair                                       |
+| lr         | 	                                              Insert a \left  \right  pair |
+| caseeq	 | Insert a = { construct                                                         |
+| fr	     | Insert \frac{}{}                                                               |
+| sq	     | Insert \sqrt{}                                                                 |
+| intl	   | Insert \int\limits_{}^{}                                                       |
+| suml	   | Insert \sum\limits_{}^{}                                                       |
+| nonum	  | Insert \nonumber\\                                                             |
+| fn	     | Make a footnote                                                                |
+| qq	     | Insert \quad                                                                   |
+| qqq	    | Insert \qquad                                                                  |
+
+** AucTeX
+| insert macro                    | C-c RET     |
+| create section                  | C-c C-s     |
+| create environment              | C-c C-e     |
+| change environment type         | C-u C-c C-e |
+| mark current environment        | C-c .       |
+| mark current section            | C-c *       |
+| close current environment       | C-c ]       |
+| find matching begin environment | C-M-a       |
+| find matching end               | C-M-e       |
+
+** Preview
+| preview buffer | F12 |
+
+** RefTeX
+| add label       | C-c ( |
+| Refer           | C-c ) |
+| add citation    | C-c [ |
+| jump to section | C-c = |
+* Appearance
+| narrow-to-region | C-F8  |
+| widen            | S-F8  |
+| narrow-to-defun  | M-F8  |
+| nolinum          | C-c n |
+ 
+* Key-chord
+  | "jj" | avy-goto-char-timer)           |
+  | "ww" | helm-swoop)                    |
+  | "bb" | helm-swoop-back-to-last-point) |
+  | "qq" | keyboard-quit)                 |
+  | ";;" | end-of-line)                   |
+  | "aa" | beginning-of-line)             |
+  | "zz" | set-mark-command)              |
+
+* Spelling
+| flyspell-check-previous-highlighted-word | C-M-/ |
+ 
