@@ -353,6 +353,9 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	(global-unset-key (kbd "M-i"))
 	(setq ivy-use-virtual-buffers t)
 	(setq enable-recursive-minibuffers t)
+	;;ido style folder navigation
+	(define-key ivy-minibuffer-map (kbd "C-j") #'ivy-immediate-done)
+	(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
 	)
   :bind (("M-i s" . swiper)
 		 ("M-i r" . ivy-resume)
