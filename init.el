@@ -365,7 +365,95 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 		 ("M-i l" . counsel-locate)
 		 )
   )
-				
+
+(use-package projectile
+  :ensure t
+  :config
+  (progn
+    (projectile-mode)
+    )
+  )
+
+(use-package helm-projectile
+  :ensure t
+  :config
+  (progn
+    (helm-projectile-on)
+    )
+  )
+
+
+(defhydra hydra-projectile-other-window (:color teal)
+  "projectile-other-window"
+  ("f"  projectile-find-file-other-window        "file")
+  ("g"  projectile-find-file-dwim-other-window   "file dwim")
+  ("d"  projectile-find-dir-other-window         "dir")
+  ("b"  projectile-switch-to-buffer-other-window "buffer")
+  ("q"  nil                                      "cancel" :color blue))
+
+(defhydra hydra-projectile (:color teal
+                            :hint nil)
+  "
+     PROJECTILE: %(projectile-project-root)
+
+     Find File            Search/Tags          Buffers                Cache
+------------------------------------------------------------------------------------------
+_s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache clear
+ _ff_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
+ _fd_: file curr dir   _o_: multi-occur     _s-k_: Kill all buffers  _X_: cleanup non-existing
+  _r_: recent file                                               ^^^^_z_: cache current
+  _d_: dir
+
+"
+  ("a"   projectile-ag)
+  ("b"   projectile-switch-to-buffer)
+  ("c"   projectile-invalidate-cache)
+  ("d"   projectile-find-dir)
+  ("s-f" projectile-find-file)
+  ("ff"  projectile-find-file-dwim)
+  ("fd"  projectile-find-file-in-directory)
+  ("g"   ggtags-update-tags)
+  ("s-g" ggtags-update-tags)
+  ("i"   projectile-ibuffer)
+  ("K"   projectile-kill-buffers)
+  ("s-k" projectile-kill-buffers)
+  ("m"   projectile-multi-occur)
+  ("o"   projectile-multi-occur)
+  ("s-p" projectile-switch-project "switch project")
+  ("p"   projectile-switch-project)
+  ("s"   projectile-switch-project)
+  ("r"   projectile-recentf)
+  ("x"   projectile-remove-known-project)
+  ("X"   projectile-cleanup-known-projects)
+  ("z"   projectile-cache-current-file)
+  ("`"   hydra-projectile-other-window/body "other window")
+  ("q"   nil "cancel" :color blue))
+
+(defhydra elpy-nav-errors (:color red)
+  "
+  Navigate errors
+  "
+  ("n" next-error "next error")
+  ("p" previous-error "previous error")
+  ("s" (progn
+         (switch-to-buffer-other-window "*compilation*")
+         (goto-char (point-max))) "switch to compilation buffer" :color blue)
+;  ("w" (venv-workon) "Workon venv…")
+  ("q" nil "quit")
+  ("Q" (kill-buffer "*compilation*") "quit and kill compilation buffer" :color blue)
+)
+
+(defhydra elpy-hydra (:color red)
+ ; "
+  ;Elpy in venv: %`venv-current-name
+  ;"
+  ("d" (progn (call-interactively 'elpy-test-django-runner) (elpy-nav-errors/body)) "current test, Django runner" :color blue)
+  ("t" (progn (call-interactively 'elpy-test-pytest-runner) (elpy-nav-errors/body)) "current test, pytest runner" :color blue)
+  ;("w" (venv-workon) "workon venv…")
+  ("q" nil "quit")
+  ("Q" (kill-buffer "*compilation*") "quit and kill compilation buffer" :color blue)
+  )
+
 
 (use-package helm
   :diminish helm
@@ -428,7 +516,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 ("M-h i" . helm-imenu)
 	 ("M-h e" . helm-semantic-or-imenu)
 	 ("M-h f" . helm-find-files)
-	 ("M-h p" . helm-projectile)
+	 ("M-h p" . hydra-projectile/body)
 	 ("M-h q" . helm-swoop-back-to-last-point)
 	 ("M-h g" . rgrep)
 	 ("M-h d" . helm-do-ag)
@@ -436,6 +524,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 	 ("M-h c" . yas-describe-tables)
 	 ("M-h l" . helm-recentf)
 	 ("M-h h" . helm-multi-swoop-all)
+	 ("M-h t" . elpy-hydra/body)
 	 )
   )
 
@@ -663,21 +752,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   :bind (("C-h b" . helm-descbinds)
          ("C-h w" . helm-descbinds)))
 
-(use-package projectile
-  :ensure t
-  :config
-  (progn
-    (projectile-mode)
-    )
-  )
-
-(use-package helm-projectile
-  :ensure t
-  :config
-  (progn
-    (helm-projectile-on)
-    )
-  )
 
 
  (use-package avy
@@ -969,6 +1043,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
  		(lambda ()
  		  (local-unset-key (kbd "M-TAB"))
  		  (define-key elpy-mode-map (kbd "<F5>") 'elpy-company-backend)))))
+
 
 (use-package pyvenv
   :ensure t
