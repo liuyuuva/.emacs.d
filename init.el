@@ -22,7 +22,7 @@
 		(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
 		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 		(setq default-directory "C:/org/")
-		(add-to-list 'exec-path "C:/bin/Aspell/bin/")
+		(add-to-list 'exec-path "C:/msys64/mingw64/bin/");have to install aspell in mingw64 as emacs 26 does not support aspell under v6.0 and it's not available on windows 7 yet. Still using the past dict though.
 		(setq ispell-dictionary "C:/bin//Aspell/dict/")
 		(setq my_org_main_file "C:/org/main.org")
 		(setq my_org_capture_file "C:/org/capture.org")
