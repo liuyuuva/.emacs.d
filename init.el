@@ -1802,13 +1802,13 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-icalendar-include-todo t) 
 
 (setq org-todo-keywords
-	  '((sequence "TODO(t)" "WAITING(w@)"  "REPORT(r)" "NEXTACTION(n)"  "INPROGRESS(p)" "TOFILE(f)" "FollowUp(o)" "Delegate(e)"  "|" "DONE(d!)" "CANCELED(c@/i)" "MEMO(m)" "LOG(l)" )
+	  '((sequence "TODO(t)"  "NEXTACTION(n)"  "INPROGRESS(i)"  "FOLLOWUP(f@/i)" "DELEGATE(e@/i)"  "|" "DONE(d!)" "CANCELED(c@/i)" "MEMO(m)"  )
 		))
 
 (setq org-todo-keyword-faces
-	  '(("TODO" . org-warning) ("INPROGRESS" . "orange") ("MEMO" . "blue") ("LOG" . "blue") ("TOFILE" . org-warning) ("REPORT" . "cyan") ("NEXTACTION" . org-warning)
+	  '(("TODO" . org-warning) ("INPROGRESS" . "orange") ("MEMO" . "blue")   ("NEXTACTION" . org-warning) ("FOLLOWUP" . org-warning) ("DELEGATE" . org-warning)
 		("CANCELED" . (:foreground "blue" :weight bold))
-		("DONE" . org-done) ("WAITING" . org-warning)))
+		("DONE" . org-done) ))
 
 
 
@@ -1849,21 +1849,15 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;; 	)
 ;;  )
 
-;; (use-package helm-bibtex
-;;   :ensure t
-;;   :config
-;;   (progn
+ (use-package helm-bibtex
+   :ensure t
+   :config
+   (progn
+	 bibtex-completion-bibliography "~/Dropbox/bibliography/references.bib"
+	 bibtex-completion-notes-path "~/Dropbox/bibliography/paper_reading_notes.org"
+	 bibtex-completion-library-path "~/Dropbox/bibliography/papers"  )
+	)
 
-;; 	(setq helm-bibtex-bibliography "~/References/index.bib" ;; where your references are stored
-;; 		  helm-bibtex-library-path "~/References/lib/" ;; where your pdfs etc are stored
-;; 	  helm-bibtex-notes-path "~/References/index.org" ;; where your notes are stored
-;; 		  bibtex-completion-bibliography "~/References/index.bib" ;; writing completion
-;; 		  bibtex-completion-notes-path "~/References/index.org"
-;; 		  bibtex-completion-library-path "~/References/lib"
-;; 		  )
-
-;; 	)
-;;   )
 
 
 
@@ -2000,11 +1994,11 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (defun mark-followup ()
   (interactive)
-  (org-todo "FollowUp")
+  (org-todo "FOLLOWUP")
   )
 (defun mark-delegate ()
   (interactive)
-  (org-todo "Delegate")
+  (org-todo "DELEGATE")
   )
 
 
@@ -2041,42 +2035,42 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (defun show-nextaction ()
   (interactive)
-  (setq current-prefix-arg 4)
+  (setq current-prefix-arg 2)
   (call-interactively 'org-show-todo-tree))
 
 (defun show-done ()
   (interactive)
-  (setq current-prefix-arg 9)
+  (setq current-prefix-arg 6)
   (call-interactively 'org-show-todo-tree))
 
-(defun show-report ()
+;; (defun show-report ()
+;;   (interactive)
+;;   (setq current-prefix-arg 3)
+;;   (call-interactively 'org-show-todo-tree))
+
+(defun show-inprogress ()
   (interactive)
   (setq current-prefix-arg 3)
   (call-interactively 'org-show-todo-tree))
 
-(defun show-inprogress ()
-  (interactive)
-  (setq current-prefix-arg 5)
-  (call-interactively 'org-show-todo-tree))
-
 (defun show-memo ()
   (interactive)
-  (setq current-prefix-arg 11)
+  (setq current-prefix-arg 8)
   (call-interactively 'org-show-todo-tree))
 
-(defun show-log()
-  (interactive)
-  (setq current-prefix-arg 12)
-  (call-interactively 'org-show-todo-tree))
+;; (defun show-log()
+;;   (interactive)
+;;   (setq current-prefix-arg 12)
+;;   (call-interactively 'org-show-todo-tree))
 
-(defun show-waiting ()
-  (interactive)
-  (setq current-prefix-arg 2)
-  (call-interactively 'org-show-todo-tree))
+;; (defun show-waiting ()
+;;   (interactive)
+;;   (setq current-prefix-arg 2)
+;;   (call-interactively 'org-show-todo-tree))
 
 (defun show-canceled ()
   (interactive)
-  (setq current-prefix-arg 10)
+  (setq current-prefix-arg 7)
   (call-interactively 'org-show-todo-tree))
 
 (defun show-todo-keyword ()
@@ -2086,12 +2080,12 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (defun show-followup ()
   (interactive)
-  (setq current-prefix-arg 7)
+  (setq current-prefix-arg 4)
   (call-interactively 'org-show-todo-tree))
 
 (defun show-delegate ()
   (interactive)
-  (setq current-prefix-arg 8)
+  (setq current-prefix-arg 5)
   (call-interactively 'org-show-todo-tree))
 
 
@@ -2144,13 +2138,14 @@ last month."
 
 (setq org-agenda-custom-commands
 	  '(("w" todo "WAITING")
-		("o" todo "MEMO")
-		("l" todo "LOG")
+		("m" todo "MEMO")
 		("n" todo "NEXTACTION")
 		("t" todo "TODO")
 		("i" todo "INPROGRESS")
-		("F" "Tasks CLOSED Last Week" tags  (concat "CLOSED>=\"<-1w>\""))
-		("f" "Tasks DONE Last Week" tags (concat "TODO=\"DONE\"" "+CLOSED>=\"<-1w>\""))
+		("e" todo "DELEGATE")
+		("f" todo "FOLLOWUP")
+	  	("C" "Tasks CLOSED Last Week" tags  (concat "CLOSED>=\"<-1w>\""))
+		("D" "Tasks DONE Last Week" tags (concat "TODO=\"DONE\"" "+CLOSED>=\"<-1w>\""))
 		("S" "Tasks CLOSED Last Month" tags (concat "CLOSED>=\"<-1m>\"")) ))
 
 (setq org-agenda-start-with-follow-mode 1)
@@ -2163,7 +2158,7 @@ last month."
    (dot . t)
    (latex . t)
    (lisp . t)
-   (sh . t)
+   (shell . t)
    (matlab . t)
    (plantuml . t)
    ))
@@ -2611,31 +2606,31 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	;;F5
 	(define-key org-mode-map (kbd "<f5> n") 'mark-nextaction)
 	(define-key org-mode-map (kbd "<f5> t") 'mark-todo)	
-	(define-key org-mode-map (kbd "<f5> f") 'mark-tofile)
+	;(define-key org-mode-map (kbd "<f5> f") 'mark-tofile)
 	(define-key org-mode-map (kbd "<f5> t") 'mark-todo)
 	(define-key org-mode-map (kbd "<f5> d") 'mark-done)
 	(define-key org-mode-map (kbd "<f5> m") 'mark-memo)
-	(define-key org-mode-map (kbd "<f5> l") 'mark-log)
-	(define-key org-mode-map (kbd "<f5> w") 'mark-waiting)
+	;(define-key org-mode-map (kbd "<f5> l") 'mark-log)
+	;(define-key org-mode-map (kbd "<f5> w") 'mark-waiting)
 	(define-key org-mode-map (kbd "<f5> c") 'mark-canceled)
-	(define-key org-mode-map (kbd "<f5> p") 'mark-inprogress)
+	;(define-key org-mode-map (kbd "<f5> p") 'mark-inprogress)
 	(define-key org-mode-map (kbd "<f5> i") 'mark-inprogress)
-	(define-key org-mode-map (kbd "<f5> r") 'mark-report)
-	(define-key org-mode-map (kbd "<f5> o") 'mark-followup)
+	;(define-key org-mode-map (kbd "<f5> r") 'mark-report)
+	(define-key org-mode-map (kbd "<f5> f") 'mark-followup)
 	(define-key org-mode-map (kbd "<f5> e") 'mark-delegate)
 	(define-key org-mode-map (kbd "C-<f5>") 'org-time-stamp-inactive)
 	;; F6
 	(define-key org-mode-map (kbd "<f6> n") 'show-nextaction)
-	(define-key org-mode-map (kbd "<f6> p") 'show-inprogress)
+	;(define-key org-mode-map (kbd "<f6> p") 'show-inprogress)
 	(define-key org-mode-map (kbd "<f6> i") 'show-inprogress)
 	(define-key org-mode-map (kbd "<f6> m") 'show-memo)
-	(define-key org-mode-map (kbd "<f6> l") 'show-log)
-	(define-key org-mode-map (kbd "<f6> w") 'show-waiting)
+	;(define-key org-mode-map (kbd "<f6> l") 'show-log)
+	;(define-key org-mode-map (kbd "<f6> w") 'show-waiting)
 	(define-key org-mode-map (kbd "<f6> c") 'show-canceled)
 	(define-key org-mode-map (kbd "<f6> d") 'show-done)
-	(define-key org-mode-map (kbd "<f6> r") 'show-report)
+	;(define-key org-mode-map (kbd "<f6> r") 'show-report)
 	(define-key org-mode-map (kbd "<f6> t") 'show-todo-keyword)
-	(define-key org-mode-map (kbd "<f6> o") 'show-followup)
+	(define-key org-mode-map (kbd "<f6> f") 'show-followup)
 	(define-key org-mode-map (kbd "<f6> e") 'show-delegate)
 	(define-key org-mode-map (kbd "M-<f6>") (kbd "C-c a n"))
 	(define-key org-mode-map (kbd "<f6> L") 'jtc-tasks-last-month)
@@ -2880,6 +2875,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(recentf-mode 1)
 	(global-set-key "\C-x\ \C-r" 'recentf-open-files)
 	(run-at-time (current-time) 600 'recentf-save-list)
+	(add-to-list 'recentf-exclude (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME")));ignore elpa install .el files
+	(add-to-list 'recentf-exclude "\\.breadcrumb\\'")
+	(add-to-list 'recentf-exclude "\\recentf\\'")
+	(add-to-list 'recentf-exclude "/\\.emacs\\.d/")
 	)
   )
 
@@ -3197,6 +3196,13 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (use-package org-ref
   :ensure t
   )
+
+
+
+;; see org-ref for use of these variables
+(setq org-ref-bibliography-notes "~/Dropbox/bibliography/paper_reading_notes.org"
+      org-ref-default-bibliography '("~/Dropbox/bibliography/references.bib")
+      org-ref-pdf-directory "~/Dropbox/bibliography/papers/")
 
 (use-package org-pdfview
    :ensure t
