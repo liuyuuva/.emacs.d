@@ -22,8 +22,8 @@
 		(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
 		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 		(setq default-directory "C:/org/")
-		(add-to-list 'exec-path "C:/msys64/mingw64/bin/");have to install aspell in mingw64 as emacs 26 does not support aspell under v6.0 and it's not available on windows 7 yet. Still using the past dict though.
-		(setq ispell-dictionary "C:/bin//Aspell/dict/")
+		(add-to-list 'exec-path "c:/bin/hunspell/bin") ; have to use hunspell as emacs 26 cannot support aspell < v6, but aspell v6 for w64 is nowhere to find.
+			;(setq ispell-dictionary "C:/bin//Aspell/dict/")
 		(setq my_org_main_file "C:/org/main.org")
 		(setq my_org_capture_file "C:/org/capture.org")
         (setq my_org_memo_file "C:/org/memo.org")
@@ -91,7 +91,9 @@
 	(setq my_org_meeting_notes_file "~/Dropbox/org/personal_meeting_notes.org")
 	(setq org_directory "~/Dropbox/org/")
 	(setq my_ipython_path "~/local/bin/ipython")
-	;(pdf-tools-install)
+										;(pdf-tools-install)
+	(setq-default ispell-program-name "aspell")
+	(setq-default ispell-local-dictionary "american")
     )
   )
 
@@ -1367,17 +1369,33 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   :defer t
   :config
   (progn
-    (setq-default ispell-program-name "aspell")
-    (setq-default ispell-local-dictionary "american")
     (add-hook 'org-mode-hook 'flyspell-mode)
-    
     (add-hook 'latex-mode-hook 'flyspell-mode)
     (add-hook 'tex-mode-hook 'flyspell-mode)
     (add-hook 'bibtex-mode-hook 'flyspell-mode)))
 
+(if (eq system-type 'windows-nt)
+	(progn
+	  (setq ispell-program-name (locate-file "hunspell"
+											 exec-path exec-suffixes 'file-executable-p))
+	  (setq ispell-dictionary "english")
+	  (add-to-list 'ispell-local-dictionary-alist '(("english"
+													 "[[:alpha:]]"
+													 "[^[:alpha:]]"
+													 "[']"
+													 t
+													 ("-d" "en_US")
+													 nil
+													 utf-8)))
+	  (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)
+	  )
+  )
+
+	  
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
 (setq flyspell-issue-welcome-flag nil) ;; fix flyspell problem
 
+	
 ;; (use-package org-bullets
 ;;   :defer t
 ;;   :config (setcdr org-bullets-bullet-map nil)
