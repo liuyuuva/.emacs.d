@@ -527,8 +527,23 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 	 ("M-h l" . helm-recentf)
 	 ("M-h h" . helm-multi-swoop-all)
 	 ("M-h t" . elpy-hydra/body)
+	 ("M-h v" . rifle-hydra/body)
 	 )
   )
+
+(use-package helm-org-rifle
+  :ensure t)
+
+(defhydra rifle-hydra (:exit t)
+  "Org Rifle"
+  ("r" helm-org-rifle "helm org rifle")
+  ("b" helm-org-rifle-current-buffer "current buffer")
+  ("d" helm-org-rifle-directories "diretories")
+  ("f" helm-org-rifle-files "show results from files")
+  ("h" helm-org-rifle-org-directory "show results from org-directory")
+  ("a" helm-org-rifle-agenda-files "show results from agenda files")
+  )
+  
 
 
 (use-package helm-ag
@@ -1057,6 +1072,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   :ensure t
 
   :config
+  
   (yas-reload-all)
   (add-hook 'prog-mode-hook #'yas-minor-mode)
   (yas-global-mode 1)
@@ -2897,6 +2913,11 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(add-to-list 'recentf-exclude "\\.breadcrumb\\'")
 	(add-to-list 'recentf-exclude "\\recentf\\'")
 	(add-to-list 'recentf-exclude "/\\.emacs\\.d/")
+	(add-to-list 'recentf-exclude "\\.log$")
+	(add-to-list 'recentf-exclude "\\.toc")
+	(add-to-list 'recentf-exclude "\\.pdfsync$")
+	(add-to-list 'recentf-exclude "\\.aux$")
+	(add-to-list 'recentf-exclude "\\.gz$")
 	)
   )
 

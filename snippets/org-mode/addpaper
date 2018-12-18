@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: addpaper
+# key:addpaper
+# --
+
+** Title: $0
+*** Citation: $1
+*** File Location: $2 

@@ -1,0 +1,1709 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-11-15 Thu 16:24 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org70b0afd">1. Org</a>
+<ul>
+<li><a href="#orge5c043a">1.1. Keywords Set and View</a></li>
+<li><a href="#org9766047">1.2. templates: &lt;"" TAB</a></li>
+<li><a href="#org7d7891c">1.3. Misc</a></li>
+</ul>
+</li>
+<li><a href="#org15f08e3">2. Marking and highlighting</a>
+<ul>
+<li><a href="#org1381726">2.1. Bookmark</a></li>
+<li><a href="#orgc3ea17a">2.2. BM</a></li>
+<li><a href="#org59ca094">2.3. Highlight</a></li>
+<li><a href="#org8a6d851">2.4. Breadcrumb</a></li>
+</ul>
+</li>
+<li><a href="#org72f108b">3. Moving in file, between files, or between windows</a>
+<ul>
+<li><a href="#org7429c74">3.1. iBuffer</a></li>
+<li><a href="#org3754c52">3.2. Avy</a></li>
+<li><a href="#org5de2fbe">3.3. Mark ring</a></li>
+<li><a href="#orgafe04f6">3.4. Ace-Window: M-W</a></li>
+<li><a href="#org249c145">3.5. Windmove</a></li>
+<li><a href="#orgd970e29">3.6. pdf-tools</a></li>
+</ul>
+</li>
+<li><a href="#orgf3229b0">4. Searching</a>
+<ul>
+<li><a href="#orgf5cfbef">4.1. Helm</a></li>
+<li><a href="#orge3b85b0">4.2. Ivy</a></li>
+</ul>
+</li>
+<li><a href="#org2e1e60e">5. File open, search</a></li>
+<li><a href="#org9379f6e">6. Editing and Replacing</a></li>
+<li><a href="#orga8e6f1f">7. Python</a></li>
+<li><a href="#orgff9e93a">8. C/C++</a></li>
+<li><a href="#org8e7f363">9. Emacs Lisp</a></li>
+<li><a href="#org52cd567">10. Macro</a></li>
+<li><a href="#org708b3ed">11. Magit</a></li>
+<li><a href="#orgfb14439">12. LaTeX</a>
+<ul>
+<li><a href="#orgf2663a6">12.1. CDLaTeX</a></li>
+<li><a href="#org9c4dd37">12.2. AucTeX</a></li>
+<li><a href="#org7e12bd0">12.3. Preview</a></li>
+<li><a href="#org149e068">12.4. RefTeX</a></li>
+</ul>
+</li>
+<li><a href="#org5013d39">13. Appearance</a></li>
+<li><a href="#org8df6c27">14. Key-chord</a></li>
+<li><a href="#org155a27b">15. Spelling</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org70b0afd" class="outline-2">
+<h2 id="org70b0afd"><span class="section-number-2">1</span> Org</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-orge5c043a" class="outline-3">
+<h3 id="orge5c043a"><span class="section-number-3">1.1</span> Keywords Set and View</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Function</td>
+<td class="org-left">Key</td>
+</tr>
+
+<tr>
+<td class="org-left">Set ToDo Keywords</td>
+<td class="org-left">F5</td>
+</tr>
+
+<tr>
+<td class="org-left">Show ToDo Keywords</td>
+<td class="org-left">F6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org9766047" class="outline-3">
+<h3 id="org9766047"><span class="section-number-3">1.2</span> templates: &lt;"" TAB</h3>
+<div class="outline-text-3" id="text-1-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">s</td>
+<td class="org-left">source block</td>
+</tr>
+
+<tr>
+<td class="org-left">e</td>
+<td class="org-left">example</td>
+</tr>
+
+<tr>
+<td class="org-left">q</td>
+<td class="org-left">quote</td>
+</tr>
+
+<tr>
+<td class="org-left">v</td>
+<td class="org-left">verse</td>
+</tr>
+
+<tr>
+<td class="org-left">V</td>
+<td class="org-left">verbatim</td>
+</tr>
+
+<tr>
+<td class="org-left">c</td>
+<td class="org-left">center</td>
+</tr>
+
+<tr>
+<td class="org-left">C</td>
+<td class="org-left">comment</td>
+</tr>
+
+<tr>
+<td class="org-left">l</td>
+<td class="org-left">export latex</td>
+</tr>
+
+<tr>
+<td class="org-left">L</td>
+<td class="org-left">#+LaTeX:</td>
+</tr>
+
+<tr>
+<td class="org-left">h</td>
+<td class="org-left">export html</td>
+</tr>
+
+<tr>
+<td class="org-left">H</td>
+<td class="org-left">#+HTML:</td>
+</tr>
+
+<tr>
+<td class="org-left">i</td>
+<td class="org-left">#+INDEX:</td>
+</tr>
+
+<tr>
+<td class="org-left">I</td>
+<td class="org-left">#+INCLUDE: %file</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org7d7891c" class="outline-3">
+<h3 id="org7d7891c"><span class="section-number-3">1.3</span> Misc</h3>
+<div class="outline-text-3" id="text-1-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Clock</td>
+<td class="org-left">F9</td>
+</tr>
+
+<tr>
+<td class="org-left">Capture</td>
+<td class="org-left">C-c r OR C-c c</td>
+</tr>
+
+<tr>
+<td class="org-left">Inactive Time Stamps</td>
+<td class="org-left">C-F5</td>
+</tr>
+
+<tr>
+<td class="org-left">Org Edit and Insert</td>
+<td class="org-left">F7</td>
+</tr>
+
+<tr>
+<td class="org-left">Org Structural Move Search</td>
+<td class="org-left">F8</td>
+</tr>
+
+<tr>
+<td class="org-left">Add sublevel</td>
+<td class="org-left">F10</td>
+</tr>
+
+<tr>
+<td class="org-left">org-overview</td>
+<td class="org-left">C-F12</td>
+</tr>
+
+<tr>
+<td class="org-left">org-copy</td>
+<td class="org-left">C-F11</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org15f08e3" class="outline-2">
+<h2 id="org15f08e3"><span class="section-number-2">2</span> Marking and highlighting</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org1381726" class="outline-3">
+<h3 id="org1381726"><span class="section-number-3">2.1</span> Bookmark</h3>
+<div class="outline-text-3" id="text-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">bookmark-set</td>
+<td class="org-left">C-F1</td>
+</tr>
+
+<tr>
+<td class="org-left">bookmark-jump</td>
+<td class="org-left">M-F1</td>
+</tr>
+
+<tr>
+<td class="org-left">bookmark-bmenu-list</td>
+<td class="org-left">S-F1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orgc3ea17a" class="outline-3">
+<h3 id="orgc3ea17a"><span class="section-number-3">2.2</span> BM</h3>
+<div class="outline-text-3" id="text-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">hydra-bm/body</td>
+<td class="org-left">F2</td>
+</tr>
+
+<tr>
+<td class="org-left">bm-next</td>
+<td class="org-left">M-F2</td>
+</tr>
+
+<tr>
+<td class="org-left">bm-toggle</td>
+<td class="org-left">C-F2</td>
+</tr>
+
+<tr>
+<td class="org-left">bm-previous</td>
+<td class="org-left">S-F2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org59ca094" class="outline-3">
+<h3 id="org59ca094"><span class="section-number-3">2.3</span> Highlight</h3>
+<div class="outline-text-3" id="text-2-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">highlight-phrase</td>
+<td class="org-left">C-&gt;</td>
+</tr>
+
+<tr>
+<td class="org-left">highlight-symbol-at-point</td>
+<td class="org-left">M-H</td>
+</tr>
+
+<tr>
+<td class="org-left">highlight-symbol-next</td>
+<td class="org-left">M-N</td>
+</tr>
+
+<tr>
+<td class="org-left">highlight-symbol-previous</td>
+<td class="org-left">M-P</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org8a6d851" class="outline-3">
+<h3 id="org8a6d851"><span class="section-number-3">2.4</span> Breadcrumb</h3>
+<div class="outline-text-3" id="text-2-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">breadcrumb hydra</td>
+<td class="org-left">F1</td>
+</tr>
+
+<tr>
+<td class="org-left">breadcrumb previous</td>
+<td class="org-left">M-up</td>
+</tr>
+
+<tr>
+<td class="org-left">breadcrumb next</td>
+<td class="org-left">M-down</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org72f108b" class="outline-2">
+<h2 id="org72f108b"><span class="section-number-2">3</span> Moving in file, between files, or between windows</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org7429c74" class="outline-3">
+<h3 id="org7429c74"><span class="section-number-3">3.1</span> iBuffer</h3>
+<div class="outline-text-3" id="text-3-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">ibuffer</td>
+<td class="org-left">C-x C-b</td>
+</tr>
+
+<tr>
+<td class="org-left">ibuffer hydra</td>
+<td class="org-left">. in iBuffer mode</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org3754c52" class="outline-3">
+<h3 id="org3754c52"><span class="section-number-3">3.2</span> Avy</h3>
+<div class="outline-text-3" id="text-3-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">avy-goto-line</td>
+<td class="org-left">S-SPC</td>
+</tr>
+
+<tr>
+<td class="org-left">avy-goto-char-timer</td>
+<td class="org-left">M-s</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org5de2fbe" class="outline-3">
+<h3 id="org5de2fbe"><span class="section-number-3">3.3</span> Mark ring</h3>
+<div class="outline-text-3" id="text-3-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">jump-back-local-mark</td>
+<td class="org-left">C-1</td>
+</tr>
+
+<tr>
+<td class="org-left">pop-global-mark</td>
+<td class="org-left">C-2</td>
+</tr>
+
+<tr>
+<td class="org-left">unpop-to-mark-command</td>
+<td class="org-left">C-3</td>
+</tr>
+
+<tr>
+<td class="org-left">push-mark-command</td>
+<td class="org-left">C-0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orgafe04f6" class="outline-3">
+<h3 id="orgafe04f6"><span class="section-number-3">3.4</span> Ace-Window: M-W</h3>
+</div>
+<div id="outline-container-org249c145" class="outline-3">
+<h3 id="org249c145"><span class="section-number-3">3.5</span> Windmove</h3>
+<div class="outline-text-3" id="text-3-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Move left</td>
+<td class="org-left">C-x left</td>
+</tr>
+
+<tr>
+<td class="org-left">Move right</td>
+<td class="org-left">C-x right</td>
+</tr>
+
+<tr>
+<td class="org-left">Move up</td>
+<td class="org-left">C-x up</td>
+</tr>
+
+<tr>
+<td class="org-left">Move down</td>
+<td class="org-left">C-x down</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orgd970e29" class="outline-3">
+<h3 id="orgd970e29"><span class="section-number-3">3.6</span> pdf-tools</h3>
+<div class="outline-text-3" id="text-3-6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">hydra</td>
+<td class="org-left">t</td>
+</tr>
+
+<tr>
+<td class="org-left">("&lt;s-spc&gt;"</td>
+<td class="org-left">pdf-view-scroll-down-or-next-page)</td>
+</tr>
+
+<tr>
+<td class="org-left">("g"</td>
+<td class="org-left">pdf-view-first-page)</td>
+</tr>
+
+<tr>
+<td class="org-left">("G"</td>
+<td class="org-left">pdf-view-last-page)</td>
+</tr>
+
+<tr>
+<td class="org-left">("l"</td>
+<td class="org-left">image-forward-hscroll)</td>
+</tr>
+
+<tr>
+<td class="org-left">("h"</td>
+<td class="org-left">image-backward-hscroll)</td>
+</tr>
+
+<tr>
+<td class="org-left">("j"</td>
+<td class="org-left">pdf-view-next-page)</td>
+</tr>
+
+<tr>
+<td class="org-left">("k"</td>
+<td class="org-left">pdf-view-previous-page)</td>
+</tr>
+
+<tr>
+<td class="org-left">("e"</td>
+<td class="org-left">pdf-view-goto-page)</td>
+</tr>
+
+<tr>
+<td class="org-left">("u"</td>
+<td class="org-left">pdf-view-revert-buffer)</td>
+</tr>
+
+<tr>
+<td class="org-left">("al"</td>
+<td class="org-left">pdf-annot-list-annotations)</td>
+</tr>
+
+<tr>
+<td class="org-left">("ad"</td>
+<td class="org-left">pdf-annot-delete)</td>
+</tr>
+
+<tr>
+<td class="org-left">("aa"</td>
+<td class="org-left">pdf-annot-attachment-dired)</td>
+</tr>
+
+<tr>
+<td class="org-left">("am"</td>
+<td class="org-left">pdf-annot-add-markup-annotation)</td>
+</tr>
+
+<tr>
+<td class="org-left">("at"</td>
+<td class="org-left">pdf-annot-add-text-annotation)</td>
+</tr>
+
+<tr>
+<td class="org-left">("ah"</td>
+<td class="org-left">pdf-annot-add-highlight-markup-annotation)</td>
+</tr>
+
+<tr>
+<td class="org-left">("y"</td>
+<td class="org-left">pdf-view-kill-ring-save)</td>
+</tr>
+
+<tr>
+<td class="org-left">("i"</td>
+<td class="org-left">pdf-misc-display-metadata)</td>
+</tr>
+
+<tr>
+<td class="org-left">("s"</td>
+<td class="org-left">pdf-occur)</td>
+</tr>
+
+<tr>
+<td class="org-left">("b"</td>
+<td class="org-left">pdf-view-set-slice-from-bounding-box)</td>
+</tr>
+
+<tr>
+<td class="org-left">("r"</td>
+<td class="org-left">pdf-view-reset-slice)</td>
+</tr>
+
+<tr>
+<td class="org-left">("D"</td>
+<td class="org-left">pdf-annot-delete)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf3229b0" class="outline-2">
+<h2 id="orgf3229b0"><span class="section-number-2">4</span> Searching</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgf5cfbef" class="outline-3">
+<h3 id="orgf5cfbef"><span class="section-number-3">4.1</span> Helm</h3>
+<div class="outline-text-3" id="text-4-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Turn on Helm</td>
+<td class="org-left">M-h</td>
+</tr>
+
+<tr>
+<td class="org-left">helm-follow-action-backward</td>
+<td class="org-left">C-r</td>
+</tr>
+
+<tr>
+<td class="org-left">helm-follow-action-forward</td>
+<td class="org-left">C-s</td>
+</tr>
+
+<tr>
+<td class="org-left">ace&#x2013;helm-line</td>
+<td class="org-left">C-'</td>
+</tr>
+
+<tr>
+<td class="org-left">helm-swoop-from-isearch</td>
+<td class="org-left">M-i</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orge3b85b0" class="outline-3">
+<h3 id="orge3b85b0"><span class="section-number-3">4.2</span> Ivy</h3>
+<div class="outline-text-3" id="text-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Turn on Ivy</td>
+<td class="org-left">M-i</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org2e1e60e" class="outline-2">
+<h2 id="org2e1e60e"><span class="section-number-2">5</span> File open, search</h2>
+<div class="outline-text-2" id="text-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Recent Dir</td>
+<td class="org-left">C-x M-r</td>
+</tr>
+
+<tr>
+<td class="org-left">Recent Opened Files</td>
+<td class="org-left">C-x C-r</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org9379f6e" class="outline-2">
+<h2 id="org9379f6e"><span class="section-number-2">6</span> Editing and Replacing</h2>
+<div class="outline-text-2" id="text-6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Whack-whitespace</td>
+<td class="org-left">M-h SPC</td>
+</tr>
+
+<tr>
+<td class="org-left">IEdit Mode</td>
+<td class="org-left">C-:</td>
+</tr>
+
+<tr>
+<td class="org-left">iMenu</td>
+<td class="org-left">C-c i</td>
+</tr>
+
+<tr>
+<td class="org-left">Autofill Mode</td>
+<td class="org-left">C-c q</td>
+</tr>
+
+<tr>
+<td class="org-left">replace-regexp</td>
+<td class="org-left">F11</td>
+</tr>
+
+<tr>
+<td class="org-left">repeat-complex-command</td>
+<td class="org-left">C-x z</td>
+</tr>
+
+<tr>
+<td class="org-left">Backward kill word</td>
+<td class="org-left">C-&lt;Backspace&gt;</td>
+</tr>
+
+<tr>
+<td class="org-left">Backward kill line</td>
+<td class="org-left">M-&lt;Backspace&gt;</td>
+</tr>
+
+<tr>
+<td class="org-left">Redo</td>
+<td class="org-left">C-+</td>
+</tr>
+
+<tr>
+<td class="org-left">Minibuffer delete</td>
+<td class="org-left">C-M-m</td>
+</tr>
+
+<tr>
+<td class="org-left">mark-sexp</td>
+<td class="org-left">C-M-;</td>
+</tr>
+
+<tr>
+<td class="org-left">toggle-window-dedicated</td>
+<td class="org-left">C-c t</td>
+</tr>
+
+<tr>
+<td class="org-left">Open line above</td>
+<td class="org-left">M-o</td>
+</tr>
+
+<tr>
+<td class="org-left">Multi Cursor</td>
+<td class="org-left">C-M-=</td>
+</tr>
+
+<tr>
+<td class="org-left">query replace</td>
+<td class="org-left">M-%</td>
+</tr>
+
+<tr>
+<td class="org-left">query replace regexp</td>
+<td class="org-left">C-M-%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orga8e6f1f" class="outline-2">
+<h2 id="orga8e6f1f"><span class="section-number-2">7</span> Python</h2>
+</div>
+<div id="outline-container-orgff9e93a" class="outline-2">
+<h2 id="orgff9e93a"><span class="section-number-2">8</span> C/C++</h2>
+<div class="outline-text-2" id="text-8">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Neotree toggle</td>
+<td class="org-left">C-F12</td>
+</tr>
+
+<tr>
+<td class="org-left">Indent buffer</td>
+<td class="org-left">C-x \</td>
+</tr>
+
+<tr>
+<td class="org-left">ff-find-other-file</td>
+<td class="org-left">C-c o</td>
+</tr>
+
+<tr>
+<td class="org-left">smart-compile</td>
+<td class="org-left">F12</td>
+</tr>
+
+<tr>
+<td class="org-left">flycheck-list-errors</td>
+<td class="org-left">F7</td>
+</tr>
+
+<tr>
+<td class="org-left">flycheck-previous-errors</td>
+<td class="org-left">F8 or M-p</td>
+</tr>
+
+<tr>
+<td class="org-left">flycheck-next-error</td>
+<td class="org-left">F9 or M-n</td>
+</tr>
+
+<tr>
+<td class="org-left">helm-flycheck</td>
+<td class="org-left">M-h c</td>
+</tr>
+
+<tr>
+<td class="org-left">gtags in this function</td>
+<td class="org-left">C-c g a</td>
+</tr>
+
+<tr>
+<td class="org-left">gtags select</td>
+<td class="org-left">C-j</td>
+</tr>
+
+<tr>
+<td class="org-left">gtags dwim</td>
+<td class="org-left">M-.</td>
+</tr>
+
+<tr>
+<td class="org-left">gtags pop stack</td>
+<td class="org-left">M-,</td>
+</tr>
+
+<tr>
+<td class="org-left">gtags previous</td>
+<td class="org-left">C-c &lt;</td>
+</tr>
+
+<tr>
+<td class="org-left">gtags next</td>
+<td class="org-left">C-c &gt;</td>
+</tr>
+
+<tr>
+<td class="org-left">semantic-fa hydra</td>
+<td class="org-left">M-g</td>
+</tr>
+
+<tr>
+<td class="org-left">hideshow hydra</td>
+<td class="org-left">C-,</td>
+</tr>
+
+<tr>
+<td class="org-left">expandregion</td>
+<td class="org-left">C-=</td>
+</tr>
+
+<tr>
+<td class="org-left">projectile hydra</td>
+<td class="org-left">C-M-g</td>
+</tr>
+
+<tr>
+<td class="org-left">smartparens hydra</td>
+<td class="org-left">M-K or C-(</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org8e7f363" class="outline-2">
+<h2 id="org8e7f363"><span class="section-number-2">9</span> Emacs Lisp</h2>
+<div class="outline-text-2" id="text-9">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Load Init</td>
+<td class="org-left">C-c I</td>
+</tr>
+
+<tr>
+<td class="org-left">Evaluate buffer</td>
+<td class="org-left">C-M-!</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org52cd567" class="outline-2">
+<h2 id="org52cd567"><span class="section-number-2">10</span> Macro</h2>
+<div class="outline-text-2" id="text-10">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">apply-macro-to-region-lines</td>
+<td class="org-left">M-F4</td>
+</tr>
+
+<tr>
+<td class="org-left">run-infinite-macro</td>
+<td class="org-left">S-F4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org708b3ed" class="outline-2">
+<h2 id="org708b3ed"><span class="section-number-2">11</span> Magit</h2>
+<div class="outline-text-2" id="text-11">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Magic status</td>
+<td class="org-left">C-x g</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orgfb14439" class="outline-2">
+<h2 id="orgfb14439"><span class="section-number-2">12</span> LaTeX</h2>
+<div class="outline-text-2" id="text-12">
+</div>
+<div id="outline-container-orgf2663a6" class="outline-3">
+<h3 id="orgf2663a6"><span class="section-number-3">12.1</span> CDLaTeX</h3>
+<div class="outline-text-3" id="text-12-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">beg</td>
+<td class="org-left">Complete an environment name and insert template</td>
+</tr>
+
+<tr>
+<td class="org-left">env</td>
+<td class="org-left">Complete an environment name and insert template</td>
+</tr>
+
+<tr>
+<td class="org-left">it</td>
+<td class="org-left">New item in current environment</td>
+</tr>
+
+<tr>
+<td class="org-left">ite</td>
+<td class="org-left">Insert an ITEMIZE environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">enu</td>
+<td class="org-left">Insert an ENUMERATE environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">equ</td>
+<td class="org-left">Insert an EQUATION environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">eqn</td>
+<td class="org-left">Insert an EQUATION environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">ali</td>
+<td class="org-left">Insert an ALIGN environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">ali*</td>
+<td class="org-left">Insert an ALIGN* environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">alit</td>
+<td class="org-left">Insert an ALIGNAT environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">alit*</td>
+<td class="org-left">Insert an ALIGNAT* environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">xal</td>
+<td class="org-left">Insert a XALIGNAT environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">xal*</td>
+<td class="org-left">Insert a XALIGNAT* environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">xxa</td>
+<td class="org-left">Insert a XXALIGNAT environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">xxa*</td>
+<td class="org-left">Insert a XXALIGNAT environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">mul</td>
+<td class="org-left">Insert a MULTINE environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">mul*</td>
+<td class="org-left">Insert a MULTINE* environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">gat</td>
+<td class="org-left">Insert a GATHER environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">gat*</td>
+<td class="org-left">Insert a GATHER* environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">fla</td>
+<td class="org-left">Insert a FLALIGN environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">fla*</td>
+<td class="org-left">Insert a FLALIGN* environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">fg</td>
+<td class="org-left">Insert a FIGURE environment template</td>
+</tr>
+
+<tr>
+<td class="org-left">sn</td>
+<td class="org-left">Insert a \section{} statement</td>
+</tr>
+
+<tr>
+<td class="org-left">ss</td>
+<td class="org-left">Insert a \subsection{} statement</td>
+</tr>
+
+<tr>
+<td class="org-left">sss</td>
+<td class="org-left">Insert a \subsubsection{} statement</td>
+</tr>
+
+<tr>
+<td class="org-left">pf</td>
+<td class="org-left">Insert a \paragraph{} statement</td>
+</tr>
+
+<tr>
+<td class="org-left">sp</td>
+<td class="org-left">Insert a \subparagraph{} statement</td>
+</tr>
+
+<tr>
+<td class="org-left">ssp</td>
+<td class="org-left">Insert a \subsubparagraph{} statement</td>
+</tr>
+
+<tr>
+<td class="org-left">cl</td>
+<td class="org-left">Insert \centerline</td>
+</tr>
+
+<tr>
+<td class="org-left">inc</td>
+<td class="org-left">Insert \includegraphics with file name</td>
+</tr>
+
+<tr>
+<td class="org-left">lr(</td>
+<td class="org-left">Insert a \left( \right) pair</td>
+</tr>
+
+<tr>
+<td class="org-left">lr[</td>
+<td class="org-left">Insert a \left[ \right] pair</td>
+</tr>
+
+<tr>
+<td class="org-left">lr{</td>
+<td class="org-left">Insert a \left{ \right} pair</td>
+</tr>
+
+<tr>
+<td class="org-left">lr&lt;</td>
+<td class="org-left">Insert a \left&lang; \right&rang; pair</td>
+</tr>
+
+<tr>
+<td class="org-left">lr</td>
+<td class="org-left">Insert a \left  \right  pair</td>
+</tr>
+
+<tr>
+<td class="org-left">caseeq</td>
+<td class="org-left">Insert a = { construct</td>
+</tr>
+
+<tr>
+<td class="org-left">fr</td>
+<td class="org-left">Insert \frac{}{}</td>
+</tr>
+
+<tr>
+<td class="org-left">sq</td>
+<td class="org-left">Insert \sqrt{}</td>
+</tr>
+
+<tr>
+<td class="org-left">intl</td>
+<td class="org-left">Insert &int;\limits<sub>nil</sub><sup>nil</sup></td>
+</tr>
+
+<tr>
+<td class="org-left">suml</td>
+<td class="org-left">Insert &sum;\limits<sub>nil</sub><sup>nil</sup></td>
+</tr>
+
+<tr>
+<td class="org-left">nonum</td>
+<td class="org-left">Insert \nonumber\\</td>
+</tr>
+
+<tr>
+<td class="org-left">fn</td>
+<td class="org-left">Make a footnote</td>
+</tr>
+
+<tr>
+<td class="org-left">qq</td>
+<td class="org-left">Insert \quad</td>
+</tr>
+
+<tr>
+<td class="org-left">qqq</td>
+<td class="org-left">Insert \qquad</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org9c4dd37" class="outline-3">
+<h3 id="org9c4dd37"><span class="section-number-3">12.2</span> AucTeX</h3>
+<div class="outline-text-3" id="text-12-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">insert macro</td>
+<td class="org-left">C-c RET</td>
+</tr>
+
+<tr>
+<td class="org-left">create section</td>
+<td class="org-left">C-c C-s</td>
+</tr>
+
+<tr>
+<td class="org-left">create environment</td>
+<td class="org-left">C-c C-e</td>
+</tr>
+
+<tr>
+<td class="org-left">change environment type</td>
+<td class="org-left">C-u C-c C-e</td>
+</tr>
+
+<tr>
+<td class="org-left">mark current environment</td>
+<td class="org-left">C-c .</td>
+</tr>
+
+<tr>
+<td class="org-left">mark current section</td>
+<td class="org-left">C-c *</td>
+</tr>
+
+<tr>
+<td class="org-left">close current environment</td>
+<td class="org-left">C-c ]</td>
+</tr>
+
+<tr>
+<td class="org-left">find matching begin environment</td>
+<td class="org-left">C-M-a</td>
+</tr>
+
+<tr>
+<td class="org-left">find matching end</td>
+<td class="org-left">C-M-e</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org7e12bd0" class="outline-3">
+<h3 id="org7e12bd0"><span class="section-number-3">12.3</span> Preview</h3>
+<div class="outline-text-3" id="text-12-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">preview buffer</td>
+<td class="org-left">F12</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org149e068" class="outline-3">
+<h3 id="org149e068"><span class="section-number-3">12.4</span> RefTeX</h3>
+<div class="outline-text-3" id="text-12-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">add label</td>
+<td class="org-left">C-c (</td>
+</tr>
+
+<tr>
+<td class="org-left">Refer</td>
+<td class="org-left">C-c )</td>
+</tr>
+
+<tr>
+<td class="org-left">add citation</td>
+<td class="org-left">C-c [</td>
+</tr>
+
+<tr>
+<td class="org-left">jump to section</td>
+<td class="org-left">C-c =</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org5013d39" class="outline-2">
+<h2 id="org5013d39"><span class="section-number-2">13</span> Appearance</h2>
+<div class="outline-text-2" id="text-13">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">narrow-to-region</td>
+<td class="org-left">C-F8</td>
+</tr>
+
+<tr>
+<td class="org-left">widen</td>
+<td class="org-left">S-F8</td>
+</tr>
+
+<tr>
+<td class="org-left">narrow-to-defun</td>
+<td class="org-left">M-F8</td>
+</tr>
+
+<tr>
+<td class="org-left">nolinum</td>
+<td class="org-left">C-c n</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org8df6c27" class="outline-2">
+<h2 id="org8df6c27"><span class="section-number-2">14</span> Key-chord</h2>
+<div class="outline-text-2" id="text-14">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">"jj"</td>
+<td class="org-left">avy-goto-char-timer)</td>
+</tr>
+
+<tr>
+<td class="org-left">"ww"</td>
+<td class="org-left">helm-swoop)</td>
+</tr>
+
+<tr>
+<td class="org-left">"bb"</td>
+<td class="org-left">helm-swoop-back-to-last-point)</td>
+</tr>
+
+<tr>
+<td class="org-left">"qq"</td>
+<td class="org-left">keyboard-quit)</td>
+</tr>
+
+<tr>
+<td class="org-left">";;"</td>
+<td class="org-left">end-of-line)</td>
+</tr>
+
+<tr>
+<td class="org-left">"aa"</td>
+<td class="org-left">beginning-of-line)</td>
+</tr>
+
+<tr>
+<td class="org-left">"zz"</td>
+<td class="org-left">set-mark-command)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org155a27b" class="outline-2">
+<h2 id="org155a27b"><span class="section-number-2">15</span> Spelling</h2>
+<div class="outline-text-2" id="text-15">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">flyspell-check-previous-highlighted-word</td>
+<td class="org-left">C-M-/</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2018-11-15 Thu 16:24</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

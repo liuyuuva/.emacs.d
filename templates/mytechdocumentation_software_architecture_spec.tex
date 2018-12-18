@@ -33,7 +33,21 @@
 }
 \usepackage{listings}
 \usepackage{xcolor}
-% \lstset { %
+
+
+\usepackage{multirow}
+%\usepackage{fontspec}
+%\setmainfont{FangSong}
+\usepackage{fullpage}
+\usepackage{array}
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
+\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
+\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
+
+%
+
+%\lstset { %
 %     language=C,
 %     backgroundcolor=\color{black!5}, % set backgroundcolor
 %     basicstyle=\footnotesize,% basic font setting
@@ -57,17 +71,6 @@
   keywordstyle=\color{blue},       % keyword style
   stringstyle=\color{mymauve},     % string literal style
 }
-
-
-\usepackage{multirow}
-%\usepackage{fontspec}
-%\setmainfont{FangSong}
-\usepackage{fullpage}
-\usepackage{array}
-\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
-\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
-\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
-\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
 
 \begin{document}
 
@@ -93,12 +96,15 @@
 
 \newfloatcommand{capbtabbox}{table}[][\FBwidth]
 
-\title{\bf \LARGE Lateral Controller Specification}
+
+
+\title{\bf \LARGE XXX System Software Architecture Specification}
 
 \author{Yu Liu}
 
 \date{}
 \maketitle
+
 
 \chapter*{Revision Record}
 \begin{table}[ht]
@@ -120,6 +126,92 @@
 \tableofcontents
 \newpage
 
+
+\chapter{Introduction}
+\section{Purpose}
+\section{Scope}
+\section{Expected Readers and Reading Suggestions}
+\section{Terms and Acronyms}
+\section{References}
+
+\chapter{Production Introduction}
+\section{Function Introduction}
+\section{Operating Environment and Context}
+\section{Condition and Constraints}
+\subsection{Hardware Constraints}
+\subsection{Operating System}
+\section{Design Principal and Policy}
+\subsection{Design Policy}
+\subsection{Coding Specification}
+\subsection{Other}
+
+\chapter{Static Design}
+\section{Software Flowchart}
+\section{Software Architecture}
+\section{List of Components}
+\section{Component Deployment}
+
+\chapter{Dynamic Design}
+\section{Software Mode and Status}
+\section{Sequence Diagram}
+\section{Scheduler Design}
+\section{Timing Design}
+
+\chapter{Software Component}
+\section{Component XXX}
+\subsection{Component Function Description}
+\subsection{Component Interface}
+
+\section{Component YYY}
+\subsection{Component Function Description}
+\subsection{Component Interface}
+
+\chapter{Resources}
+\chapter{Interface Design}
+\chapter{Application Parameters and Calibration}
+\chapter{Non-Functional Requirements}
+\section{Scalability}
+\section{Performance}
+\section{Safety}
+\section{Security}
+
+\begin{thebibliography}{199}
+%\setlength{\itemsep}{-2mm}
+
+
+
+\bibitem{Miller_eCVT} J. M. Miller, ``Hybrid electric vehicle propulsion system
+  architectures of the e-cvt type,'' {\it IEEE Transactions on Power
+    Electronics}, vol. 21, no. 3, pp. 756--767, May 2006.
+
+\bibitem{Kuang_HEV101_08} M. Kuang, ``Power split system HEV 101,'' Ford
+  Internal Presentation, 2008.
+
+
+\bibitem{Liang_etal_ELDModelingControl_12} W. Liang, X. Wang, T.
+  Chrostowski, R. McGee, J. Doering, and M. Kuang, ``Modeling and control of power
+  split hybrid vehicle transaxle system using enhanced lever diagram,''
+  Ford Technical Report, SRR-2012-0155, 2012.
+
+\bibitem{LiangEtAlEngSpdCtrl12} W. Liang, C. Okubo, T. Chrostowski, and
+  M. Kuang, ``Engine speed control of a power split HEV,'' Ford
+  Technical Report, SRR-2012-0156, 2012.
+
+\bibitem{MeyerAPSTCR2Presentation} J. Meyer, et al., ``Advanced Power
+  Split Transaxle Controls R2 Review,'' APSTC project TDR presentation. 
+
+
+\bibitem{MeyerAPSTCR3Presentation} W. Liang, et al., ``Advanced Power
+  Split Transaxle Controls R3 Review,'' APSTC project TDR presentation. 
+
+\bibitem{AlcantarCrankingComp15} J. V. Alcantar, R. Johri, and M. Kuang,
+  ``Minimizing Vibration of the Power Split Drivetrain During Engine
+  Starts and Stops via Cranking Torque Estimation and Compensation,''
+  Ford Technical Report, SRR-2015ยกV0151.
+
+
+\end{thebibliography}
+\end{document}
 \chapter{ Introduction}
 This documentation is to detail the design of the Lateral Controller
 Module for the Traffic Jam Pilot (TJP) project. The primary purpose of
@@ -517,40 +609,3 @@ described as follows.
 % }
 % \end{floatrow}
 % \end{figure}
-\begin{thebibliography}{199}
-%\setlength{\itemsep}{-2mm}
-
-
-
-\bibitem{Miller_eCVT} J. M. Miller, ``Hybrid electric vehicle propulsion system
-  architectures of the e-cvt type,'' {\it IEEE Transactions on Power
-    Electronics}, vol. 21, no. 3, pp. 756--767, May 2006.
-
-\bibitem{Kuang_HEV101_08} M. Kuang, ``Power split system HEV 101,'' Ford
-  Internal Presentation, 2008.
-
-
-\bibitem{Liang_etal_ELDModelingControl_12} W. Liang, X. Wang, T.
-  Chrostowski, R. McGee, J. Doering, and M. Kuang, ``Modeling and control of power
-  split hybrid vehicle transaxle system using enhanced lever diagram,''
-  Ford Technical Report, SRR-2012-0155, 2012.
-
-\bibitem{LiangEtAlEngSpdCtrl12} W. Liang, C. Okubo, T. Chrostowski, and
-  M. Kuang, ``Engine speed control of a power split HEV,'' Ford
-  Technical Report, SRR-2012-0156, 2012.
-
-\bibitem{MeyerAPSTCR2Presentation} J. Meyer, et al., ``Advanced Power
-  Split Transaxle Controls R2 Review,'' APSTC project TDR presentation. 
-
-
-\bibitem{MeyerAPSTCR3Presentation} W. Liang, et al., ``Advanced Power
-  Split Transaxle Controls R3 Review,'' APSTC project TDR presentation. 
-
-\bibitem{AlcantarCrankingComp15} J. V. Alcantar, R. Johri, and M. Kuang,
-  ``Minimizing Vibration of the Power Split Drivetrain During Engine
-  Starts and Stops via Cranking Torque Estimation and Compensation,''
-  Ford Technical Report, SRR-2015ยกV0151.
-
-
-\end{thebibliography}
-\end{document}
