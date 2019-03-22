@@ -98,7 +98,7 @@
   )
 
 
-;(set-language-environment "UTF-8")
+(set-language-environment "UTF-8")
 (global-set-key (kbd "C-M-!") 'eval-buffer)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
@@ -493,9 +493,10 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 			   (not (file-directory-p (helm-get-selection))))
 		  (helm-maybe-exit-minibuffer)
 		(apply orig-fun args)))
+	
 	(advice-add 'helm-execute-persistent-action :around #'fu/helm-find-files-navigate-forward)
 	(define-key helm-find-files-map (kbd "<return>") 'helm-execute-persistent-action)
-
+	(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 	(defun fu/helm-find-files-navigate-back (orig-fun &rest args)
 	  (if (= (length helm-pattern) (length (helm-find-files-initial-input)))
 		  (helm-find-files-up-one-level 1)
@@ -531,6 +532,7 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 	 )
   )
 
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
 (use-package helm-org-rifle
   :ensure t)
 
@@ -911,40 +913,40 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
     )
   )
 
-
-(use-package ido
-  :ensure t
-  :defer t
-  :init (progn (ido-mode 1)
-               (ido-everywhere 1)
-			   (use-package ido-vertical-mode
-				 :ensure t
-				 :init (ido-vertical-mode 1)
-				 :config
-				 (progn
-				   (setq ido-use-faces t)
-                   (set-face-attribute 'ido-vertical-first-match-face nil
-                    :background nil
-                    :foreground "orange")
-                   (set-face-attribute 'ido-vertical-only-match-face nil
-                                       :background nil
-                                       :foreground nil)
-                   (set-face-attribute 'ido-vertical-match-face nil
-                                       :foreground nil)
-				   ))
-			   )
-  :config
-  (progn
-    (setq ido-case-fold t)
-    (setq ido-everywhere t)
-    (setq ido-enable-prefix nil)
-    (setq ido-enable-flex-matching t)
-    (setq ido-create-new-buffer 'prompt)
-    (setq ido-max-prospects 10)
-    (setq ido-use-faces nil)
-	(setq ido-auto-merge-work-directories-length -1)
-    (setq ido-file-extensions-order '(".org" ".c" ".tex" ".py" ".emacs" ".el" ".ini" ".cfg" ".cnf"))
-    (add-to-list 'ido-ignore-files "appspec.yml")))
+;; 1/16/2019: ido is conflicting with helm, removing it temporarily
+;; (use-package ido
+;;   :ensure t
+;;   :defer t
+;;   :init (progn (ido-mode 1)
+;;                (ido-everywhere 1)
+;; 			   (use-package ido-vertical-mode
+;; 				 :ensure t
+;; 				 :init (ido-vertical-mode 1)
+;; 				 :config
+;; 				 (progn
+;; 				   (setq ido-use-faces t)
+;;                    (set-face-attribute 'ido-vertical-first-match-face nil
+;;                     :background nil
+;;                     :foreground "orange")
+;;                    (set-face-attribute 'ido-vertical-only-match-face nil
+;;                                        :background nil
+;;                                        :foreground nil)
+;;                    (set-face-attribute 'ido-vertical-match-face nil
+;;                                        :foreground nil)
+;; 				   ))
+;; 			   )
+;;   :config
+;;   (progn
+;;     (setq ido-case-fold t)
+;;     (setq ido-everywhere t)
+;;     (setq ido-enable-prefix nil)
+;;     (setq ido-enable-flex-matching t)
+;;     (setq ido-create-new-buffer 'prompt)
+;;     (setq ido-max-prospects 10)
+;;     (setq ido-use-faces nil)
+;; 	(setq ido-auto-merge-work-directories-length -1)
+;;     (setq ido-file-extensions-order '(".org" ".c" ".tex" ".py" ".emacs" ".el" ".ini" ".cfg" ".cnf"))
+;;     (add-to-list 'ido-ignore-files "appspec.yml")))
 
 (use-package anzu
   :ensure t
@@ -1097,7 +1099,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
       (interactive)
       (save-excursion
         (indent-region (point-min) (point-max) nil)))
-    (global-set-key [f12] 'indent-buffer)
+    ;(global-set-key [f12] 'indent-buffer)
 
 (global-set-key "\C-x\\" 'indent-buffer)
 
@@ -1215,8 +1217,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
     )
   )
 
-
-
 ;(define-key c-mode-map  (kbd "C-<tab>") 'company-complete)
 ;(define-key c++-mode-map  (kbd "C-<tab>") 'company-complete)
 ;(define-key c-mode-map  [(tab)] 'company-complete)
@@ -1261,7 +1261,9 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
        :config
        (progn    
 
-		 (add-hook 'c++-mode-hook 'flycheck-mode)
+         (add-hook 'c++-mode-hook 'flycheck-mode)
+;;		 (add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
+		 
 		 (add-hook 'c-mode-hook 'flycheck-mode)
 
        )
@@ -1270,7 +1272,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (define-key flycheck-mode-map (kbd "<F7>") #'flycheck-list-errors)
 (define-key flycheck-mode-map (kbd "<F8>")  #'flycheck-previous-error)
 (define-key flycheck-mode-map (kbd "<F9>") #'flycheck-next-error)
-(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))        
+;(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))        
 
 (use-package helm-flycheck
   :ensure t
@@ -1675,8 +1677,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq make-backup-files t)
 
 (setq version-control t ;; Use version numbers for backups
-	 kept-new-versions 100 ;; Number of newest versions to keep
-	 kept-old-versions 100 ;; Number of oldest versions to keep
+	 kept-new-versions 20 ;; Number of newest versions to keep
+	 kept-old-versions 10 ;; Number of oldest versions to keep
 	 delete-old-versions t ;; Ask to delete excess backup versions?
 	)
 	
@@ -1755,7 +1757,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 
 (setq kill-ring-max 200)
-(mouse-avoidance-mode 'animate)
+;(mouse-avoidance-mode 'animate)
 
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
@@ -1935,7 +1937,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (setq org-agenda-clockreport-parameter-plist 
 	  '(:fileskip0 t :link t :maxlevel 2 :formula "$5=($3+$4)*(60/25);t"))
-
+;(setq org-agenda-skip-deadline-if-done t)
+;(setq org-agenda-skip-scheduled-if-done t)
 
 (setq org-log-done 'time)
 
@@ -1948,11 +1951,11 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-refile-use-outline-path t)
 (setq org-outline-path-complete-in-steps nil)
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
-(defun bh/verify-refile-target ()
-  "Exclude todo keywords with a done state from refile targets"
-  (not (member (nth 2 (org-heading-components)) (quote "DONE")))) ;Note - "org-done-keywords"?
+;; (defun bh/verify-refile-target ()
+;;   "Exclude todo keywords with a done state from refile targets"
+;;   (not (member (nth 2 (org-heading-components)) (quote "DONE")))) ;Note - "org-done-keywords"?
 
-(setq org-refile-target-verify-function 'bh/verify-refile-target)
+;; (setq org-refile-target-verify-function 'bh/verify-refile-target)
 
 
 ;(defun open-notes ()
@@ -3023,8 +3026,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (define-key company-active-map [tab] 'expand-snippet-or-complete-selection)
 (define-key company-active-map (kbd "TAB") 'expand-snippet-or-complete-selection)
 
-(define-key yas-minor-mode-map [tab] nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
+;(define-key yas-minor-mode-map [tab] nil)
+;(define-key yas-minor-mode-map (kbd "TAB") nil)
 
 (define-key yas-keymap [tab] 'tab-complete-or-next-field)
 (define-key yas-keymap (kbd "TAB") 'tab-complete-or-next-field)
@@ -3278,6 +3281,14 @@ buffer in current window."
   (progn
 	(setq super-save-auto-save-when-idle t)
 	))
+
+(use-package keyfreq
+  :config
+  (progn
+	(keyfreq-mode 1)
+	(keyfreq-autosave-mode 1)
+	)
+  )
 
 (defun smart-open-line-above ()
   "Insert an empty line above the current line.
