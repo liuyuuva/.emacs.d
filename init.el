@@ -27,7 +27,7 @@
 		(setq my_org_main_file "C:/org/main.org")
 		(setq my_org_capture_file "C:/org/capture.org")
         (setq my_org_memo_file "C:/org/memo.org")
-		(setq my_org_journal_file "c:/org/journal.org")
+		(setq my_org_journal_file "~/Dropbox/0_Journal/journal.org")
 		(setq my_org_meeting_notes_file "c:/org/meeting_notes.org")
 		(setq org_directory "C:/org/")
 		(setq my_python_command "c:/bin/Anaconda3/python.exe")
