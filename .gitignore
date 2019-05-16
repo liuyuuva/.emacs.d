@@ -10,6 +10,8 @@ request/
 recentf
 latex*
 irony/
+ccls/
+.lsp-session*
 \#*\#
 .emacs.desktop
 .gitattributes

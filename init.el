@@ -23,7 +23,8 @@
 		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 		(setq default-directory "C:/org/")
 		(add-to-list 'exec-path "c:/bin/hunspell/bin") ; have to use hunspell as emacs 26 cannot support aspell < v6, but aspell v6 for w64 is nowhere to find.
-			;(setq ispell-dictionary "C:/bin//Aspell/dict/")
+										;(setq ispell-dictionary "C:/bin//Aspell/dict/")
+		(add-to-list 'exec-path "~/.emacs.d/ccls/")
 		(setq my_org_main_file "C:/org/main.org")
 		(setq my_org_capture_file "C:/org/capture.org")
         (setq my_org_memo_file "C:/org/memo.org")
@@ -1163,24 +1164,24 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;; "-I/.../" where /.../ is the folder structure, such as /src/,
 ;; /include/, /header/, etc. there could be multiple. This way the irony I/O
 ;; error will be gone, and function prototype can be auto completed 
-(use-package irony
-	:ensure t
-	:init
-	(progn
-	  (add-hook 'c++-mode-hook 'irony-mode)
-	  (add-hook 'c-mode-hook 'irony-mode)
-	    )
-	  )
+;; (use-package irony
+;; 	:ensure t
+;; 	:init
+;; 	(progn
+;; 	  (add-hook 'c++-mode-hook 'irony-mode)
+;; 	  (add-hook 'c-mode-hook 'irony-mode)
+;; 	    )
+;; 	  )
 
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
 ;; irony-mode's buffers by irony-mode's function
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'counsel-irony );'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'counsel-irony ));'irony-completion-at-point-async))
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+;; (defun my-irony-mode-hook ()
+;;   (define-key irony-mode-map [remap completion-at-point]
+;;     'counsel-irony );'irony-completion-at-point-async)
+;;   (define-key irony-mode-map [remap complete-symbol]
+;;     'counsel-irony ));'irony-completion-at-point-async))
+;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 	
 (when (boundp 'w32-pipe-read-delay)
   (setq w32-pipe-read-delay 0))
@@ -1190,22 +1191,15 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package company
   :ensure t
-
   :config
   (progn
     (add-hook 'after-init-hook 'global-company-mode)
     (setq company-idle-delay 0)
-    ;; (setq company-idle-delay nil
-	;;   company-show-numbers t
-	;;   company-async-timeout 50)
-    (add-to-list 'company-backends
-	  '(company-irony
-		;company-gtags
-		;company-ispell
-	    )
-	  )
+	)
+  )
+
     
-    (setq company-backends (delete 'company-semantic company-backends))
+   ; (setq company-backends (delete 'company-semantic company-backends))
 
 	
   
@@ -1214,8 +1208,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;    (define-key c-mode-map  [kbd "F5"] 'company-complete-common)
 ;    (define-key cmode-map  [kbd "F5"] 'company-complete-common)
   
-    )
-  )
+    ;)
+ ; )
 
 ;(define-key c-mode-map  (kbd "C-<tab>") 'company-complete)
 ;(define-key c++-mode-map  (kbd "C-<tab>") 'company-complete)
@@ -1226,25 +1220,56 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (global-set-key (kbd "C-'") 'company-complete-common)
 
 
-(use-package company-irony
-  :ensure t
-	   )
 
 (use-package company-c-headers
   :ensure t
   :defer t
   :config
   (progn
-    
-    (add-to-list 'company-backends 'company-c-headers)
+	(add-to-list 'company-backends 'company-c-headers)
     )
   )
 
-(use-package company-irony-c-headers
+;; (use-package company-irony-c-headers
+;;   :ensure t
+;;   :after company
+;;   :config
+;;   (add-to-list 'company-backends 'company-irony-c-headers)
+;;   )
+
+(use-package lsp-mode
   :ensure t
-  :after company
+  :commands lsp
   :config
-  (add-to-list 'company-backends 'company-irony-c-headers)
+  (progn
+	(setq lsp-prefer-flymake nil)
+	)
+  )
+
+
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode
+  :init (setq lsp-ui-doc-enable t
+			  lsp_ui-doc-header t
+			  lsp-ui-doc-include-signature t)
+			  
+	  )
+
+(use-package company-lsp
+  :ensure t
+  :commands company-lsp)
+
+(use-package ccls
+  :ensure t
+  :hook (
+	   (c-mode c++-mode) .
+	   (lambda () (require 'ccls) (lsp)))
+
+  :config
+  (progn
+	(setq ccls-executable "~/.emacs.d/ccls")
+	)
   )
 
 (use-package flycheck
@@ -1289,19 +1314,19 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;; )
 	 
 
-(use-package flycheck-irony
-  :ensure t
-  :defer t
-	:config
-	(eval-after-load 'flycheck
-	  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
-	  )
-	)
+;; ;(use-package flycheck-irony
+;;   :ensure t
+;;   :defer t
+;; 	:config
+;; 	(eval-after-load 'flycheck
+;; 	  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
+;; 	  )
+;; 	)
 
 
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
+;; (add-hook 'c++-mode-hook 'irony-mode)
+;; (add-hook 'c-mode-hook 'irony-mode)
+;; (add-hook 'objc-mode-hook 'irony-mode)
 
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
     ;; ;; irony-mode's buffers by irony-mode's asynchronous function
