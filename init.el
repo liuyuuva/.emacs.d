@@ -24,7 +24,7 @@
 		(setq default-directory "C:/org/")
 		(add-to-list 'exec-path "c:/bin/hunspell/bin") ; have to use hunspell as emacs 26 cannot support aspell < v6, but aspell v6 for w64 is nowhere to find.
 										;(setq ispell-dictionary "C:/bin//Aspell/dict/")
-		(add-to-list 'exec-path "~/.emacs.d/ccls/")
+;		(add-to-list 'exec-path "~/.emacs.d/ccls/")
 		(setq my_org_main_file "C:/org/main.org")
 		(setq my_org_capture_file "C:/org/capture.org")
         (setq my_org_memo_file "C:/org/memo.org")
@@ -1237,6 +1237,22 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;;   (add-to-list 'company-backends 'company-irony-c-headers)
 ;;   )
 
+(use-package ccls
+  :ensure t
+  :hook (
+	   (c-mode c++-mode) .
+	   (lambda () (require 'ccls) (lsp)))
+  :init 
+   	(setq ccls-executable "c:/bin/ccls/ccls.exe")
+  
+	)
+
+(use-package helm-xref
+  :ensure t
+  :init (setq xref-show-xrefs-function 'helm-xref-show-xrefs)
+  )
+
+
 (use-package lsp-mode
   :ensure t
   :commands lsp
@@ -1246,31 +1262,19 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	)
   )
 
-
+(setq xref-prompt-for-identifier '(not xref-find-definitions
+                                            xref-find-definitions-other-window
+                                            xref-find-definitions-other-frame
+                                            xref-find-references))
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
-  :init (setq lsp-ui-doc-enable t
-			  lsp_ui-doc-header t
-			  lsp-ui-doc-include-signature t)
-			  
+  			  
 	  )
 
 (use-package company-lsp
   :ensure t
   :commands company-lsp)
-
-(use-package ccls
-  :ensure t
-  :hook (
-	   (c-mode c++-mode) .
-	   (lambda () (require 'ccls) (lsp)))
-
-  :config
-  (progn
-	(setq ccls-executable "~/.emacs.d/ccls")
-	)
-  )
 
 (use-package flycheck
 	   :ensure t
@@ -1644,33 +1648,33 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 
 
-(use-package helm-gtags
-  :ensure t
-  :init
-  (progn
-    (setq
-     helm-gtags-ignore-case t
-     helm-gtags-auto-update t
-     helm-gtags-use-input-at-cursor t
-     helm-gtags-pulse-at-cursor t
-     helm-gtags-prefix-key "\C-cg"
-     helm-gtags-suggested-key-mapping t
-     ))
-  :config
-  (progn
-    (add-hook 'dired-mode-hook 'helm-gtags-mode)
-    (add-hook 'eshell-mode-hook 'helm-gtags-mode)
-    (add-hook 'c-mode-hook 'helm-gtags-mode)
-    (add-hook 'c++-mode-hook 'helm-gtags-mode)
-    (add-hook 'asm-mode-hook 'helm-gtags-mode)
+;; (use-package helm-gtags
+;;   :ensure t
+;;   :init
+;;   (progn
+;;     (setq
+;;      helm-gtags-ignore-case t
+;;      helm-gtags-auto-update t
+;;      helm-gtags-use-input-at-cursor t
+;;      helm-gtags-pulse-at-cursor t
+;;      helm-gtags-prefix-key "\C-cg"
+;;      helm-gtags-suggested-key-mapping t
+;;      ))
+;;   :config
+;;   (progn
+;;     (add-hook 'dired-mode-hook 'helm-gtags-mode)
+;;     (add-hook 'eshell-mode-hook 'helm-gtags-mode)
+;;     (add-hook 'c-mode-hook 'helm-gtags-mode)
+;;     (add-hook 'c++-mode-hook 'helm-gtags-mode)
+;;     (add-hook 'asm-mode-hook 'helm-gtags-mode)
     
-    (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-    (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
-    (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
-    (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
-    (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
-    (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
-    ))
+;;     (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+;;     (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+;;     (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+;;     (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+;;     (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+;;     (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
+;;     ))
 
 (use-package cedet
   :defer t
