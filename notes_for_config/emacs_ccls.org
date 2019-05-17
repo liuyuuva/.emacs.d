@@ -40,7 +40,7 @@ $ cmake -H. -BRelease -G Ninja -DCMAKE_CXX_FLAGS=-D__STDC_FORMAT_MACROS
 #+begin_src sh
  ninja -C Release
 #+end_src
-there will be some warnings, but .exe file is generated.
+there will be some warnings, but .exe file is generated. Put exe file under C:\bin\ccls\ccls.exe. (Optional) can add c:\bin\ccls to $PATH
 * emacs setup
 ** comment out all irony related config, since we will not use irony for autocomplete
 ** comment out gtags related config, as we will use ccls for tag-like function
