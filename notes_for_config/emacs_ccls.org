@@ -1,0 +1,110 @@
+* Open mingw64 shell 
+* Verify that the following packages are installed using "pacman -Qs /name of package/"
+#+begin_src sh
+mingw-w64-x86_64-clang 
+mingw-w64-x86_64-clang-tools-extra 
+mingw64/mingw-w64-x86_64-polly 
+mingw-w64-x86_64-cmake 
+mingw-w64-x86_64-jq 
+mingw-w64-x86_64-ninja 
+mingw-w64-x86_64-ncurses
+#+end_src
+
+* Clone "ccls" repo:
+#+begin_src sh
+git clone --recursive https://github.com/MaskRay/ccls
+cd ccls
+git submodule update --init #To prevent "nothing to describe" error
+#+end_src
+* Cmake
+#+begin_src sh
+$ cmake -H. -BRelease -G Ninja -DCMAKE_CXX_FLAGS=-D__STDC_FORMAT_MACROS
+-- The CXX compiler identification is GNU 8.2.0
+-- Check for working CXX compiler: C:/msys64/mingw64/bin/c++.exe
+-- Check for working CXX compiler: C:/msys64/mingw64/bin/c++.exe -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Setting build type to 'Release' as none was specified.
+-- Looking for C++ include pthread.h
+-- Looking for C++ include pthread.h - found
+-- Looking for pthread_create
+-- Looking for pthread_create - found
+-- Found Threads: TRUE
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/YLiu/Downloads/ccls/Release
+#+end_src
+* Make
+#+begin_src sh
+ ninja -C Release
+#+end_src
+there will be some warnings, but .exe file is generated.
+* emacs setup
+** comment out all irony related config, since we will not use irony for autocomplete
+** comment out gtags related config, as we will use ccls for tag-like function
+** install lsp-mode, lsp-ui, and company-lsp; install emacs-ccls, helm-xref
+** add the following setting in init.el
+#+begin_src lisp
+
+(use-package ccls
+  :ensure t
+  :hook (
+	   (c-mode c++-mode) .
+	   (lambda () (require 'ccls) (lsp)))
+  :init 
+   	(setq ccls-executable "c:/bin/ccls/ccls.exe")
+  
+	)
+
+(use-package helm-xref
+  :ensure t
+  :init (setq xref-show-xrefs-function 'helm-xref-show-xrefs)
+  )
+
+
+(use-package lsp-mode
+  :ensure t
+  :commands lsp
+  :config
+  (progn
+	(setq lsp-prefer-flymake nil); prefer flycheck
+	)
+  )
+
+(setq xref-prompt-for-identifier '(not xref-find-definitions
+                                            xref-find-definitions-other-window
+                                            xref-find-definitions-other-frame
+                                            xref-find-references)) ;to prevent error in finding references
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode
+  			  
+	  )
+
+(use-package company-lsp
+  :ensure t
+  :commands company-lsp)
+
+#+end_src
+** run M-x company-diag and make sure Used backend: includes company-lsp
+* ccls file and example project structure
+** Set up a project with the following structure
+#+begin_src sh
+project root --- include 
+             |
+             |-- src
+#+end_src
+** put all .h files in include folder, and all .c or .cpp files in src folders
+** put an empty .ccls-root file under "project folder"
+** write a .ccls file under "project folder" with the following content
+#+begin_src sh
+clang
+%c -std=c11
+%cpp -std=c++14
+%h -x c++-header
+-Iinclude
+-Isrc
+#+end_src
+** open a cpp file, try goto definition and goto references, as well as autocomplete. It should work.

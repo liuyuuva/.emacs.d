@@ -1,0 +1,262 @@
+* Irony mode on Windows
+
+My solution is mostly based on this [[http://walterwangcn.blogspot.com/2016/05/windowsemacsirony-company-company-irony.html][article]]
+[[https://oremacs.com/2017/03/28/emacs-cpp-ide/][article]]
+
+** Install msys64
+** Open shell, and run 
+#+BEGIN_SRC sh
+$ pacman -Sy
+#+END_SRC
+** Install:
+#+BEGIN_SRC sh
+   $ pacman -S mingw-w64-x86_64-gcc
+   $ pacman -S mingw-w64-x86_64-gdb
+   $ pacman -S make
+   $ pacman -S mingw-w64-x86_64-cmake
+#+END_SRC
+** clang was also installed using pacman, please use the latest version
+   by searching:
+#+BEGIN_SRC sh
+$ pacman -Ss mingw-w64-x86_64-clang
+#+END_SRC   
+
+** mingw64 should be on C:\ root for clang to work. So perform the following within cmd.exe:
+   #+BEGIN_SRC sh
+   $ ln -s C:\msys64\mingw64 mingw64
+#+END_SRC
+** In msys64 shell, make sure clang works fine with ordinary c/c++ compilation.
+** In home folder (obtain in shell: echo $HOME), setup a .bashrc file,
+and add emacs's path: 
+#+BEGIN_SRC sh 
+   PATH="/c/emacs-25.2/bin:${PATH}"
+#+END_SRC 
+   echo $PATH to make sure the path is correct.
+** Open mingw64 shell and cd to ~\.emacs.d\elpa\irony-2017xxxxxx\server
+** mkdir build, and cd build
+** Run
+#+BEGIN_SRC sh
+   - cmake -DLIBCLANG_LIBRARY=/c/msys64/mingw64/bin/libclang.dll -G 'MSYS Makefiles' ..
+   #+END_SRC
+WARNING: cmake might not be albe to find libclang.dll in that folder!! However, I got a copy of the file "clang.dll" and renamed it to "libclang.dll" and it seemed to work fine.
+The result is shown below:
+ 
+    #+BEGIN_SRC sh
+-- The C compiler identification is GNU 7.2.0
+-- The CXX compiler identification is GNU 7.2.0
+-- Check for working C compiler: C:/msys64/mingw64/bin/gcc.exe
+-- Check for working C compiler: C:/msys64/mingw64/bin/gcc.exe -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: C:/msys64/mingw64/bin/g++.exe
+-- Check for working CXX compiler: C:/msys64/mingw64/bin/g++.exe -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Setting build type to 'Release' as none was specified
+-- Performing Test HAS_STDCXX11
+-- Performing Test HAS_STDCXX11 - Success
+-- Performing Test HAS_CXX11_STDLIB
+-- Performing Test HAS_CXX11_STDLIB - Success
+-- C++11 compiler option(s): -std=c++11
+-- Found LibClang: C:/msys64/mingw64/bin/libclang.dll
+-- Detecting libclang builtin headers directory
+-- Detecting libclang builtin headers directory -- success
+-- Irony package version is '1.1.0'
+-- Found emacs: C:/Users/YLIU193/Softwares/emacs-25.1/bin/emacs.exe
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/YLIU193/.emacs.d/elpa/irony-20170920.1417/server/build
+#+END_SRC
+
+** Run make
+#+BEGIN_SRC sh
+Scanning dependencies of target irony-server
+[ 14%] Building CXX object src/CMakeFiles/irony-server.dir/support/CommandLineParser.cpp.obj
+[ 28%] Building CXX object src/CMakeFiles/irony-server.dir/support/TemporaryFile.cpp.obj
+[ 42%] Building CXX object src/CMakeFiles/irony-server.dir/Command.cpp.obj
+[ 57%] Building CXX object src/CMakeFiles/irony-server.dir/Irony.cpp.obj
+[ 71%] Building CXX object src/CMakeFiles/irony-server.dir/TUManager.cpp.obj
+[ 85%] Building CXX object src/CMakeFiles/irony-server.dir/main.cpp.obj
+[100%] Linking CXX executable ../bin/irony-server.exe
+[100%] Built target irony-server
+#+END_SRC
+** copy /build/bin/irony-server.exe to ~/.emacs.d/irony/bin, and also copy 
+#+BEGIN_SRC
+libgcc_s_seh-1.dll    
+libstdc++-6.dll
+libwinpthread-1.dll
+#+END_SRC
+from msys64/mingw64/bin to /.emacs.d/irony/bin
+** My irony setting in init.el
+
+#+BEGIN_SRC emacs-lisp
+(use-package irony
+	:ensure t
+	:init
+	(progn
+	  (add-hook 'c++-mode-hook 'irony-mode)
+	  (add-hook 'c-mode-hook 'irony-mode)
+	    )
+	  )
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+	
+(when (boundp 'w32-pipe-read-delay)
+  (setq w32-pipe-read-delay 0))
+;; Set the buffer size to 64K on Windows (from the original 4K)
+	 
+	 
+
+(use-package company
+  :ensure t
+
+  :config
+  (progn
+    (add-hook 'after-init-hook 'global-company-mode)
+    
+    ;; (setq company-idle-delay nil
+	;;   company-show-numbers t
+	;;   company-async-timeout 50)
+    (add-to-list 'company-backends
+	  '(company-irony
+		company-gtags
+	    )
+	  )
+    
+    (setq company-backends (delete 'company-semantic company-backends))
+
+  
+;    (define-key company-active-map 'company-complete-common nil)
+;    (define-key company-active-map "C-'" 'company-complete-common)
+;    (define-key c-mode-map  [kbd "F5"] 'company-complete-common)
+;    (define-key cmode-map  [kbd "F5"] 'company-complete-common)
+  
+    )
+  )
+
+
+
+;(define-key c-mode-map  (kbd "C-<tab>") 'company-complete)
+;(define-key c++-mode-map  (kbd "C-<tab>") 'company-complete)
+;(define-key c-mode-map  [(tab)] 'company-complete)
+;(define-key c++-mode-map  [(tab)] 'company-complete)
+;;(eval-after-load 'company
+;;  '(add-to-list 'company-backends 'company-irony))
+(global-set-key (kbd "C-'") 'company-complete-common)
+
+
+(use-package company-irony
+  :ensure t
+	   )
+
+(use-package company-c-headers
+  :ensure t
+  :defer t
+  :config
+  (progn
+    
+    (add-to-list 'company-backends 'company-c-headers)
+    )
+  )
+
+#+END_SRC
+** In cpp project folder, mkdir build and cd build
+
+run 
+#+BEGIN_SRC sh
+cmake -G "MSYS Makefiles" .. 
+#+END_SRC
+
+
+#+BEGIN_SRC sh
+-- The C compiler identification is GNU 7.2.0
+-- The CXX compiler identification is GNU 7.2.0
+-- Check for working C compiler: C:/msys64/mingw64/bin/gcc.exe
+-- Check for working C compiler: C:/msys64/mingw64/bin/gcc.exe -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: C:/msys64/mingw64/bin/g++.exe
+-- Check for working CXX compiler: C:/msys64/mingw64/bin/g++.exe -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/ccode/Model-Predictive-Control-master/build
+
+#+END_SRC
+
+** The above step will create a compile_commands.json
+
+** In root folder of project, create a file .clang_complete to specify the folder structure.
+
+For example, I have a folder "test_auto", and have 2 C files
+
+- header.c
+- test.c
+
+header.c has the declaration of a function 
+
+#+BEGIN_SRC c
+void myadder(int input1, int input2);
+#+END_SRC
+
+The .clang_complete file looks like this:
+#+BEGIN_EXAMPLE
+-I/c/msys64/mingw64/include/
+-I.
+#+END_EXAMPLE
+
+Because the project structure is very simple and has no CMakeLists.txt, I didn't generate a compile_commands.json file.
+
+In test.c, when I typed "mya" and typed TAB, the full function name shows up with cursor stops at the first parameter. It works perfectly as I hoped. 
+
+If we run irony-cdb-menu we would see the following result in new window:
+
+#+BEGIN_EXAMPLE
+Compilation Database: irony-cdb-clang-complete
+
+Working Directory: c:/ccode/test_auto/
+Compile Options: -I/c/msys64/mingw64/include/ -I.
+#+END_EXAMPLE
+
+We can use clang++ -v -x c++ -E -'' to get the included file paths to be added to clang_complete file.
+
+The following .clang_complete file works well for a work project
+#+BEGIN_SRC sh
+-I/c/Work/0_git_SimpleRLM/
+-IC:/msys64/mingw64/include/c++/8.2.0
+-IC:/msys64/mingw64/include/c++/8.2.0/x86_64-w64-mingw32
+-IC:/msys64/mingw64/include/c++/8.2.0/backward
+-IC:/msys64/mingw64/lib/clang/7.0.0/include
+-IC:/msys64/mingw64/x86_64-w64-mingw32/include
+-IC:/msys64/mingw64/include
+#+END_SRC
+
+* A problem for irony on windows:
+On Linux, irony can suggest relevant results, but on windows, the suggestions are not quite relevant. For a class with a very small number of members, irony suggested all available tags instead. I made the two changes to make it work perfectly on windows: change include paths in .clang_complete to windows format, and removed the "add to list" line for company-gtags (as this backend is already in company-backends by reviewing company-backends variable in emacs). After the changes, it works as expected on windows.
+
+* How to generate Ebrowse file uisng emacs:
+1. change working directory to project root
+2. Using M-x find-dired RET RET -name *.h -o -name *.cc (or cpp) then use t to toggle selection and use !ebrowse * to generate browse file
+
+** another way
+on both linux and windows( mingw64 provided that emacs bin is in the path)
+ebrowse $(find -name '*.h' -o -name '*.cc')
+
+another tip: for project like apollo, it's better to create BROWSE for each individual module instead of the whole project, as the tree will be huge and not convevient to go through.

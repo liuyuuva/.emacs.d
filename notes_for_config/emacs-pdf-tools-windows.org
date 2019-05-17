@@ -1,0 +1,60 @@
+Steps for installing pdf-tools in mingw. I referred to this very helpful document:
+[[https://gist.github.com/justbur/afb5f605def2376eeffc643f7b7daae9]]
+
+* In mingw64, install cask:
+#+BEGIN_SRC sh
+curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+#+END_SRC
+Remember to add cask into path (should use absolute path instead of "~"
+#+BEGIN_SRC sh
+export PATH="$HOME/.cask/bin:$PATH"
+#+END_SRC
+May also need to add windows emacs to path as it is what i use
+#+BEGIN_SRC sh
+export PATH="/c/bin/emacs/bin:$PATH"
+
+#+END_SRC
+Seems that the export command is temporary in this terminal instance.
+
+* In msys2, use "pacman -Syu" to update system
+
+* Install the following dependencies
+#+BEGIN_SRC sh
+pacman -Syu
+pacman -S base-devel
+pacman -S mingw-w64-x86_64-toolchain
+pacman -S mingw-w64-x86_64-zlib
+pacman -S mingw-w64-x86_64-libpng
+pacman -S mingw-w64-x86_64-poppler
+pacman -S mingw-w64-x86_64-imagemagick
+#+END_SRC
+
+* In mingw64, enter pdf-tools/ folder
+#+BEGIN_SRC sh
+make -s
+#+END_SRC
+there should be a "pdf-tools-XXX.tar" file in folder
+
+if updated from melpa, the src will be under ~/.emacs.d/elpa/pdf-tools-20xxxxxxx/server. It seems that following emacs prompt to rebuild could work.
+
+* open emacs and install
+#+BEGIN_SRC sh
+M-x package-install-file RET pdf-tools-${VERSION}.tar RET
+#+END_SRC
+
+* activate package.Make sure that preferred coding system is
+   utf-unix:
+#+BEGIN_SRC lisp
+(prefer-coding-system 'utf-8-unix)
+#+END_SRC
+Also make sure that c:\msys64\mingw64\bin is ahead of windows git in the
+#+BEGIN_SRC lisp
+M-x pdf-tools-install RET
+#+END_SRC
+Message "Building the PDF Tools server succeeded" should appear
+
+Emacs may be slow in loading pdf files, when linum mode is on. Should turn it off in init.el.
+
+I also put "pdf-tools-install" in init.el, but make sure that "package-initialize" is before it.
+
+At this moment, pdf file loads very quickly in emacs.
