@@ -99,13 +99,13 @@ project root --- include
 ** put all .h files in include folder, and all .c or .cpp files in src folders
 ** put an empty .ccls-root file under "project folder"
 ** write a .ccls file under "project folder" with the following content
-#+begin_src sh
+#+begin_src lisp
 clang
 %c -std=c11
 %cpp -std=c++14
 %h -x c++-header
--Iinclude
--Isrc
+-Iinclude ;; don't use relative path if using this type
+-Isrc     ;; don't use relative path
 #+end_src
 ** open a cpp file, try goto definition and goto references, as well as autocomplete. It should work.
 * ccls file with headers with relative path 
@@ -125,5 +125,5 @@ clang
 %c -std=c11
 %cpp -std=c++14
 %h -x c++-header
--I. ;; tell ccls the path to "modules" folder 
+-I. ;; tell ccls the path to "modules" folder. Works well for Apollo 
 #+end_src
