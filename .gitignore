@@ -1,3 +1,5 @@
+.#*
+.cache/
 request/
 %backup%~
 .org-id-locations

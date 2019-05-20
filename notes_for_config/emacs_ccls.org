@@ -108,3 +108,22 @@ clang
 -Isrc
 #+end_src
 ** open a cpp file, try goto definition and goto references, as well as autocomplete. It should work.
+* ccls file with headers with relative path 
+Using apollo project as an example. All the header files used are with
+the following relative path format
+#+begin_src c++
+#include "modules/common/adapters/adapter_manager.h"
+#include "modules/common/log.h"
+#include "modules/common/time/time.h"
+#include "modules/common/vehicle_state/vehicle_state_provider.h"
+#include "modules/control/common/control_gflags.h"
+#+end_src
+Modules folder is inside the project root folder "apollo", so in ccls
+file we can specify the path to the modules folder as:
+#+begin_src lisp
+clang
+%c -std=c11
+%cpp -std=c++14
+%h -x c++-header
+-I. ;; tell ccls the path to "modules" folder 
+#+end_src
