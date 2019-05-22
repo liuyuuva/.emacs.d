@@ -127,3 +127,20 @@ clang
 %h -x c++-header
 -I. ;; tell ccls the path to "modules" folder. Works well for Apollo 
 #+end_src
+* reuse of ccls file
+** look at the cpp file and find out about the relative path in the header
+google protobuf example:
+#+begin_src c++
+#include <google/protobuf/any.h>
+#include <google/protobuf/arenastring.h>
+#include <google/protobuf/descriptor.h>
+#include <google/protobuf/generated_message_util.h>
+#include <google/protobuf/message.h>
+#include <google/protobuf/port_def.inc>
+#+end_src
+** From the above code, we see that the top folder the path refers to is "google"
+** We can see that above the google folder, the path has 2 levels: \/protobuf\/src\/google
+** So we can copy our apollo .ccls file and .ccls-root files to the src folder. 
+** since in the ccls file, there is a line: "-I.", the system would know that "src" is the location of the source files. All the top header path location "google" will be checked in here.
+** Indeed, "google" is in "src". In a way, we connected the "-I." for "src" folder with the relative paths "google\/protobuf\/**.h" to form a complete and valid path to the header files, thus the ccls server can successfully find the information.
+** I didn't change ccls file. simply by placing it in the "src" folder, I could see the correct class definition in the "sideline" when browsing the code.
