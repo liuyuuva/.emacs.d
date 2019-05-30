@@ -142,10 +142,12 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; open recent directory, requires ivy (part of swiper)
 ;; borrows from http://stackoverflow.com/questions/23328037/in-emacs-how-to-maintain-a-list-of-recent-directories
-(use-package benchmark-init
-  :ensure t
-  :config
-   (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+
+;; (use-package benchmark-init
+;;   :ensure t
+;;   :config
+;;    (add-hook 'after-init-hook 'benchmark-init/deactivate))
   
 
 (defun bjm/ivy-dired-recent-dirs ()
@@ -171,11 +173,6 @@
 ;; remember cursor position
 
 (save-place-mode 1)
-
-
-
-
-
 
 (use-package bookmark
   :ensure t
@@ -302,12 +299,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     )
   )
 
-;; (use-package rainbow-delimiters
-;;   :ensure t
-;;   :config
-;;   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-;;   )
-
 (use-package magit
   :ensure t
   :bind
@@ -366,6 +357,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 		 ("M-i f" . counsel-find-file)
 		 ("M-i g" . counsel-git)
 		 ("M-i l" . counsel-locate)
+		 ("M-i a" . counsel-ag)
+		 ("M-i m" . counsel-minibuffer-history)
 		 )
   )
 
@@ -559,7 +552,7 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 	)
   )
 	
-;(global-set-key (kbd "C-x C-b") 'buffer-menu) ; this is my preferred buffer list behavior over helm. this is actually what i had been using before helm. not list-buffers in fact, was buffer-menu
+
 (global-set-key (kbd "C-x C-b") 'ibuffer); trying ibuffer instead of buffer-menu
 
 (use-package ibuffer
@@ -628,9 +621,7 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 				(ibuffer-auto-mode 1)
 				(ibuffer-switch-to-saved-filter-groups "default")))
 
-;; don't show these
-					;(add-to-list 'ibuffer-never-show-predicates "zowie")
-;; Don't show filter groups if there are no buffers in that group
+
 (setq ibuffer-show-empty-filter-groups nil)
 
 	
@@ -798,7 +789,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	(key-chord-define-local "ww" 'helm-swoop)
 	(key-chord-define-local "bb" 'helm-swoop-back-to-last-point)
 	(key-chord-define-local "qq" 'keyboard-quit)
-	;(key-chord-define "dm" 'delete-minibuffer-contents)
+	(key-chord-define-local "dm" 'delete-minibuffer-contents)
 	(key-chord-define-local ";;" 'end-of-line)
 	(key-chord-define-local "aa" 'beginning-of-line)
 	(key-chord-define-local "zz" 'set-mark-command)
@@ -810,6 +801,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (add-hook 'c++-mode-hook 'yl/setup-key-chord)
 ;; (add-hook 'emacs-lisp-mode-hook 'yl/setup-key-chord)
 (add-hook 'python-mode-hook 'yl/setup-key-chord)
+(add-hook 'org-mode-hook 'yl/setup-key-chord)
 
 
 ;; (use-package ace-jump-mode
@@ -2425,21 +2417,21 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (
    ("C-M-g" . hydra-projectile/body)
    )
-  :config
-  (defhydra hydra-projectile (:color red :columns 4)
-	"Projectile"
-	("a" counsel-git-grep "ag")
-	("b" projectile-switch-to-buffer "switch to buffer")
-	("d" projectile-find-dir "dir")
-	("i" projectile-ibuffer "Ibuffer")
-	("K" projectile-kill-buffers "Kill all buffers")
-	("p" projectile-switch-project "switch")
-	("r" projectile-run-async-shell-command-in-root "run shell command")
-	("x" projectile-remove-known-project "remove known")
-	("X" projectile-cleanup-known-projects "cleanup non-existing")
-	("z" projectile-cache-current-file "cache current")
-	("q" nil "cancel")
-	  )
+  ;;:config
+  ;; (defhydra hydra-projectile (:color red :columns 4)
+  ;;   "Projectile"
+  ;;   ("a" counsel-git-grep "ag")
+  ;;   ("b" projectile-switch-to-buffer "switch to buffer")
+  ;;   ("d" projectile-find-dir "dir")
+  ;;   ("i" projectile-ibuffer "Ibuffer")
+  ;;   ("K" projectile-kill-buffers "Kill all buffers")
+  ;;   ("p" projectile-switch-project "switch")
+  ;;   ("r" projectile-run-async-shell-command-in-root "run shell command")
+  ;;   ("x" projectile-remove-known-project "remove known")
+  ;;   ("X" projectile-cleanup-known-projects "cleanup non-existing")
+  ;;   ("z" projectile-cache-current-file "cache current")
+  ;;   ("q" nil "cancel")
+  ;;     )
 	 )
 
 (use-package smartparens
