@@ -1,6 +1,7 @@
 .#*
 .cache/
 request/
+transient/
 %backup%~
 .org-id-locations
 *.aux
