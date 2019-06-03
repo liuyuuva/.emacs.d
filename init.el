@@ -771,7 +771,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
    (progn
      (global-set-key (kbd "S-SPC") 'avy-goto-line)
 	 (global-set-key (kbd "M-s") 'avy-goto-char-timer)
-	 ;(global-set-key (kbd "C-.") 'avy-goto-char-timer)
+	 (global-set-key (kbd "C-.") 'avy-goto-char-timer)
 
 	 
 	 )
@@ -820,48 +820,50 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   ("i" text-scale-increase "in")
   ("o" text-scale-decrease "out")
   )
+;; This has to be before we invoke evil-mode due to:
+    ;; https://github.com/cofi/evil-leader/issues/10
 
 (use-package evil
   :ensure t
-  :defer t
   :init
   (progn
     ;; if we don't have this evil overwrites the cursor color
     (setq evil-default-cursor t)
     (setq evil-toggle-key "C-`")
-	(evil-mode 1)
-	;; leader shortcuts
 
-    ;; This has to be before we invoke evil-mode due to:
-    ;; https://github.com/cofi/evil-leader/issues/10
-    ;; (use-package evil-leader
-    ;;   :config
-    ;;   (progn
-    ;;     (setq evil-leader/in-all-states t)
-    ;;     (setq evil-leader/set-leader "<SPC>")
-    ;;     ;; keyboard shortcuts
-    ;;     (evil-leader/set-key
-	;;   "b" 'helm-buffer-list
-	;;   "eb" 'eval-buffer
-	;;   "f" 'ido-find-file
-	;;   "g" 'magit-status
-	;;   "j" 'ace-jump-char-mode
-	;;   "k" 'kill-buffer
-	;;   "K" 'kill-this-buffer
-	;;   "o" 'helm-occur
-	;;   "r" 'recentf-open-files
-	;;   "s" 'helm-swoop
-	;;   "w" 'save-buffer
-	;;   "y" 'helm-show-kill-ring
-	;;   "<SPC>" 'ace-jump-line-mode
-    ;;   "e"   'flycheck-list-errors
+	(use-package evil-leader
+      :ensure t
+      :init
+      (progn
+        (global-evil-leader-mode)
+        (setq evil-leader/leader "<SPC>")
+        )
+      :config
+      (progn
+        
+        (setq evil-leader/in-all-states t)
+        
+        ;; keyboard shortcuts
+	(evil-leader/set-key
+	  "b" 'helm-buffers-list
+	   "f" 'helm-find-files
+	   "g" 'magit-status
+	   "j" 'avy-goto-char-timer
+	   "k" 'kill-buffer
+	   "K" 'kill-this-buffer
+	   "o" 'helm-occur
+	   "r" 'recentf-open-files
+	   "s" 'helm-swoop
+	   "w" 'save-buffer
+	   "y" 'helm-show-kill-ring
+	   "<SPC>" 'avy-goto-line
+       "e"   'flycheck-list-errors
+	   
+	   )
+	)
+  )
 
-	;;  )
-	;;)
-     ;; )
 
-    ;; boot evil by default
-    ;;(evil-mode 1))
 	)
   :config
   (progn
@@ -902,7 +904,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
     (evil-define-key 'normal flycheck-mode-map (kbd "[e") 'flycheck-previous-error)
     (eval-after-load 'evil-maps
 	  '(define-key evil-normal-state-map (kbd "M-.") nil)) ;release M-. for helm-gtags-dwim
-
+    (evil-mode 1)
     )
   )
 
