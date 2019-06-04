@@ -1205,12 +1205,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
     ;)
  ; )
 
-;(define-key c-mode-map  (kbd "C-<tab>") 'company-complete)
-;(define-key c++-mode-map  (kbd "C-<tab>") 'company-complete)
-;(define-key c-mode-map  [(tab)] 'company-complete)
-;(define-key c++-mode-map  [(tab)] 'company-complete)
-;;(eval-after-load 'company
-;;  '(add-to-list 'company-backends 'company-irony))
+
 (global-set-key (kbd "C-'") 'company-complete-common)
 
 
@@ -2580,13 +2575,14 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   :ensure t
   :config
   (setq windmove-wrap-around t)
-  :bind
-  (
-   ("C-x <left>" . windmove-left)
-   ("C-x <right>" . windmove-right)
-   ("C-x <up>" . windmove-up)
-   ("C-x <down>" . windmove-down)
-   )
+  (windmove-default-keybindings)
+  ;; :bind
+  ;; (
+  ;;  ("C-x <left>" . windmove-left)
+  ;;  ("C-x <right>" . windmove-right)
+  ;;  ("C-x <up>" . windmove-up)
+  ;;  ("C-x <down>" . windmove-down)
+  ;;  )
   )
 
 
@@ -2892,6 +2888,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (global-set-key (kbd "C-z")  'set-mark-command)
 ;(global-set-key "\C-x\C-b" 'buffer-menu)
 (global-set-key (kbd "C-<backspace>") 'backward-kill-word)
+(global-set-key [C-tab] 'other-window)
+;(global-set-key [C-next] 'scroll-other-window)
+;(global-set-key [C-prior] 'scroll-other-window-down)
 
 
 (global-set-key (kbd "M-<backspace>") (lambda ()
