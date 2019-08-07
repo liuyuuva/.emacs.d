@@ -26,10 +26,10 @@
 										;(setq ispell-dictionary "C:/bin//Aspell/dict/")
 ;		(add-to-list 'exec-path "~/.emacs.d/ccls/")
 		(setq my_org_main_file "C:/org/main.org")
-		(setq my_org_capture_file "C:/org/capture.org")
+		(setq my_org_capture_file "C:/org/main.org")
         (setq my_org_memo_file "C:/org/memo.org")
 		(setq my_org_journal_file "~/Dropbox/0_Journal/journal.org")
-		(setq my_org_meeting_notes_file "c:/org/meeting_notes.org")
+		(setq my_org_meeting_notes_file "c:/org/main.org")
 		(setq org_directory "C:/org/")
 		(setq my_python_command "c:/bin/Anaconda3/python.exe")
         (setq my_ipython_path "c:/bin/Anaconda3/Scripts/ipython.exe")
@@ -1878,11 +1878,11 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;;;;Org Capture
 
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline my_org_capture_file "Tasks" )
+      '(("t" "Todo" entry (file+headline my_org_capture_file "Notes" )
 		 "* TODO %?\n  ")
         ("n" "Notes" entry (file+headline my_org_capture_file "Notes" )
 		 "* %?\nEntered on %U\n ")
-        ("m" "Meeting Note" entry (file my_org_meeting_notes_file)
+        ("m" "Meeting Note" entry (file+headline my_org_meeting_notes_file "Meeting Notes")
          "* Meeting with %? on %U\n")
 		 ("j" "Journal" entry (file+datetree my_org_journal_file)
 		  "* %?\nEntered on %U\n %i\n ")
