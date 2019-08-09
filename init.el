@@ -803,16 +803,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (add-hook 'python-mode-hook 'yl/setup-key-chord)
 (add-hook 'org-mode-hook 'yl/setup-key-chord)
 
-
-;; (use-package ace-jump-mode
-;;   :ensure t
-
-;;   :config
-;;   (progn
-;;     (global-set-key (kbd "M-s") 'ace-jump-char-mode)
-;;     (global-set-key (kbd "S-SPC") 'ace-jump-line-mode)
-;;     ))
-
 (global-unset-key (kbd "C-M-z"))
 
 (defhydra hydra-zoom (global-map "C-M-z")
@@ -908,40 +898,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
     )
   )
 
-;; 1/16/2019: ido is conflicting with helm, removing it temporarily
-;; (use-package ido
-;;   :ensure t
-;;   :defer t
-;;   :init (progn (ido-mode 1)
-;;                (ido-everywhere 1)
-;; 			   (use-package ido-vertical-mode
-;; 				 :ensure t
-;; 				 :init (ido-vertical-mode 1)
-;; 				 :config
-;; 				 (progn
-;; 				   (setq ido-use-faces t)
-;;                    (set-face-attribute 'ido-vertical-first-match-face nil
-;;                     :background nil
-;;                     :foreground "orange")
-;;                    (set-face-attribute 'ido-vertical-only-match-face nil
-;;                                        :background nil
-;;                                        :foreground nil)
-;;                    (set-face-attribute 'ido-vertical-match-face nil
-;;                                        :foreground nil)
-;; 				   ))
-;; 			   )
-;;   :config
-;;   (progn
-;;     (setq ido-case-fold t)
-;;     (setq ido-everywhere t)
-;;     (setq ido-enable-prefix nil)
-;;     (setq ido-enable-flex-matching t)
-;;     (setq ido-create-new-buffer 'prompt)
-;;     (setq ido-max-prospects 10)
-;;     (setq ido-use-faces nil)
-;; 	(setq ido-auto-merge-work-directories-length -1)
-;;     (setq ido-file-extensions-order '(".org" ".c" ".tex" ".py" ".emacs" ".el" ".ini" ".cfg" ".cnf"))
-;;     (add-to-list 'ido-ignore-files "appspec.yml")))
 
 (use-package anzu
   :ensure t
@@ -996,14 +952,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
      (setq undo-tree-visualizer-timestamps t)
      (setq undo-tree-visualizer-diff t)))
 (global-unset-key (kbd "C-/"))
-;; (use-package guide-key
-;;   :ensure t
-;;   :defer t
-;;   :diminish guide-key-mode
-;;   :config
-;;   (progn
-;;   (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
-;;   (guide-key-mode 1)))  ; Enable guide-key-mode
 
 
 (use-package python
@@ -1110,35 +1058,9 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	)
   )
 
-;; (use-package google-c-style
-;;   :ensure t
-;;   :init
-;;   (add-hook 'c-mode-common-hook 'google-set-c-style)
-;;   (add-hook 'c-mode-common-hook 'google-make-newline-indent)
-;;   (add-hook 'c++-mode-hook 'google-set-c-style)
-;;   (add-hook 'c++-mode-hook 'google-make-newline-indent)
-;;    )
 
 (setq indent-tabs-mode nil)
 
-
-;; The package below is removed from melpa
-;;   (use-package flycheck-google-cpplint
-;;     :ensure t
-;;     :config
-;; ;    (flycheck-add-next-checker 'c/c++-gcc ;; change if you don't use 'gcc'
-;; 					;			       'c/c++-googlelint)
-;;     (add-to-list 'flycheck-checkers 'c/c++-googlelint)
-;;     (custom-set-variables
-;;      '(flycheck-c/c++-googlelint-executable "cpplint");"~/.emacs.d/scripts/cpplint.py")
-;;      '(flycheck-google-cpplint-verbose "3")
-;;      '(flycheck-google-cpplint-filter "-whitespace,+whitespace/braces")
-;;      '(flycheck-google-cpplint-linelength "120"))
-;;     ;; This requires that google cpplint be installed
-;;     ;; See: https://github.com/flycheck/flycheck-google-cpplint
-    
-;;     )
-;;   )
 	 
 ;; Some bindings for hi-lock mode that will be very convenient for C code reading
 ;;(global-set-key (kbd "C-.") 'highlight-symbol-at-point)
@@ -1153,29 +1075,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (use-package counsel
   :ensure t
   )
-;; in addition to cmake to obtain compile_commands.json, should also
-;; manually get a .clang_complete file in root folder of project include
-;; "-I/.../" where /.../ is the folder structure, such as /src/,
-;; /include/, /header/, etc. there could be multiple. This way the irony I/O
-;; error will be gone, and function prototype can be auto completed 
-;; (use-package irony
-;; 	:ensure t
-;; 	:init
-;; 	(progn
-;; 	  (add-hook 'c++-mode-hook 'irony-mode)
-;; 	  (add-hook 'c-mode-hook 'irony-mode)
-;; 	    )
-;; 	  )
-
-;; replace the `completion-at-point' and `complete-symbol' bindings in
-;; irony-mode's buffers by irony-mode's function
-;; (defun my-irony-mode-hook ()
-;;   (define-key irony-mode-map [remap completion-at-point]
-;;     'counsel-irony );'irony-completion-at-point-async)
-;;   (define-key irony-mode-map [remap complete-symbol]
-;;     'counsel-irony ));'irony-completion-at-point-async))
-;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 	
 (when (boundp 'w32-pipe-read-delay)
   (setq w32-pipe-read-delay 0))
@@ -1193,17 +1092,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   )
 
     
-   ; (setq company-backends (delete 'company-semantic company-backends))
-
-	
-  
-;    (define-key company-active-map 'company-complete-common nil)
-;    (define-key company-active-map "C-'" 'company-complete-common)
-;    (define-key c-mode-map  [kbd "F5"] 'company-complete-common)
-;    (define-key cmode-map  [kbd "F5"] 'company-complete-common)
-  
-    ;)
- ; )
 
 
 (global-set-key (kbd "C-'") 'company-complete-common)
@@ -1219,22 +1107,22 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
     )
   )
 
-;; (use-package company-irony-c-headers
-;;   :ensure t
-;;   :after company
-;;   :config
-;;   (add-to-list 'company-backends 'company-irony-c-headers)
-;;   )
+
 
 (use-package ccls
   :ensure t
   :hook (
 	   (c-mode c++-mode) .
 	   (lambda () (require 'ccls) (lsp)))
-  :init 
-   	(setq ccls-executable "c:/bin/ccls/ccls.exe")
-  
+  :init
+  (progn
+	(if (eq system-type 'windows-nt)
+		(setq ccls-executable "c:/bin/ccls/ccls.exe")
+	  )
+	
 	)
+  
+  )
 
 (use-package helm-xref
   :ensure t
@@ -1299,41 +1187,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   (eval-after-load 'flycheck
     '(define-key flycheck-mode-map (kbd "M-h c") 'helm-flycheck)))
 
-;; (defun setup-c-clang-options ()
-;; 	(setq irony-additional-clang-options (quote ("-std=c11"))))
 
-;; (defun setup-cpp-clang-options ()
-;; (setq irony-additional-clang-options (quote ("-std=c++14" "-stdlib=libc++")))
-;; )
-	 
-
-;; ;(use-package flycheck-irony
-;;   :ensure t
-;;   :defer t
-;; 	:config
-;; 	(eval-after-load 'flycheck
-;; 	  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
-;; 	  )
-;; 	)
-
-
-;; (add-hook 'c++-mode-hook 'irony-mode)
-;; (add-hook 'c-mode-hook 'irony-mode)
-;; (add-hook 'objc-mode-hook 'irony-mode)
-
-;; replace the `completion-at-point' and `complete-symbol' bindings in
-    ;; ;; irony-mode's buffers by irony-mode's asynchronous function
-    ;; (defun my-irony-mode-hook ()
-    ;;   (define-key irony-mode-map [remap completion-at-point]
-    ;;     'irony-completion-at-point-async)
-    ;;   (define-key irony-mode-map [remap complete-symbol]
-    ;;     'irony-completion-at-point-async))
-    ;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-
-;; company-irony
-
-
-;;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
   
 
 (use-package company-quickhelp
@@ -1350,50 +1204,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
   :ensure t)
 
-
-;; ;; ;
-;;  (use-package auto-complete
-;;    :init
-;;    (progn
-;;      (auto-complete-mode t))
-;;    :bind (("C-n" . ac-next)
-;;  	  ("C-p" . ac-previous))
-;;    :config
-;;    (progn
-;;      (use-package auto-complete-config)
-;;      (ac-config-default))
-;;    )
-
-;; (use-package auto-complete
-;;   :ensure t
-;;   ;; :init
-;;   ;; (progn
-;;   ;; 	(auto-complete-mode t))
-;;    :config
-;;    (progn
-;; 	 (setq ac-modes '(emacs-lisp-mode
-;; 					  lisp-mode
-;; 					  lisp-interaction-mode
-;; 					  )
-;; 		   )
-	 
-;; 	 (use-package auto-complete-config)
-;;    	(ac-config-default))
-   
-;;   )
-
-;; (defun my-org-ac-hook ()
-;;   (auto-complete-mode 1))
-
-;(add-hook 'org-mode-hook 'my-org-ac-hook)
-  
-
-;; (define-globalized-minor-mode real-global-auto-complete-mode
-;;   auto-complete-mode (lambda ()
-;;                        (if (not (minibufferp (current-buffer)))
-;;                          (auto-complete-mode 1))
-;;                        ))
-;; (real-global-auto-complete-mode t)
 
 
   
@@ -1432,13 +1242,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq flyspell-issue-welcome-flag nil) ;; fix flyspell problem
 
 	
-;; (use-package org-bullets
-;;   :defer t
-;;   :config (setcdr org-bullets-bullet-map nil)
-;;   )
-
-;(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))    
-
 
 
 (require 'calendar)
@@ -1466,14 +1269,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (which-function-mode 1)
 
-; (use-package linum
-  ; :ensure t
-
-  ; :config
-  ; (progn
-    ; (global-linum-mode 1)
-    ; )
-  ; )
 
 (defun nolinum()
       (interactive)
@@ -1637,34 +1432,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 
 
-;; (use-package helm-gtags
-;;   :ensure t
-;;   :init
-;;   (progn
-;;     (setq
-;;      helm-gtags-ignore-case t
-;;      helm-gtags-auto-update t
-;;      helm-gtags-use-input-at-cursor t
-;;      helm-gtags-pulse-at-cursor t
-;;      helm-gtags-prefix-key "\C-cg"
-;;      helm-gtags-suggested-key-mapping t
-;;      ))
-;;   :config
-;;   (progn
-;;     (add-hook 'dired-mode-hook 'helm-gtags-mode)
-;;     (add-hook 'eshell-mode-hook 'helm-gtags-mode)
-;;     (add-hook 'c-mode-hook 'helm-gtags-mode)
-;;     (add-hook 'c++-mode-hook 'helm-gtags-mode)
-;;     (add-hook 'asm-mode-hook 'helm-gtags-mode)
-    
-;;     (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-;;     (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
-;;     (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
-;;     (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
-;;     (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
-;;     (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
-;;     ))
-
 (use-package cedet
   :defer t
   :ensure t
@@ -1677,18 +1444,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
     
   )
 
-; sementic seems to make the computer very slow
-;; (use-package sementic
-;;   :config
-;;   (progn
-;;     (global-semanticdb-minor-mode 1)
-;;     (global-semantic-idle-scheduler-mode 1)
-;;     (semantic-mode 1)
-;; ))
-
-;(use-package function-args;
-;	:init 
-;	(fa-config-default))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Backup
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1702,40 +1457,23 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	
 	  
 (defun force-backup-of-buffer ()
-     (let ((buffer-backed-up nil))
-       (backup-buffer)))
-   (add-hook 'before-save-hook  'force-backup-of-buffer)
+  (let ((buffer-backed-up nil))
+	(backup-buffer)))
+(add-hook 'before-save-hook  'force-backup-of-buffer)
 (setq initial-scratch-message "") ;; Uh, I know what Scratch is for
-	
+
 
 ;(when (window-system)
 ;  (progn
-	(tool-bar-mode -1)               ;; Toolbars were only cool with XEmacs
-	(setq default-frame-alist '((tool-bar-lines . 0))
-		  )
+(tool-bar-mode -1)               ;; Toolbars were only cool with XEmacs
+(setq default-frame-alist '((tool-bar-lines . 0))
+	  )
 ;	)
-  (when (fboundp 'horizontal-scroll-bar-mode)
-    (horizontal-scroll-bar-mode -1))
-  (scroll-bar-mode 1)            ;; Scrollbars are waste screen estate
+(when (fboundp 'horizontal-scroll-bar-mode)
+  (horizontal-scroll-bar-mode -1))
+(scroll-bar-mode 1)            ;; Scrollbars are waste screen estate
 ;)
  
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Dired
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (global-set-key (kbd "<f12> h") ;; open Emacs home directory
-;;   (lambda ()
-;;     (interactive)
-;;     (dired "~/")))
-
-;; (global-set-key (kbd "<f12> w") ;; open Work directory
-;;   (lambda ()
-;;     (interactive)
-;;     (dired "C:/Users/yliu193/Work")))
-
-;; (global-set-key (kbd "<f12> n") ;; open Notes_Planning 
-;;   (lambda ()
-;;     (interactive)
-;;     (dired "C:/Users/yliu193/Work/Notes_Planning")))
 
 
 
@@ -1794,25 +1532,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (defvar my-mode-line-buffer-line-count nil)
 (make-variable-buffer-local 'my-mode-line-buffer-line-count)
 
-;; (setq-default mode-line-format
-;;               '(
-;; 				("  " mode-line-modified
-;;                 (list 'line-number-mode "  ")
-;;                 (:eval (when line-number-mode
-;;                          (let ((str "L%l"))
-;;                            (when (and (not (buffer-modified-p)) my-mode-line-buffer-line-count)
-;;                              (setq str (concat str "/" my-mode-line-buffer-line-count)))
-;;                            str)))
-;;                 "  %p"
-;;                 (list 'column-number-mode "  C%c")
-;;                 "  " mode-line-buffer-identification
-;;                 "  " mode-line-modes)
-;; 				(:propertize
-;; 				 (t org-mode-line-string)
-;; 				 face (:foreground "cyan" :weight bold)
-;; 				 )
-;; 				)
-;; 			  )
 
 (defun my-mode-line-count-lines ()
   (setq my-mode-line-buffer-line-count (int-to-string (count-lines (point-min) (point-max)))))
@@ -1890,19 +1609,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
         )
 	  )
 
-										;(use-package org-ref
-;;   :ensure t
-;;   :config
-;;   (progn
-;; ;	(add-hook 'org-mode-hook 'org-ref)
-;; 	(setq org-ref-notes-directory "~/References"
-;; 		  org-ref-bibliography-notes "~/References/index.org"
-;; 		  org-ref-default-bibliography '("~/References/index.bib")
-;; 		  org-ref-pdf-directory "~/References/pdfs/"
-;; 		 )
-;; 	)
-;;  )
-
  (use-package helm-bibtex
    :ensure t
    :config
@@ -1969,31 +1675,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-refile-use-outline-path t)
 (setq org-outline-path-complete-in-steps nil)
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
-;; (defun bh/verify-refile-target ()
-;;   "Exclude todo keywords with a done state from refile targets"
-;;   (not (member (nth 2 (org-heading-components)) (quote "DONE")))) ;Note - "org-done-keywords"?
-
-;; (setq org-refile-target-verify-function 'bh/verify-refile-target)
-
-
-;(defun open-notes ()
-;  (interactive)
-;  (find-file "C:/Users/yliu193/Notes/Notes.org")
-;  )
-
-;(defun open-projects ()
-;  (interactive)
-;  (find-file my_org_capture_file "Notes" )
-;  )
-
-
-;(defun open-notes-projects ()
-;  (interactive)
-;  (split-window-horizontally)
-;  (open-projects)
-;  (other-window 1)
-;  (open-notes)
- ; )
 
 (defun mark-tofile ()
   (interactive)
@@ -2076,17 +1757,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   (or (re-search-backward "^\* " nil t)
       (goto-char (point-min))))
 
-										;(defun show-nextaction-agenda ()
-										;  (interactive)
-										;  (setq 
-										;  (org-agenda "N")
-										;)
-
-;; (defun show-nextaction 
-;;       (let ((case-fold-search nil)
-;;        (kwd-re  "\\<EXTACTION\\>"))
-;;    (message "%d NEXTACTION entries found"
-;;            (org-occur (concat "^" outline-regexp " +" kwd-re )))))
 
 (defun show-nextaction ()
   (interactive)
@@ -2098,10 +1768,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   (setq current-prefix-arg 6)
   (call-interactively 'org-show-todo-tree))
 
-;; (defun show-report ()
-;;   (interactive)
-;;   (setq current-prefix-arg 3)
-;;   (call-interactively 'org-show-todo-tree))
 
 (defun show-inprogress ()
   (interactive)
@@ -2113,15 +1779,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   (setq current-prefix-arg 8)
   (call-interactively 'org-show-todo-tree))
 
-;; (defun show-log()
-;;   (interactive)
-;;   (setq current-prefix-arg 12)
-;;   (call-interactively 'org-show-todo-tree))
-
-;; (defun show-waiting ()
-;;   (interactive)
-;;   (setq current-prefix-arg 2)
-;;   (call-interactively 'org-show-todo-tree))
 
 (defun show-canceled ()
   (interactive)
@@ -2233,12 +1890,6 @@ last month."
 				)
    )
 
- ;;   (add-to-list 'org-latex-classes
- ;; 			   '("beamer"
- ;; 				 "\\documentclass\[presentation\]\{beamer\}"
- ;; 				 ("\\section\{%s\}" . "\\section*\{%s\}")
- ;; 				 ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
- ;; 				 ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}"))))
 
 
  (use-package ox-beamer
@@ -2355,26 +2006,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (add-hook 'LaTeX-mode-hook 'my-LaTeX-setup-auto-fill)
 (add-hook 'LaTeX-mode-hook
 		  (lambda () (local-set-key (quote [f9]) #'LaTeX-indent-line)))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Matlab setting
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; (if (eq system-type 'windows-nt)
-;; 	(eval-after-load 'matlab
-;; 	  '(progn
-;; 		 (add-to-list
-;; 		  'auto-mode-alist
-;; 		  '("\\.m$" . matlab-mode))
-;; 		 (setq matlab-indent-function t)
-
-;; 										; (add-hook 'matlab-mode 'auto-complete-mode)
-;; 		 (add-hook 'matlab-mode-hook 'ace-jump-mode)
-;; 		 (define-key matlab-mode-map (kbd "M-s") nil)
-;; 		 (setq matlab-shell-command "c:\matlabshell\matlabshell.cmd")
-;; 		 (setq matlab-shell-command-switches '())
-;; 		 (setq matlab-shell-echoes nil)
-;; 		 ))
-;;   )
 										;
 ;; Octave Mode
 
@@ -2538,31 +2169,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   ;;
   ("q" nil)
   ) 
-  ;; (defhydra hydra-smartparens (:color red :columns 6)
-  ;; 	"Smartparens"
-  ;; 	("a" sp-beginning-of-sexp "Beginning")
-  ;; 	("e" sp-end-of-sexp "End")
-  ;; 	("<down>" sp-down-sexp "Down")
-  ;; 	("<up>" sp-up-sexp "Up")
-  ;; 	("M-<down>" sp-backward-down-sexp "Backward down")
-  ;; 	("M-<up>" sp-backward-up-sexp "Backward up")
-  ;; 	("f" sp-foward-sexp "Forward")
-  ;; 	("b" sp-backward-sexp "Backward")
-  ;; 	("n" sp-next-sexp "Next")
-  ;; 	("p" sp-previous-sexp "Prev")
-  ;; 	("C-f" sp-forward-symbol "Forward symbol")
-  ;; 	("C-b" sp-backward-symbol "Back symbol")
-  ;; 	("C-<right>" sp-forward-slurp-sexp "Forward slurp")
-  ;; 	("M-<right>" sp-forward-barf-sexp "Forward barf")
-  ;; 	("C-<left>"  sp-backward-slurp-sexp "Backward slurp")
-  ;; 	("M-<left>"  sp-backward-barf-sexp "Backward barf")
-  ;; 	("C-/" sp-splice-sexp "Splice the wrap")
-  ;; 	("t" sp-transpose-sexp "Transpose")
-  ;; 	("k" sp-kill-sexp "Kill")
-  ;; 	("w" sp-copy-sexp "Copy")
-  ;; 	("C-r" sp-rewrap-sexp "Rewrap")
-  ;; 	("q" nil "Quit")
-  ;; 	)
+
   )
 
 (global-unset-key (kbd "C-x <left>"))
@@ -2587,26 +2194,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 
 
-;; (use-package elfeed
-;;   :ensure t
-;;   :defer t
-;;   ;; :config
-;;   ;; (setq elfeed-feeds
-;;   ;; 		'("http://www.autonomousvehicletech.com/rss/topic/108-autonomous-vehicle-news"
-;;   ;; 		  "http://jalopnik.com/rss"
-;;   ;; 		  "http://gizmodo.com/rss"
-;;   ;; 		  "http://lifehacker.com/rss"
-;;   ;; 		  "http://planet.emacsen.org/atom.xml")
-;;   ;; 		)
-;;   )
-
-;; (use-package elfeed-org
-;;   :ensure t
-;;   :defer t
-;;   :config
-;;   (setq rmh-org-files (list "~/.emacs.d/elfeed.org"))
-;;   (elfeed-org)
-;;   )
 
  
 
@@ -2961,29 +2548,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
     (replace-string "\C-m\C-j" "\C-j")))
 
 
-  ;; (defun check-expansion ()
-  ;;   (save-excursion
-  ;;     (if (looking-at "\\_>") t
-  ;;       (backward-char 1)
-  ;;       (if (looking-at "\\.") t
-  ;;         (backward-char 1)
-  ;;         (if (looking-at "->") t nil)))))
 
-  ;; (defun do-yas-expand ()
-  ;;   (let ((yas/fallback-behavior 'return-nil))
-  ;;     (yas/expand)))
-
-  ;; (defun tab-indent-or-complete ()
-  ;;   (interactive)
-  ;;   (if (minibufferp)
-  ;;       (minibuffer-complete)
-  ;;     (if (or (not yas/minor-mode)
-  ;;             (null (do-yas-expand)))
-  ;;         (if (check-expansion)
-  ;;             (company-complete-common)
-  ;;           (indent-for-tab-command)))))
-
-  ;; (global-set-key [tab] 'tab-indent-or-complete)
 (defun check-expansion ()
   (save-excursion
     (if (looking-at "\\_>") t
@@ -3065,17 +2630,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	))
 (global-set-key (kbd "C-M-;") 'my-mark-sexp)
 
-;;   (defun ibuffer-previous-line ()
-;;     (interactive) (previous-line)
-;;     (if (<= (line-number-at-pos) 2)
-;;         (goto-line (- (count-lines (point-min) (point-max)) 2))))
-
-;;   (defun ibuffer-next-line ()
-;;     (interactive) (next-line)
-;;     (if (>= (line-number-at-pos) (- (count-lines (point-min) (point-max)) 1))
-;;         (goto-line 3)))
-;;   (define-key ibuffer-mode-map (kbd "<up>") 'ibuffer-previous-line)
-;; (define-key ibuffer-mode-map (kbd "<down>") 'ibuffer-next-line)
 
 (use-package afternoon-theme
 	     :ensure t)
