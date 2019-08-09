@@ -93,8 +93,8 @@
 	(setq org_directory "~/Dropbox/org/")
 	(setq my_ipython_path "~/local/bin/ipython")
 										;(pdf-tools-install)
-	(setq-default ispell-program-name "aspell")
-	(setq-default ispell-local-dictionary "american")
+	;;(setq-default ispell-program-name "aspell")
+	;;(setq-default ispell-local-dictionary "american")
     )
   )
 
