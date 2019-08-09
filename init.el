@@ -1224,22 +1224,19 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
     (add-hook 'org-mode-hook 'flyspell-mode)
     (add-hook 'latex-mode-hook 'flyspell-mode)
     (add-hook 'tex-mode-hook 'flyspell-mode)
-    (add-hook 'bibtex-mode-hook 'flyspell-mode)))
-
-(if (eq system-type 'windows-nt)
-	(progn
-	  (setq ispell-program-name (locate-file "hunspell"
-											 exec-path exec-suffixes 'file-executable-p))
-	  (setq ispell-dictionary "english")
-	  (add-to-list 'ispell-local-dictionary-alist '(("english"
-													 "[[:alpha:]]"
-													 "[^[:alpha:]]"
-													 "[']"
-													 t
-													 ("-d" "en_US")
-													 nil
-													 utf-8)))
-	  (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)
+    (add-hook 'bibtex-mode-hook 'flyspell-mode)
+	(setq ispell-program-name (locate-file "hunspell"
+										   exec-path exec-suffixes 'file-executable-p))
+	(setq ispell-dictionary "english")
+	(add-to-list 'ispell-local-dictionary-alist '(("english"
+												   "[[:alpha:]]"
+												   "[^[:alpha:]]"
+												   "[']"
+												   t
+												   ("-d" "en_US")
+												   nil
+												   utf-8)))
+	(setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)
 	  )
   )
 
