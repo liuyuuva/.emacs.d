@@ -1084,6 +1084,10 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package company
   :ensure t
+  :init
+  (progn
+	(setq company-global-modes '(not org-mode))
+	)
   :config
   (progn
     (add-hook 'after-init-hook 'global-company-mode)
@@ -2858,13 +2862,6 @@ buffer in current window."
 	(setq super-save-auto-save-when-idle t)
 	))
 
-(use-package keyfreq
-  :config
-  (progn
-	(keyfreq-mode 1)
-	(keyfreq-autosave-mode 1)
-	)
-  )
 
 (defun smart-open-line-above ()
   "Insert an empty line above the current line.

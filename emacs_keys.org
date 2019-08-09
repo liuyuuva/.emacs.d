@@ -5,7 +5,7 @@
 | Show ToDo Keywords| F6 |
 
 ** templates: <"" TAB
-| s| source block|
+| s| source block (can also use c-c c-,)|
 | e| example|
 | q| quote|
 | v| verse|
