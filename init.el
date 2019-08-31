@@ -1058,8 +1058,12 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	)
   )
 
-
+(add-hook 'c-mode-common-hook 'google-set-c-style)
 (setq indent-tabs-mode nil)
+
+(use-package yasnippet-snippets
+  :ensure t
+  )
 
 	 
 ;; Some bindings for hi-lock mode that will be very convenient for C code reading
