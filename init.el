@@ -1134,7 +1134,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	)
   
   )
-
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (use-package helm-xref
   :ensure t
   :init (setq xref-show-xrefs-function 'helm-xref-show-xrefs)
