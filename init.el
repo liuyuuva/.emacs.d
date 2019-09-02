@@ -518,7 +518,8 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 	 ("M-h g" . rgrep)
 	 ("M-h d" . helm-do-ag)
 	 ("M-h r" . helm-resume)
-	 ("M-h c" . yas-describe-tables)
+     ;;	 ("M-h c" . yas-describe-tables)
+     ("M-h c" . helm-flycheck)
 	 ("M-h l" . helm-recentf)
 	 ("M-h h" . helm-multi-swoop-all)
 	 ("M-h t" . elpy-hydra/body)
@@ -1193,7 +1194,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package helm-flycheck
   :ensure t
-  :defer t
   :config
   (eval-after-load 'flycheck
     '(define-key flycheck-mode-map (kbd "M-h c") 'helm-flycheck)))
@@ -1661,11 +1661,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (advice-add 'org-clocktable-indent-string :override #'my-org-clocktable-indent-string)
 
-(use-package org-pomodoro
-  :ensure t
-  :commands (org-pomodoro)
-  :config
-  (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil)))))
 
 (setq org-agenda-clockreport-parameter-plist 
 	  '(:fileskip0 t :link t :maxlevel 2 :formula "$5=($3+$4)*(60/25);t"))
