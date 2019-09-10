@@ -1093,6 +1093,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   :init
   (progn
 	(setq company-global-modes '(not org-mode))
+	(setq company-global-modes '(not latex-mode))
+	(setq company-global-modes '(not tex-mode))
 	)
   :config
   (progn
@@ -2609,8 +2611,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
       (yas-abort-snippet)
     (company-abort)))
 
-(global-set-key [tab] 'tab-indent-or-complete)
-(global-set-key (kbd "TAB") 'tab-indent-or-complete)
+;;(global-set-key [tab] 'tab-indent-or-complete)
+;;(global-set-key (kbd "TAB") 'tab-indent-or-complete)
 (global-set-key [(control return)] 'company-complete-common)
 
 (define-key company-active-map [tab] 'expand-snippet-or-complete-selection)
