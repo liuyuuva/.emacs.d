@@ -1093,8 +1093,6 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   :init
   (progn
 	(setq company-global-modes '(not org-mode))
-	(setq company-global-modes '(not latex-mode))
-	(setq company-global-modes '(not tex-mode))
 	)
   :config
   (progn
