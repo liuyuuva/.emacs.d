@@ -2872,3 +2872,10 @@ Position the cursor at it's beginning, according to the current mode."
   (indent-according-to-mode))
 
 (global-set-key (kbd "M-o") 'smart-open-line-above)
+
+(use-package leetcode
+  :init
+  (progn
+	(setq leetcode-prefer-language "cpp")
+	)
+  )
