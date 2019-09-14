@@ -2879,3 +2879,20 @@ Position the cursor at it's beginning, according to the current mode."
 	(setq leetcode-prefer-language "cpp")
 	)
   )
+
+(use-package rust-mode
+  :ensure t
+  :hook (rust-mode . lsp))
+
+(use-package cargo
+  :ensure t
+  :hook (rust-mode . cargo-minor-mode))
+
+(use-package flycheck-rust
+  :ensure t
+  :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  )
+
+(use-package toml-mode
+  :ensure t
+  )
