@@ -394,9 +394,9 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
      Find File            Search/Tags          Buffers                Cache
 ------------------------------------------------------------------------------------------
-_s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache clear
- _ff_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
- _fd_: file curr dir   _o_: multi-occur     _s-k_: Kill all buffers  _X_: cleanup non-existing
+_f_: find file            _a_: ag                _i_: Ibuffer           _c_: cache clear
+ _ef_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
+ _hf_: file curr dir   _o_: multi-occur     _s-k_: Kill all buffers  _X_: cleanup non-existing
   _r_: recent file                                               ^^^^_z_: cache current
   _d_: dir
 
@@ -405,18 +405,13 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   ("b"   projectile-switch-to-buffer)
   ("c"   projectile-invalidate-cache)
   ("d"   projectile-find-dir)
-  ("s-f" projectile-find-file)
-  ("ff"  projectile-find-file-dwim)
-  ("fd"  projectile-find-file-in-directory)
-  ("g"   ggtags-update-tags)
-  ("s-g" ggtags-update-tags)
+  ("f" projectile-find-file)
+  ("ef"  projectile-find-file-dwim)
+  ("hf"  projectile-find-file-in-directory)
   ("i"   projectile-ibuffer)
   ("K"   projectile-kill-buffers)
-  ("s-k" projectile-kill-buffers)
   ("m"   projectile-multi-occur)
   ("o"   projectile-multi-occur)
-  ("s-p" projectile-switch-project "switch project")
-  ("p"   projectile-switch-project)
   ("s"   projectile-switch-project)
   ("r"   projectile-recentf)
   ("x"   projectile-remove-known-project)
@@ -513,7 +508,7 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 	 ("M-h i" . helm-imenu)
 	 ("M-h e" . helm-semantic-or-imenu)
 	 ("M-h f" . helm-find-files)
-	 ("M-h p" . hydra-projectile/body)
+	 ("M-h p" . helm-projectile)
 	 ("M-h q" . helm-swoop-back-to-last-point)
 	 ("M-h g" . rgrep)
 	 ("M-h d" . helm-do-ag)
@@ -803,6 +798,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;; (add-hook 'emacs-lisp-mode-hook 'yl/setup-key-chord)
 (add-hook 'python-mode-hook 'yl/setup-key-chord)
 (add-hook 'org-mode-hook 'yl/setup-key-chord)
+
 
 (global-unset-key (kbd "C-M-z"))
 
@@ -2458,8 +2454,14 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;;;;;;;;
 ;; F11
 ;;;;;;;;
-
-(global-set-key (kbd "<f11>") 'replace-regexp)
+(defun my-gdb-other-frame ()
+  (interactive)
+  (select-frame (make-frame))
+  (call-interactively 'gdb))
+(setq gdb-many-windows t)
+(setq gdb-show-main t)
+(setq gdb-show-changed-values t)
+(global-set-key (kbd "<f11>") 'my-gdb-other-frame)
 
 
 ;;;;;;;;
