@@ -592,6 +592,7 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
 								   (mode . c-mode)
 								   (mode . python-mode)
 								   (mode . c++-mode)
+								   (mode . rust-mode)
 								   (name . "^\\*Compile-Log\\*$")
 								   ))
 				   ("emacs" (or
