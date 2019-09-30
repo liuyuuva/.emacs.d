@@ -1154,8 +1154,20 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
-  			  
-	  )
+  :config
+  (setq lsp-ui-doc-enable t
+		lsp-ui-doc-use-childframe t
+		lsp-ui-doc-position 'top
+		lsp-ui-doc-include-signature t
+		lsp-ui-flycheck-enable t
+		lsp-ui-flycheck-list-position 'right
+		lsp-ui-flycheck-live-reporting t
+		lsp-ui-peek-enable t
+		lsp-ui-peek-list-width 60
+		lsp-ui-peek-peek-height 25)
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+
+
 
 (use-package company-lsp
   :ensure t
