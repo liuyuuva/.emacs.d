@@ -511,7 +511,7 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
 	 ("M-h p" . helm-projectile)
 	 ("M-h q" . helm-swoop-back-to-last-point)
 	 ("M-h g" . rgrep)
-	 ("M-h d" . helm-do-ag)
+	 ("M-h d" . helm-ag)
 	 ("M-h r" . helm-resume)
      ;;	 ("M-h c" . yas-describe-tables)
      ("M-h c" . helm-flycheck)
@@ -1592,11 +1592,11 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-icalendar-include-todo t) 
 
 (setq org-todo-keywords
-	  '((sequence "TODO(t)"  "NEXTACTION(n)"  "INPROGRESS(i)"  "FOLLOWUP(f@/i)" "DELEGATE(e@/i)"  "|" "DONE(d!)" "CANCELED(c@/i)" "MEMO(m)"  )
+	  '((sequence "TODO(t)"  "NEXTACTION(n)" "DELAYED(y)" "INPROGRESS(i)"  "FOLLOWUP(f@/i)" "DELEGATE(e@/i)"  "|" "DONE(d!)" "CANCELED(c@/i)" "MEMO(m)"  )
 		))
 
 (setq org-todo-keyword-faces
-	  '(("TODO" . org-warning) ("INPROGRESS" . "orange") ("MEMO" . "blue")   ("NEXTACTION" . org-warning) ("FOLLOWUP" . org-warning) ("DELEGATE" . org-warning)
+	  '(("TODO" . org-warning) ("INPROGRESS" . "orange") ("MEMO" . "blue")   ("NEXTACTION" . org-warning) ("DELAYED" . org-warning) ("FOLLOWUP" . org-warning) ("DELEGATE" . org-warning)
 		("CANCELED" . (:foreground "blue" :weight bold))
 		("DONE" . org-done) ))
 
@@ -1608,9 +1608,24 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
-										;(add-hook 'org-mode-hook 'toggle_truncate_lines)
+										;
+										;;(add-hook 'org-mode-hook 'toggle_truncate_lines)
 
+(add-hook 'org-mode-hook (lambda ()
+  "Beautify Org Checkbox Symbol"
+  (push '("[ ]" .  "☐") prettify-symbols-alist)
+  (push '("[X]" . "☑" ) prettify-symbols-alist)
+  (push '("[-]" . "❍" ) prettify-symbols-alist)
+  (prettify-symbols-mode)))
+(defface org-checkbox-done-text
+  '((t (:foreground "#71696A" :strike-through t)))
+  "Face for the text part of a checked org-mode checkbox.")
 
+(font-lock-add-keywords
+ 'org-mode
+ `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
+    1 'org-checkbox-done-text prepend))
+ 'append)
 ;;;;Org Capture
 
 (setq org-capture-templates
@@ -1698,6 +1713,11 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   (org-todo "NEXTACTION")
   )
 
+(defun mark-delayed ()
+  (interactive)
+  (org-todo "DELAYED")
+  )
+
 (defun mark-todo ()
   (interactive)
   (org-todo "TODO")
@@ -1777,24 +1797,24 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (defun show-done ()
   (interactive)
-  (setq current-prefix-arg 6)
+  (setq current-prefix-arg 7)
   (call-interactively 'org-show-todo-tree))
 
 
 (defun show-inprogress ()
   (interactive)
-  (setq current-prefix-arg 3)
+  (setq current-prefix-arg 4)
   (call-interactively 'org-show-todo-tree))
 
 (defun show-memo ()
   (interactive)
-  (setq current-prefix-arg 8)
+  (setq current-prefix-arg 9)
   (call-interactively 'org-show-todo-tree))
 
 
 (defun show-canceled ()
   (interactive)
-  (setq current-prefix-arg 7)
+  (setq current-prefix-arg 8)
   (call-interactively 'org-show-todo-tree))
 
 (defun show-todo-keyword ()
@@ -1804,12 +1824,12 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (defun show-followup ()
   (interactive)
-  (setq current-prefix-arg 4)
+  (setq current-prefix-arg 5)
   (call-interactively 'org-show-todo-tree))
 
 (defun show-delegate ()
   (interactive)
-  (setq current-prefix-arg 5)
+  (setq current-prefix-arg 6)
   (call-interactively 'org-show-todo-tree))
 
 
@@ -1864,6 +1884,7 @@ last month."
 	  '(("w" todo "WAITING")
 		("m" todo "MEMO")
 		("n" todo "NEXTACTION")
+		("y" todo "DELAYED")
 		("t" todo "TODO")
 		("i" todo "INPROGRESS")
 		("e" todo "DELEGATE")
