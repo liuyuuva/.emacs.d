@@ -519,6 +519,8 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
 	 ("M-h h" . helm-multi-swoop-all)
 	 ("M-h t" . elpy-hydra/body)
 	 ("M-h v" . rifle-hydra/body)
+	 ("M-h u" . lsp-find-references)
+	 ("M-h ." . lsp-find-definition)
 	 )
   )
 
