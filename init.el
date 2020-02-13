@@ -511,7 +511,7 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
 	 ("M-h p" . helm-projectile)
 	 ("M-h q" . helm-swoop-back-to-last-point)
 	 ("M-h g" . rgrep)
-	 ("M-h d" . helm-ag)
+	 ("M-h d" . helm-do-ag)
 	 ("M-h r" . helm-resume)
      ;;	 ("M-h c" . yas-describe-tables)
      ("M-h c" . helm-flycheck)
