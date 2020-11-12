@@ -1,5 +1,6 @@
 (require 'package)
 ;; Avoid multiple initialization of installed packages.
+
 (setq package-enable-at-startup nil)
 ;; Add Melpa to the list of package archives.
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
@@ -17,27 +18,27 @@
 
 (if (eq system-type 'windows-nt)
     (progn
-      	(let ((default-directory "C:/org/"))
+      	(let ((default-directory "C:/Users/523452/Work/org/"))
 		  (normal-top-level-add-subdirs-to-load-path))
 		(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
 		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
-		(setq default-directory "C:/org/")
-		(add-to-list 'exec-path "c:/bin/hunspell/bin") ; have to use hunspell as emacs 26 cannot support aspell < v6, but aspell v6 for w64 is nowhere to find.
+		(setq default-directory "C:/Users/523452/Work/org/")
+		;;(add-to-list 'exec-path "c:/bin/hunspell/bin") ; have to use hunspell as emacs 26 cannot support aspell < v6, but aspell v6 for w64 is nowhere to find.
 										;(setq ispell-dictionary "C:/bin//Aspell/dict/")
 ;		(add-to-list 'exec-path "~/.emacs.d/ccls/")
-		(setq my_org_main_file "C:/org/main.org")
-		(setq my_org_capture_file "C:/org/main.org")
-        (setq my_org_memo_file "C:/org/memo.org")
-		(setq my_org_journal_file "~/Dropbox/0_Journal/journal.org")
-		(setq my_org_meeting_notes_file "c:/org/main.org")
-		(setq org_directory "C:/org/")
-		(setq my_python_command "c:/bin/Anaconda3/python.exe")
-        (setq my_ipython_path "c:/bin/Anaconda3/Scripts/ipython.exe")
+		(setq my_org_main_file "C:/Users/523452/Work/org/main.org")
+		(setq my_org_capture_file "C:/Users/523452/Work/org/main.org")
+        (setq my_org_memo_file "C:/Users/523452/Work/org/memo.org")
+		;;(setq my_org_journal_file "~/Dropbox/0_Journal/journal.org")
+		(setq my_org_meeting_notes_file "c:/Users/523452/Work/org/main.org")
+		(setq org_directory "C:/Users/523452/Work/org/")
+		(setq my_python_command "c:/Users/523452/bin/Anaconda3/python.exe")
+        (setq my_ipython_path "c:/Users/523452/bin/Anaconda3/Scripts/ipython.exe")
 		;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 		(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
 		(add-to-list 'exec-path "c:/msys64/usr/bin");;added for find.exe and grep.exe
-		(add-to-list 'exec-path "c:/bin/glo656wb/bin");; for global.exe
-		(add-to-list 'exec-path "C:/bin/Anaconda3/Scripts")
+		;;(add-to-list 'exec-path "c:/bin/glo656wb/bin");; for global.exe
+		(add-to-list 'exec-path "C:/Users/523452/Work/bin/Anaconda3/Scripts")
 		(setq preview-gs-command "gswin64c")
 		(setq doc-view-ghostscript-program "gswin64c")
 		(set-fontset-font t 'han (font-spec :family "Microsoft Yahei" :size 12))
@@ -395,8 +396,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
      Find File            Search/Tags          Buffers                Cache
 ------------------------------------------------------------------------------------------
 _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cache clear
- _ef_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
- _hf_: file curr dir   _o_: multi-occur     _s-k_: Kill all buffers  _X_: cleanup non-existing
+ _ef_: file dwim             _b_: switch to buffer  _x_: remove known project
+ _hf_: file curr dir   _o_: multi-occur       _X_: cleanup non-existing
   _r_: recent file                                               ^^^^_z_: cache current
   _d_: dir
 
@@ -2767,38 +2768,38 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   :ensure t
   )
 
-(use-package pdf-tools
-    :ensure t
-    :config
-    (pdf-tools-install)
-    (setq-default pdf-view-display-size 'fit-width)
-    ;(define-pdf-cache-function outline)
-    ;(pdf-cache-outline)
-    (bind-keys :map pdf-view-mode-map
-        ("t" . hydra-pdftools/body)
-        ("<s-spc>" .  pdf-view-scroll-down-or-next-page)
-        ("g"  . pdf-view-first-page)
-        ("G"  . pdf-view-last-page)
-        ("l"  . image-forward-hscroll)
-        ("h"  . image-backward-hscroll)
-        ("j"  . pdf-view-next-page)
-        ("k"  . pdf-view-previous-page)
-        ("e"  . pdf-view-goto-page)
-        ("u"  . pdf-view-revert-buffer)
-        ("al" . pdf-annot-list-annotations)
-        ("ad" . pdf-annot-delete)
-        ("aa" . pdf-annot-attachment-dired)
-        ("am" . pdf-annot-add-markup-annotation)
-        ("at" . pdf-annot-add-text-annotation)
-		("ah" . pdf-annot-add-highlight-markup-annotation)
-        ("y"  . pdf-view-kill-ring-save)
-        ("i"  . pdf-misc-display-metadata)
-        ("s"  . pdf-occur)
-        ("b"  . pdf-view-set-slice-from-bounding-box)
-        ("r"  . pdf-view-reset-slice)
-		("D" . pdf-annot-delete)
-		)
-	)
+;; (use-package pdf-tools
+;;     :ensure t
+;;     :config
+;;     (pdf-tools-install)
+;;     (setq-default pdf-view-display-size 'fit-width)
+;;     ;(define-pdf-cache-function outline)
+;;     ;(pdf-cache-outline)
+;;     (bind-keys :map pdf-view-mode-map
+;;         ("t" . hydra-pdftools/body)
+;;         ("<s-spc>" .  pdf-view-scroll-down-or-next-page)
+;;         ("g"  . pdf-view-first-page)
+;;         ("G"  . pdf-view-last-page)
+;;         ("l"  . image-forward-hscroll)
+;;         ("h"  . image-backward-hscroll)
+;;         ("j"  . pdf-view-next-page)
+;;         ("k"  . pdf-view-previous-page)
+;;         ("e"  . pdf-view-goto-page)
+;;         ("u"  . pdf-view-revert-buffer)
+;;         ("al" . pdf-annot-list-annotations)
+;;         ("ad" . pdf-annot-delete)
+;;         ("aa" . pdf-annot-attachment-dired)
+;;         ("am" . pdf-annot-add-markup-annotation)
+;;         ("at" . pdf-annot-add-text-annotation)
+;; 		("ah" . pdf-annot-add-highlight-markup-annotation)
+;;         ("y"  . pdf-view-kill-ring-save)
+;;         ("i"  . pdf-misc-display-metadata)
+;;         ("s"  . pdf-occur)
+;;         ("b"  . pdf-view-set-slice-from-bounding-box)
+;;         ("r"  . pdf-view-reset-slice)
+;; 		("D" . pdf-annot-delete)
+;; 		)
+;; 	)
 
 	
 
@@ -2863,10 +2864,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
       org-ref-default-bibliography '("~/Dropbox/bibliography/references.bib")
       org-ref-pdf-directory "~/Dropbox/bibliography/papers/")
 
-(use-package org-pdfview
-   :ensure t
-   :after org
-   )
+;;(use-package org-pdfview
+;;   :ensure t
+;;   :after org
+;;   )
 
 
 (add-to-list 'org-file-apps 
