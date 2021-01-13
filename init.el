@@ -91,8 +91,8 @@
 	(setq my_org_journal_file "~/Dropbox/org/personal_journal.org")
 	(setq my_org_meeting_notes_file "~/Dropbox/org/personal_meeting_notes.org")
 	(setq org_directory "~/Dropbox/org/")
-	(setq my_ipython_path "~/local/bin/ipython")
-										;(pdf-tools-install)
+	(setq my_ipython_path "/usr/local/bin/ipython")
+	;;(pdf-tools-install)
 	;;(setq-default ispell-program-name "aspell")
 	;;(setq-default ispell-local-dictionary "american")
     )
@@ -395,8 +395,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
      Find File            Search/Tags          Buffers                Cache
 ------------------------------------------------------------------------------------------
 _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cache clear
- _ef_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
- _hf_: file curr dir   _o_: multi-occur     _s-k_: Kill all buffers  _X_: cleanup non-existing
+ _ef_: file dwim             _b_: switch to buffer  _x_: remove known project
+ _hf_: file curr dir   _o_: multi-occur       _X_: cleanup non-existing
   _r_: recent file                                               ^^^^_z_: cache current
   _d_: dir
 
@@ -1129,7 +1129,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 		(setq ccls-executable "c:/bin/ccls/ccls.exe")
 	  )
 	(if (eq system-type 'gnu/linux)
-		(setq ccls-executable "/home/yliu/bin/ccls")
+		(setq ccls-executable "/snap/bin/ccls")
 	  )
 	)
   
@@ -2863,10 +2863,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
       org-ref-default-bibliography '("~/Dropbox/bibliography/references.bib")
       org-ref-pdf-directory "~/Dropbox/bibliography/papers/")
 
-(use-package org-pdfview
-   :ensure t
-   :after org
-   )
+;; (use-package org-pdfview
+;;    :ensure t
+;;    :after org
+;;    )
 
 
 (add-to-list 'org-file-apps 
@@ -2933,5 +2933,9 @@ Position the cursor at it's beginning, according to the current mode."
   )
 
 (use-package toml-mode
+  :ensure t
+  )
+
+(use-package ein
   :ensure t
   )
