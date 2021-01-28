@@ -1127,7 +1127,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   :init
   (progn
 	(if (eq system-type 'windows-nt)
-		(setq ccls-executable "c:/bin/ccls/ccls.exe")
+		(setq ccls-executable "c:/Users/523452/bin/ccls/ccls.exe")
 	  )
 	(if (eq system-type 'gnu/linux)
 		(setq ccls-executable "/home/yliu/bin/ccls")
