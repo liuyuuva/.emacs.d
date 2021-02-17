@@ -1568,7 +1568,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;; Org Mode Setting;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (org-agenda-to-appt)
-
+(setq org-special-ctrl-a/e t)
 (setq org-latex-create-formula-image-program 'dvipng)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 (setq default-major-mode 'org-mode)
