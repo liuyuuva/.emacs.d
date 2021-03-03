@@ -772,7 +772,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
    :ensure t
    :config
    (progn
-     (global-set-key (kbd "S-SPC") 'avy-goto-line)
+     (global-set-key (kbd "C-S-j") 'avy-goto-line)
 	 (global-set-key (kbd "M-s") 'avy-goto-char-timer)
 	 (global-set-key (kbd "C-.") 'avy-goto-char-timer)
 
