@@ -365,6 +365,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package projectile
   :ensure t
+  :diminish pjt
   :config
   (progn
     (projectile-mode)
@@ -522,6 +523,7 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
 	 ("M-h v" . rifle-hydra/body)
 	 ("M-h u" . lsp-find-references)
 	 ("M-h ." . lsp-find-definition)
+	 ("M-h n" . helm-org-in-buffer-headings)
 	 )
   )
 
@@ -539,7 +541,8 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
   ("a" helm-org-rifle-agenda-files "show results from agenda files")
   )
   
-
+(use-package helm-org
+  :ensure t)
 
 (use-package helm-ag
   :ensure t
@@ -1543,9 +1546,9 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (setq default-fill-column 72)
 
-(setq display-time-24hr-format t)
-(setq display-time-day-and-date t)
-(display-time)
+;;(setq display-time-24hr-format t)
+;;(setq display-time-day-and-date t)
+;;(display-time)
 
 
 
@@ -1568,7 +1571,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;; Org Mode Setting;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (org-agenda-to-appt)
-(setq org-special-ctrl-a/e t)
+(setq org-special-ctrl-a t)
 (setq org-latex-create-formula-image-program 'dvipng)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 (setq default-major-mode 'org-mode)
@@ -1691,9 +1694,11 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (setq org-agenda-clockreport-parameter-plist 
 	  '(:fileskip0 t :link t :maxlevel 2 :formula "$5=($3+$4)*(60/25);t"))
-;(setq org-agenda-skip-deadline-if-done t)
-;(setq org-agenda-skip-scheduled-if-done t)
-
+(setq org-agenda-skip-deadline-if-done t)
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-todo-ignore-scheduled 'future)
+(setq org-agenda-tags-todo-honor-ignore-options t)
+(setq org-deadline-warning-days 15)
 (setq org-log-done 'time)
 
 (setq org-refile-targets 
@@ -2271,13 +2276,35 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 					   )
 				 )
 			  )
+	(add-hook 'org-mode-hook '(lambda ()
+								(which-function-mode 0)))
+
 	(define-key org-mode-map (kbd "M-a") nil) ;; reserve for ace-window
 
+	(setq org-duration-format (quote h:mm))
+	
 	(defun org-insert-link-with-prefix ()
     (interactive)
     (let ((current-prefix-arg '(4))) (call-interactively 'org-insert-link))
 )
-		   
+
+	(defun my/org-agenda-list-current-buffer (&optional arg)
+	  (interactive "P")
+	  (org-agenda arg "a" t))
+	
+	(defun yl/insert-custom-clock-entry ()
+	  (interactive)
+	  (insert "CLOCK: ")
+	  (org-time-stamp-inactive)
+	  (insert "--")
+	  ;; Inserts the current time by default.
+	  ;; (let ((current-prefix-arg '(4))) (call-interactively 'org-time-stamp-inactive))
+	  ;; (org-ctrl-c-ctrl-c))
+	  (org-time-stamp-inactive)
+	  (backward-char 1)
+	  (insert " ")
+	  )
+	
     (define-key org-mode-map (kbd "<C-f1>") nil)
     (define-key org-mode-map (kbd "M-h") nil) ;; reserve for helm
 	;;F1
@@ -2299,6 +2326,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "<f5> e") 'mark-delegate)
 	(define-key org-mode-map (kbd "C-<f5>") 'org-time-stamp-inactive)
 	;; F6
+	(define-key org-mode-map (kbd "<f6> a") 'my/org-agenda-list-current-buffer)
 	(define-key org-mode-map (kbd "<f6> n") 'show-nextaction)
 	;(define-key org-mode-map (kbd "<f6> p") 'show-inprogress)
 	(define-key org-mode-map (kbd "<f6> i") 'show-inprogress)
@@ -2330,6 +2358,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "<f9> s") 'org-resolve-clocks)
 	(define-key org-mode-map (kbd "<f9> a") 'org-update-all-dblocks)
 	(define-key org-mode-map (kbd "<f9> h") 'org-hide-block-all)
+	(define-key org-mode-map (kbd "<f9> y") 'yl/insert-custom-clock-entry)
 
 	(define-key org-mode-map (kbd "<f9> p") 'org-pomodoro)
 	(define-key org-mode-map (kbd "<f9> k")	'org-pomodoro-kill)
@@ -2354,6 +2383,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "S-<f9>") 'org-shiftmetaup)
 	(define-key org-mode-map (kbd "M-<f9>") 'org-shiftmetadown)
 	(define-key org-mode-map (kbd "<f9> t") 'jump-to-today-report)
+	(define-key org-mode-map (kbd "C-a") 'org-beginning-of-line)
+	(define-key org-mode-map (kbd "C-e") 'org-end-of-line)
+	(define-key org-mode-map (kbd "C-k") 'org-kill-line)
 	
 	) )
 
@@ -2389,6 +2421,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   ("<right>" org-demote-subtree "demote tree")
   ("M-<up>" org-move-subtree-up "move tree up")
   ("M-<down>" org-move-subtree-sown "move tree down")
+  ("i" org-toggle-inline-images "toggle inline images")
   ("l" org-insert-link "insert link")
   ("f" org-insert-link-with-prefix "insert link to file")
   ("m" org-mark-element "mark element")
@@ -2399,9 +2432,11 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   ("^" org-sort "sort")
   ("*" org-toggle-heading "toggle heading")
   ("p" org-set-property "property")
+  ("u" org-priority "priority")
   ("P" yl-insert-project-template "insert project template")
   ("B" yl-insert-beamer-template "insert beamer template")
   ("t" org-toggle-latex-fragment "toggle latex fragment")
+  
   ("q" nil "quit")
   )
 
@@ -2768,38 +2803,38 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   :ensure t
   )
 
-;; (use-package pdf-tools
-;;     :ensure t
-;;     :config
-;;     (pdf-tools-install)
-;;     (setq-default pdf-view-display-size 'fit-width)
-;;     ;(define-pdf-cache-function outline)
-;;     ;(pdf-cache-outline)
-;;     (bind-keys :map pdf-view-mode-map
-;;         ("t" . hydra-pdftools/body)
-;;         ("<s-spc>" .  pdf-view-scroll-down-or-next-page)
-;;         ("g"  . pdf-view-first-page)
-;;         ("G"  . pdf-view-last-page)
-;;         ("l"  . image-forward-hscroll)
-;;         ("h"  . image-backward-hscroll)
-;;         ("j"  . pdf-view-next-page)
-;;         ("k"  . pdf-view-previous-page)
-;;         ("e"  . pdf-view-goto-page)
-;;         ("u"  . pdf-view-revert-buffer)
-;;         ("al" . pdf-annot-list-annotations)
-;;         ("ad" . pdf-annot-delete)
-;;         ("aa" . pdf-annot-attachment-dired)
-;;         ("am" . pdf-annot-add-markup-annotation)
-;;         ("at" . pdf-annot-add-text-annotation)
-;; 		("ah" . pdf-annot-add-highlight-markup-annotation)
-;;         ("y"  . pdf-view-kill-ring-save)
-;;         ("i"  . pdf-misc-display-metadata)
-;;         ("s"  . pdf-occur)
-;;         ("b"  . pdf-view-set-slice-from-bounding-box)
-;;         ("r"  . pdf-view-reset-slice)
-;; 		("D" . pdf-annot-delete)
-;; 		)
-;; 	)
+(use-package pdf-tools
+    :ensure t
+    :config
+;    (pdf-tools-install)
+    (setq-default pdf-view-display-size 'fit-width)
+    ;(define-pdf-cache-function outline)
+    ;(pdf-cache-outline)
+    (bind-keys :map pdf-view-mode-map
+        ("t" . hydra-pdftools/body)
+        ("<s-spc>" .  pdf-view-scroll-down-or-next-page)
+        ("g"  . pdf-view-first-page)
+        ("G"  . pdf-view-last-page)
+        ("l"  . image-forward-hscroll)
+        ("h"  . image-backward-hscroll)
+        ("j"  . pdf-view-next-page)
+        ("k"  . pdf-view-previous-page)
+        ("e"  . pdf-view-goto-page)
+        ("u"  . pdf-view-revert-buffer)
+        ("al" . pdf-annot-list-annotations)
+        ("ad" . pdf-annot-delete)
+        ("aa" . pdf-annot-attachment-dired)
+        ("am" . pdf-annot-add-markup-annotation)
+        ("at" . pdf-annot-add-text-annotation)
+		("ah" . pdf-annot-add-highlight-markup-annotation)
+        ("y"  . pdf-view-kill-ring-save)
+        ("i"  . pdf-misc-display-metadata)
+        ("s"  . pdf-occur)
+        ("b"  . pdf-view-set-slice-from-bounding-box)
+        ("r"  . pdf-view-reset-slice)
+		("D" . pdf-annot-delete)
+		)
+	)
 
 	
 
