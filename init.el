@@ -2806,7 +2806,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (use-package pdf-tools
     :ensure t
     :config
-;    (pdf-tools-install)
+    (pdf-tools-install)
     (setq-default pdf-view-display-size 'fit-width)
     ;(define-pdf-cache-function outline)
     ;(pdf-cache-outline)
@@ -2906,8 +2906,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 
 (add-to-list 'org-file-apps 
-              '("\\.pdf\\'" . (lambda (file link)
-                                      (org-pdfview-open link))))
+              '("\\.pdf\\'" . emacs))
 
 (defun toggle-window-dedicated ()
   "Control whether or not Emacs is allowed to display another
