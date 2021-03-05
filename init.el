@@ -2272,6 +2272,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 								 ("\\.png\\'" . default)
 								 ("\\.jpg\\'" . default)
 								 ("\\.gif\\'" . default)
+								 ("\\.xlsx\\'" . default)
 								 ) org-file-apps )
 					   )
 				 )
