@@ -207,9 +207,9 @@
 	(add-hook 'kill-emacs-hook #'(lambda nil
 								   (bm-buffer-save-all)
 								   (bm-repository-save)))
-	(add-hook 'after-save-hook #'(lambda nil
-								   (bm-buffer-save)
-								   (bm-repository-save)))
+	;; (add-hook 'after-save-hook #'(lambda nil  ;; every time it autosaves, this will be run? comment out for now 
+	;; 							   (bm-buffer-save)
+	;; 							   (bm-repository-save)))
 	
 	(add-hook 'find-file-hooks   #'bm-buffer-restore)
 	(add-hook 'after-revert-hook #'bm-buffer-restore)
@@ -1636,10 +1636,10 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline my_org_capture_file "Notes" )
-		 "* TODO %?\n  ")
+		 "* TODO %?\n ")
         ("n" "Notes" entry (file+headline my_org_capture_file "Notes" )
 		 "* %?\nEntered on %U\n ")
-        ("m" "Meeting Note" entry (file+headline my_org_meeting_notes_file "Meeting Notes")
+        ("m" "Meeting Note" entry (file+headline my_org_capture_file "Notes")
          "* Meeting with %? on %U\n")
 		 ("j" "Journal" entry (file+datetree my_org_journal_file)
 		  "* %?\nEntered on %U\n %i\n ")
