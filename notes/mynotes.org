@@ -1,0 +1,16 @@
+#+STARTUP: content
+#+STARTUP: hideblocks
+#+STARTUP: latexpreview
+#+OPTIONS: tex:dvipng
+#+STARTUP: show2levels
+#+COLUMNS: %25ITEM  %TODO %TAGS %From
+
+* Books
+** [Book] The First 90 Days
+** [Book] Understanding A3 Thinking
+
+* Online Classes
+
+* Papers 
+
+* Other
