@@ -1,0 +1,7 @@
+#+begin_src dot :file dot_example1.png :cmdline -Kdot -Tpng
+digraph D {
+
+  A -> {B, C, D} -> {F}
+
+}
+#+end_src
