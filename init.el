@@ -2279,7 +2279,14 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 			  )
 	(add-hook 'org-mode-hook '(lambda ()
 								(which-function-mode 0)))
-
+	(add-hook 'org-mode-hook '(lambda ()
+								(setq helm-swoop-pre-input-function
+									  (lambda () "")
+									  )
+								)
+			  )
+	
+	
 	(define-key org-mode-map (kbd "M-a") nil) ;; reserve for ace-window
 
 	(setq org-duration-format (quote h:mm))
