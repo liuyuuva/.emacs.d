@@ -1,0 +1,59 @@
+#+TITLE:     Personal Introduction
+#+AUTHOR:    Yu Liu
+#+EMAIL:     yl5c@virginia.edu
+#+DATE:      October 2, 2017
+
+#+OPTIONS: H:2 toc:t num:t
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation]
+#+BEAMER_HEADER: \setbeamertemplate{blocks}[rounded][shadow=false]
+#+BEAMER_HEADER: \setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+
+
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+#+BEAMER_THEME: Warsaw
+
+# # top level (*) section (not shown in frame title)
+# # second level (**) frame title
+# # third level (***) block title
+# #  -: bullets
+
+* Education Background
+** Education: Start of the Journey in  Control Engineering
+*** B.S. in /Automation/, 2001
+- Curriculum focused on automatic control
+- Core courses: control, signal and system, sensors, actuators,  etc.
+*** M.S. in /Control Science and Engineernig/, 2004
+- Further study in control theory and engineering
+- /A glimpse at real-world control systems/
+
+** PhD: A Deeper Dive Into Control Research
+*** A thorough exposure to control study
+- Full spectrum of dynamics and control courses
+- Adaptive control, optimal control, robust control,
+  nonlinear systems, dynamical systems
+
+*** A start in control research training
+- Modeling of dynamical systems under failures and damage
+- Multivariable adaptive control algorithms for
+  aircraft under actuator failures and airframe damage
+
+* Training in Control Research
+** Postdoctoral Research: Farewell to Academia
+*** Continued research in adaptive control
+- Worked with engineers from NASA Langley Research Center to evaluate
+  adaptive control for aircraft appliations
+- Designed adaptive algorithms for aircraft under variable failures
+- Simulation of aircraft systems using NASA UAV Model
+- Invented adaptive control allocation algorithm
+*** Decided to bid farewell to academia
+- Huge gap between control theory and applications
+- Personally prefer the practical side
+
+* Test
+- Worked?\\
+- Workd 2?

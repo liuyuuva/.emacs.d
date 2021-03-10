@@ -5,3 +5,6 @@ digraph D {
 
 }
 #+end_src
+
+#+RESULTS:
+[[file:dot_example1.png]]
