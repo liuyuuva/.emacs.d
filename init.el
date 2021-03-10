@@ -540,7 +540,10 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
   ("h" helm-org-rifle-org-directory "show results from org-directory")
   ("a" helm-org-rifle-agenda-files "show results from agenda files")
   )
-  
+
+(use-package helm-swoop
+  :ensure t)
+
 (use-package helm-org
   :ensure t)
 
