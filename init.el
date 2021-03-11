@@ -23,7 +23,7 @@
 		(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
 		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 		(setq default-directory "C:/Users/523452/Work/org/")
-		;;(add-to-list 'exec-path "c:/bin/hunspell/bin") ; have to use hunspell as emacs 26 cannot support aspell < v6, but aspell v6 for w64 is nowhere to find.
+		(add-to-list 'exec-path "c:/msys64/mingw64/bin/") ; have to use hunspell as emacs 26 cannot support aspell < v6, but aspell v6 for w64 is nowhere to find.
 										;(setq ispell-dictionary "C:/bin//Aspell/dict/")
 ;		(add-to-list 'exec-path "~/.emacs.d/ccls/")
 		(setq my_org_main_file "C:/Users/523452/Work/org/main.org")
