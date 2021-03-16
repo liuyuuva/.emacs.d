@@ -1701,6 +1701,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-agenda-skip-scheduled-if-done t)
 (setq org-agenda-todo-ignore-scheduled 'future)
 (setq org-agenda-tags-todo-honor-ignore-options t)
+(setq org-agenda-skip-scheduled-if-deadline-is-shown t)
+;;(setq org-agenda-skip-deadline-prewarning-if-scheduled t)
 (setq org-deadline-warning-days 15)
 (setq org-log-done 'time)
 
@@ -2999,26 +3001,44 @@ Position the cursor at it's beginning, according to the current mode."
 (use-package mermaid-mode
   :ensure t
   :defer t
-  :config
-  (setq mermaid-mode-map
-  (let ((map mermaid-mode-map))
-    (define-key map (kbd "C-c C-c") nil)
-    (define-key map (kbd "C-c C-f") nil)
-    (define-key map (kbd "C-c C-b") nil)
-    (define-key map (kbd "C-c C-r") nil)
-    (define-key map (kbd "C-c C-o") nil)
-    (define-key map (kbd "C-c C-d") nil)
-    (define-key map (kbd "C-c C-d c") 'mermaid-compile)
-    (define-key map (kbd "C-c C-d c") 'mermaid-compile)
-    (define-key map (kbd "C-c C-d f") 'mermaid-compile-file)
-    (define-key map (kbd "C-c C-d b") 'mermaid-compile-buffer)
-    (define-key map (kbd "C-c C-d r") 'mermaid-compile-region)
-    (define-key map (kbd "C-c C-d o") 'mermaid-open-browser)
-    (define-key map (kbd "C-c C-d d") 'mermaid-open-doc)
-    map))
   )
 
 (use-package ob-mermaid
   :ensure t
   :defer t)
+
+(use-package org-super-agenda
+  :ensure t
+  :config
+  (org-super-agenda-mode)
+  (setq  org-super-agenda-groups
+		'((:name "High Priority"
+				 :priority "A"
+				 :order 1
+				 )
+		  (:name "In Progress"
+				 :todo "INPROGRESS"
+				 :order 2
+				 )
+		  (:name "Next Action"
+				 :todo "NEXTACTION"
+				 :order 3
+				 )
+		  (:name "Follow Up"
+				 :todo "FOLLOWUP"
+				 :order 4
+				 )
+		  (:name "Today"
+				 :deadline today
+				 :order 5)
+		  (:name "Over Due"
+				 :deadline past
+				 :order 6)
+		  (:name "Delegate"
+				 :todo "DELEGATE"
+				 :order 7)
+		  )
+		)
+   )
+  
 
