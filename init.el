@@ -2725,9 +2725,24 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 
 (use-package afternoon-theme
-	     :ensure t)
+  :ensure t)
+(use-package monokai-theme
+  :ensure t)
+(use-package cyberpunk-theme
+  :ensure t)
 
 (load-theme 'afternoon t)
+;;(load-theme 'monokai t)
+;;(load-theme 'cyberpunk t)
+
+;; (use-package ample-theme
+;;   :init (progn (load-theme 'ample t t)
+;;                (load-theme 'ample-flat t t)
+;;                (load-theme 'ample-light t t)
+;;                (enable-theme 'ample-flat))
+;;   :defer t
+;;   :ensure t)
+
 (if (eq system-type 'windows-nt)
 	(set-face-attribute 'mode-line nil :font "Courier New")
   )
@@ -3042,3 +3057,5 @@ Position the cursor at it's beginning, according to the current mode."
    )
   
 
+(set-face-attribute 'org-mode-line-clock nil
+                    :weight 'bold :box '(:line-width 1 :color "#FFBB00") :foreground "white" :background "#FF4040")
