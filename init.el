@@ -3068,8 +3068,3 @@ Position the cursor at it's beginning, according to the current mode."
   :ensure t
   )
 
-(use-package undo-tree
-  :ensure t
-  :config
-  (global-undo-tree-mode)
-  )
