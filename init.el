@@ -2401,6 +2401,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "<f9> t i") 'org-timer-item)
 	(define-key org-mode-map (kbd "<f9> t p") 'org-timer-pause-or-continue)
 	(define-key org-mode-map (kbd "<f9> t s") 'org-timer-stop)
+	(define-key org-mode-map (kbd "<f9> t d") 'org-timer-set-timer)
 	(define-key org-mode-map (kbd "C-a") 'org-beginning-of-line)
 	(define-key org-mode-map (kbd "C-e") 'org-end-of-line)
 	(define-key org-mode-map (kbd "C-k") 'org-kill-line)
@@ -3065,4 +3066,10 @@ Position the cursor at it's beginning, according to the current mode."
 
 (use-package helm-descbinds
   :ensure t
+  )
+
+(use-package undo-tree
+  :ensure t
+  :config
+  (global-undo-tree-mode)
   )
