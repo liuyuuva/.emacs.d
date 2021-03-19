@@ -2398,7 +2398,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "C-S-u") 'outline-up-heading)
 	(define-key org-mode-map (kbd "S-<f9>") 'org-shiftmetaup)
 	(define-key org-mode-map (kbd "M-<f9>") 'org-shiftmetadown)
-	(define-key org-mode-map (kbd "<f9> t") 'jump-to-today-report)
+	(define-key org-mode-map (kbd "<f9> t i") 'org-timer-item)
+	(define-key org-mode-map (kbd "<f9> t p") 'org-timer-pause-or-continue)
+	(define-key org-mode-map (kbd "<f9> t s") 'org-timer-stop)
 	(define-key org-mode-map (kbd "C-a") 'org-beginning-of-line)
 	(define-key org-mode-map (kbd "C-e") 'org-end-of-line)
 	(define-key org-mode-map (kbd "C-k") 'org-kill-line)
@@ -2440,6 +2442,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   ("i" org-toggle-inline-images "toggle inline images")
   ("l" org-insert-link "insert link")
   ("f" org-insert-link-with-prefix "insert link to file")
+  ("k" org-set-line-checkbox "change line to checkbox")
   ("m" org-mark-element "mark element")
   ("x" org-cut-subtree "cut tree")
   ("c" org-copy-subtree "copy tree")
@@ -3059,3 +3062,7 @@ Position the cursor at it's beginning, according to the current mode."
 
 (set-face-attribute 'org-mode-line-clock nil
                     :weight 'bold :box '(:line-width 1 :color "#FFBB00") :foreground "white" :background "#FF4040")
+
+(use-package helm-descbinds
+  :ensure t
+  )
