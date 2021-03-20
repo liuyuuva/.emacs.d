@@ -831,7 +831,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   (progn
     ;; if we don't have this evil overwrites the cursor color
     (setq evil-default-cursor t)
-    (setq evil-toggle-key "C-`")
+    (setq evil-toggle-key "C-M-`")
 
 	(use-package evil-leader
       :ensure t
@@ -1607,8 +1607,11 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-icalendar-include-todo t) 
 
 (setq org-todo-keywords
-	  '((sequence "TODO(t)"  "NEXTACTION(n)" "DELAYED(y)" "INPROGRESS(i)"  "FOLLOWUP(f@/i)" "DELEGATE(e@/i)"  "|" "DONE(d!)" "CANCELED(c@/i)" "MEMO(m)"  )
-		))
+	  '(
+		(sequence  "TODO(t)"  "NEXTACTION(n)"  "DELAYED(y)"	 "INPROGRESS(i)" "FOLLOWUP(f@/i)" "DELEGATE(e@/i)"  "MEMO(m)" "|" "CANCELED(c@/i)" "DONE(d!)"  )
+		)
+	  )
+
 
 (setq org-todo-keyword-faces
 	  '(("TODO" . org-warning) ("INPROGRESS" . "orange") ("MEMO" . "blue")   ("NEXTACTION" . org-warning) ("DELAYED" . org-warning) ("FOLLOWUP" . org-warning) ("DELEGATE" . org-warning)
@@ -1816,7 +1819,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (defun show-done ()
   (interactive)
-  (setq current-prefix-arg 7)
+  (setq current-prefix-arg 9)
   (call-interactively 'org-show-todo-tree))
 
 
@@ -1827,7 +1830,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (defun show-memo ()
   (interactive)
-  (setq current-prefix-arg 9)
+  (setq current-prefix-arg 7)
   (call-interactively 'org-show-todo-tree))
 
 
@@ -1910,7 +1913,10 @@ last month."
 		("f" todo "FOLLOWUP")
 	  	("C" "Tasks CLOSED Last Week" tags  (concat "CLOSED>=\"<-1w>\""))
 		("D" "Tasks DONE Last Week" tags (concat "TODO=\"DONE\"" "+CLOSED>=\"<-1w>\""))
-		("S" "Tasks CLOSED Last Month" tags (concat "CLOSED>=\"<-1m>\"")) ))
+		("S" "Tasks CLOSED Last Month" tags (concat "CLOSED>=\"<-1m>\""))
+		("Q" "Tasks CLOSED Older Than A Month" tags (concat "CLOSED<=\"<-1m>\""))
+		)
+	  )
 
 (setq org-agenda-start-with-follow-mode 1)
 
@@ -2388,6 +2394,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
     (define-key org-mode-map (kbd "<f10>") 'add-sublevel-plainitem)
 	
 	(define-key org-mode-map (kbd "C-<f12>") 'org-overview)
+	(define-key org-mode-map (kbd "<f12>") 'ace-window)
 	(define-key org-mode-map (kbd "M-<f12>") 'org-forward-same-level)
 	(define-key org-mode-map (kbd "S-<f12>") 'outline-next-visible-heading )
 	(define-key org-mode-map (kbd "C-<f11>") 'org-copy)
@@ -2566,7 +2573,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;; F12
 ;;;;;;;;
 
-(global-set-key (kbd "<f12>") 'smart-compile)
+;;(global-set-key (kbd "<f12>") 'smart-compile)
 
 ;;;;;;;;
 ;; Others
@@ -2835,6 +2842,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
    :config
    (progn
 	 (global-set-key (kbd "M-W") 'ace-window)
+	 (global-set-key (kbd "C-`") 'ace-window)
 
 	  )
 	 )
@@ -3079,3 +3087,36 @@ Position the cursor at it's beginning, according to the current mode."
   :config
   (global-undo-tree-mode)
   )
+
+
+
+
+;; ;; Custom agenda skip function to skip entries with activity in the
+;; ;; past month used to find candidates for archiving. Adapted from
+;; ;; http://doc.norang.ca/org-mode.html#Archiving
+;; (defun my/skip-non-archivable-tasks ()
+;;   "Skip trees that are not available for archiving"
+;;   (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
+;;     ;; consider only tasks with done todo headings as archivable tasks
+;;     (if (member (org-get-todo-state) org-done-keywords)
+;;         (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+;;                (daynr (string-to-number (format-time-string "%d" (current-time))))
+;;                (a-month-ago (* 60 60 24 (+ daynr 1)))
+;;                (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
+;;                (this-month (format-time-string "%Y-%m-" (current-time)))
+;;                (subtree-is-current (save-excursion
+;;                                      (forward-line 1)
+;;                                      (and (< (point) subtree-end)
+;;                                           (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
+;;           (if subtree-is-current
+;;               next-headline ;; has a date in this month or last month, so skip it
+;;             nil)) ;; available to archive
+;;       (or next-headline (point-max)))))
+
+;; ;; Add an agenda view that utilises this skip function.
+;; (setq org-agenda-custom-commands
+;;       (cons
+;;        '("A" "Candidate trees for archiving" tags "-NOARCHIVE"
+;;          ((org-agenda-overriding-header "Candidate tasks for archiving")
+;;           (org-agenda-skip-function 'my/skip-non-archivable-tasks)))
+;;       org-agenda-custom-commands))
