@@ -365,6 +365,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package projectile
   :ensure t
+  :defer t
   :diminish pjt
   :config
   (progn
@@ -374,6 +375,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package helm-projectile
   :ensure t
+  :defer t
   :config
   (progn
     (helm-projectile-on)
@@ -529,6 +531,7 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
 
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (use-package helm-org-rifle
+  :defer t
   :ensure t)
 
 (defhydra rifle-hydra (:exit t)
@@ -549,6 +552,7 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
 
 (use-package helm-ag
   :ensure t
+  :defer t
   :config
   (progn
 	(setq helm-ag-fuzzy-match t
@@ -822,6 +826,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package evil
   :ensure t
+  :defer 
   :init
   (progn
     ;; if we don't have this evil overwrites the cursor color
@@ -1058,6 +1063,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package cc-mode
   :ensure t
+  :defer t
   :config
   (progn
     (setq-default c-basic-offset 4)
