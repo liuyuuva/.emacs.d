@@ -1608,7 +1608,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (setq org-todo-keywords
 	  '(
-		(sequence  "TODO(t)"  "NEXTACTION(n)"  "DELAYED(y)"	 "INPROGRESS(i)" "FOLLOWUP(f@/i)" "DELEGATE(e@/i)"  "MEMO(m)" "|" "CANCELED(c@/i)" "DONE(d!)"  )
+		(sequence  "TODO(t)"  "NEXTACTION(n)"  "DELAYED(y)"	 "INPROGRESS(i)" "FOLLOWUP(f@/i)" "DELEGATE(e@/i)" "|" "MEMO(m)" "CANCELED(c@/i)" "DONE(d!)"  )
 		)
 	  )
 
@@ -1903,18 +1903,12 @@ last month."
 	 for-month for-year "TODO=\"DONE\"")))
 
 (setq org-agenda-custom-commands
-	  '(("w" todo "WAITING")
-		("m" todo "MEMO")
-		("n" todo "NEXTACTION")
-		("y" todo "DELAYED")
-		("t" todo "TODO")
-		("i" todo "INPROGRESS")
-		("e" todo "DELEGATE")
-		("f" todo "FOLLOWUP")
-	  	("C" "Tasks CLOSED Last Week" tags  (concat "CLOSED>=\"<-1w>\""))
+	  '(
+		("q" "Tasks CLOSED Older Than A Month" tags (concat "CLOSED<=\"<-30d>\""))
+		("C" "Tasks CLOSED Last Week" tags  (concat "CLOSED>=\"<-1w>\""))
 		("D" "Tasks DONE Last Week" tags (concat "TODO=\"DONE\"" "+CLOSED>=\"<-1w>\""))
 		("S" "Tasks CLOSED Last Month" tags (concat "CLOSED>=\"<-1m>\""))
-		("Q" "Tasks CLOSED Older Than A Month" tags (concat "CLOSED<=\"<-1m>\""))
+		
 		)
 	  )
 
@@ -2339,6 +2333,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	;;(define-key org-mode-map (kbd "C-<f1>") 'org-back-to-top-level-heading)
 	;;F5
 	(define-key org-mode-map (kbd "<f5> n") 'mark-nextaction)
+	(define-key org-mode-map (kbd "<f5> a") 'org-agenda)
 	(define-key org-mode-map (kbd "<f5> t") 'mark-todo)	
 	;(define-key org-mode-map (kbd "<f5> f") 'mark-tofile)
 	(define-key org-mode-map (kbd "<f5> t") 'mark-todo)
@@ -2390,6 +2385,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 	(define-key org-mode-map (kbd "<f9> p") 'org-pomodoro)
 	(define-key org-mode-map (kbd "<f9> k")	'org-pomodoro-kill)
+	(define-key org-mode-map (kbd "<f9> t i") 'org-timer-item)
+	(define-key org-mode-map (kbd "<f9> t p") 'org-timer-pause-or-continue)
+	(define-key org-mode-map (kbd "<f9> t s") 'org-timer-stop)
+	(define-key org-mode-map (kbd "<f9> t d") 'org-timer-set-timer)
 
     (define-key org-mode-map (kbd "<f10>") 'add-sublevel-plainitem)
 	
@@ -2411,10 +2410,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "C-S-u") 'outline-up-heading)
 	(define-key org-mode-map (kbd "S-<f9>") 'org-shiftmetaup)
 	(define-key org-mode-map (kbd "M-<f9>") 'org-shiftmetadown)
-	(define-key org-mode-map (kbd "<f9> t i") 'org-timer-item)
-	(define-key org-mode-map (kbd "<f9> t p") 'org-timer-pause-or-continue)
-	(define-key org-mode-map (kbd "<f9> t s") 'org-timer-stop)
-	(define-key org-mode-map (kbd "<f9> t d") 'org-timer-set-timer)
 	(define-key org-mode-map (kbd "C-a") 'org-beginning-of-line)
 	(define-key org-mode-map (kbd "C-e") 'org-end-of-line)
 	(define-key org-mode-map (kbd "C-k") 'org-kill-line)
@@ -2432,6 +2427,8 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	("<down>" org-forward-heading-same-level "forward same level")
 	("u" outline-up-heading "up level")
 	("n" org-narrow-to-subtree "narrow")
+	("l" org-agenda-set-restriction-lock "lock agenda to subtree")
+	("r" org-agenda-remove-restriction-lock "remove agenda subtree lock")
 	("w" widen "widen")
 	("q" nil "quit")
 	)
@@ -2595,9 +2592,23 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 								(kill-line 0)
 								(indent-according-to-mode)))
 
+(defun remember-here ()
+  "Remember current position."
+  (interactive)
+  (point-to-register 8)
+  (message "Have remembered this position"))
+
+(defun remember-jump ()
+  "Jump to latest position."
+  (interactive)
+  (let ((tmp (point-marker)))
+    (jump-to-register 8)
+    (set-register 8 tmp))
+  (message "Jumped back to remembered position"))
+
 (global-set-key (kbd "C-M-/") 'flyspell-check-previous-highlighted-word)
-(global-set-key (kbd "C-1") 'jump-back-local-mark) ;jump back mark in local mark ring
-(global-set-key (kbd "C-2") 'pop-global-mark) ; jump back to global mark ring
+(global-set-key (kbd "C-1") 'remember-here) ;jump back mark in local mark ring
+(global-set-key (kbd "C-2") 'remember-jump) ; jump back to global mark ring
 
 
 
@@ -3044,36 +3055,71 @@ Position the cursor at it's beginning, according to the current mode."
   :ensure t
   :config
   (org-super-agenda-mode)
-  (setq  org-super-agenda-groups
-		'((:name "High Priority"
-				 :priority "A"
-				 :order 1
-				 )
-		  (:name "In Progress"
-				 :todo "INPROGRESS"
-				 :order 2
-				 )
-		  (:name "Next Action"
-				 :todo "NEXTACTION"
-				 :order 3
-				 )
-		  (:name "Follow Up"
-				 :todo "FOLLOWUP"
-				 :order 4
-				 )
-		  (:name "Today"
-				 :deadline today
-				 :order 5)
-		  (:name "Over Due"
-				 :deadline past
-				 :order 6)
-		  (:name "Delegate"
-				 :todo "DELEGATE"
-				 :order 7)
-		  )
-		)
+  ;; (setq  org-super-agenda-groups
+  ;; 		'((:name "High Priority"
+  ;; 				 :priority "A"
+  ;; 				 :order 1
+  ;; 				 )
+  ;; 		  (:name "In Progress"
+  ;; 				 :todo "INPROGRESS"
+  ;; 				 :order 2
+  ;; 				 )
+  ;; 		  (:name "Next Action"
+  ;; 				 :todo "NEXTACTION"
+  ;; 				 :order 3
+  ;; 				 )
+  ;; 		  (:name "Follow Up"
+  ;; 				 :todo "FOLLOWUP"
+  ;; 				 :order 4
+  ;; 				 )
+  ;; 		  (:name "Today"
+  ;; 				 :deadline today
+  ;; 				 :order 5)
+  ;; 		  (:name "Over Due"
+  ;; 				 :deadline past
+  ;; 				 :order 6)
+  ;; 		  (:name "Delegate"
+  ;; 				 :todo "DELEGATE"
+  ;; 				 :order 7)
+  ;; 		  )
+  ;; 		)
    )
   
+(add-to-list 'org-agenda-custom-commands
+			 '("z" "Supger Agenda" agenda ""
+			   ((org-super-agenda-groups
+				 '((
+					:name "High Priority"
+						  :priority "A"
+						  :order 1
+						  )
+				   (:name "In Progress"
+						  :todo "INPROGRESS"
+						  :order 2
+						  )
+				   (:name "Next Action"
+						  :todo "NEXTACTION"
+						  :order 3
+						  )
+				   (:name "Follow Up"
+						  :todo "FOLLOWUP"
+						  :order 4
+						  )
+				   (:name "Today"
+						  :deadline today
+						  :order 5)
+				   (:name "Over Due"
+						  :deadline past
+						  :order 6)
+				   (:name "Delegate"
+						  :todo "DELEGATE"
+						  :order 7)
+				   )
+				 )
+				)
+			   )
+			 )
+				
 
 (set-face-attribute 'org-mode-line-clock nil
                     :weight 'bold :box '(:line-width 1 :color "#FFBB00") :foreground "white" :background "#FF4040")
@@ -3082,41 +3128,5 @@ Position the cursor at it's beginning, according to the current mode."
   :ensure t
   )
 
-(use-package undo-tree
-  :ensure t
-  :config
-  (global-undo-tree-mode)
-  )
 
 
-
-
-;; ;; Custom agenda skip function to skip entries with activity in the
-;; ;; past month used to find candidates for archiving. Adapted from
-;; ;; http://doc.norang.ca/org-mode.html#Archiving
-;; (defun my/skip-non-archivable-tasks ()
-;;   "Skip trees that are not available for archiving"
-;;   (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
-;;     ;; consider only tasks with done todo headings as archivable tasks
-;;     (if (member (org-get-todo-state) org-done-keywords)
-;;         (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
-;;                (daynr (string-to-number (format-time-string "%d" (current-time))))
-;;                (a-month-ago (* 60 60 24 (+ daynr 1)))
-;;                (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
-;;                (this-month (format-time-string "%Y-%m-" (current-time)))
-;;                (subtree-is-current (save-excursion
-;;                                      (forward-line 1)
-;;                                      (and (< (point) subtree-end)
-;;                                           (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
-;;           (if subtree-is-current
-;;               next-headline ;; has a date in this month or last month, so skip it
-;;             nil)) ;; available to archive
-;;       (or next-headline (point-max)))))
-
-;; ;; Add an agenda view that utilises this skip function.
-;; (setq org-agenda-custom-commands
-;;       (cons
-;;        '("A" "Candidate trees for archiving" tags "-NOARCHIVE"
-;;          ((org-agenda-overriding-header "Candidate tasks for archiving")
-;;           (org-agenda-skip-function 'my/skip-non-archivable-tasks)))
-;;       org-agenda-custom-commands))
