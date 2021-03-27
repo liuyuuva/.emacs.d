@@ -121,7 +121,7 @@
 ;(defvaralias 'c-basic-offset 'tab-width)
 
 ;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-(winner-mode 1) ;save window configuration
+;;(winner-mode 1) ;save window configuration
 
 
 
@@ -149,7 +149,10 @@
 ;;   :ensure t
 ;;   :config
 ;;    (add-hook 'after-init-hook 'benchmark-init/deactivate))
-  
+
+(use-package winner
+  :defer t
+  )
 
 (defun bjm/ivy-dired-recent-dirs ()
   "Present a list of recently used directories and open the selected one in dired"
@@ -175,15 +178,16 @@
 
 (save-place-mode 1)
 
-(use-package bookmark
-  :ensure t
-  :config
-  (progn
-    (global-unset-key (kbd "<C-f1>"))
-    (define-key global-map (kbd "<C-f1>") 'bookmark-set)
-    (define-key global-map (kbd "<M-f1>") 'bookmark-jump)
-    (define-key global-map (kbd "<S-f1>") 'bookmark-bmenu-list)
-    ))
+;; (use-package bookmark
+;;   :ensure t
+;;   :defer t
+;;   :config
+;;   (progn
+;;     (global-unset-key (kbd "<C-f1>"))
+;;     (define-key global-map (kbd "<C-f1>") 'bookmark-set)
+;;     (define-key global-map (kbd "<M-f1>") 'bookmark-jump)
+;;     (define-key global-map (kbd "<S-f1>") 'bookmark-bmenu-list)
+;;     ))
 
 (use-package bm
   :ensure t
@@ -227,11 +231,11 @@
    )
   )
 
-(use-package vlf
-  :ensure t
-  :defer t
-  :config (progn
-            (require 'vlf-setup)))
+;; (use-package vlf
+;;   :ensure t
+;;   :defer t
+;;   :config (progn
+;;             (require 'vlf-setup)))
 
 (use-package neotree
   :ensure t
@@ -302,6 +306,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package magit
   :ensure t
+  :defer t
   :bind
   ("C-x g" . magit-status)
    
@@ -514,17 +519,16 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
 	 ("M-h f" . helm-find-files)
 	 ("M-h p" . helm-projectile)
 	 ("M-h q" . helm-swoop-back-to-last-point)
-	 ("M-h g" . rgrep)
-	 ("M-h d" . helm-do-ag)
+	 ("M-h d" . rg-dwim)
 	 ("M-h r" . helm-resume)
-     ;;	 ("M-h c" . yas-describe-tables)
      ("M-h c" . helm-flycheck)
 	 ("M-h l" . helm-recentf)
-	 ("M-h h" . helm-multi-swoop-all)
+	 ("M-h h" . helm-org-in-buffer-headings)
 	 ("M-h t" . elpy-hydra/body)
 	 ("M-h v" . rifle-hydra/body)
-	 ("M-h u" . lsp-find-references)
-	 ("M-h ." . lsp-find-definition)
+	 ("M-h u" . helm-multi-swoop-all)
+	 ("M-h ." . helm-rg)
+	 ("M-h g" . rg)
 	 ("M-h n" . helm-org-in-buffer-headings)
 	 )
   )
@@ -548,7 +552,8 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
   :ensure t)
 
 (use-package helm-org
-  :ensure t)
+  :ensure t
+  )
 
 (use-package helm-ag
   :ensure t
@@ -769,6 +774,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 
 (use-package helm-descbinds
+  :ensure t
   :defer t
   :bind (("C-h b" . helm-descbinds)
          ("C-h w" . helm-descbinds)))
@@ -795,7 +801,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	(setq key-chord-one-key-delay 0.2)
 	(key-chord-mode 1)
 	:config
-	(key-chord-define-local"jj" 'avy-goto-char-timer)
+	(key-chord-define-local "jj" 'avy-goto-char-timer)
+	(key-chord-define-local "hh" 'avy-goto-char-timer)
 	(key-chord-define-local "ww" 'helm-swoop)
 	(key-chord-define-local "bb" 'helm-swoop-back-to-last-point)
 	(key-chord-define-local "qq" 'keyboard-quit)
@@ -826,7 +833,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package evil
   :ensure t
-  :defer 
+  :defer t
   :init
   (progn
     ;; if we don't have this evil overwrites the cursor color
@@ -913,7 +920,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package anzu
   :ensure t
-  :commands (isearch-foward isearch-backward)
+  :commands (isearch-forward isearch-backward)
   :config
   (progn
     (global-anzu-mode)
@@ -1071,12 +1078,16 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	)
   )
 
-(require 'google-c-style)
+(use-package 'google-c-style
+  :ensure t
+  :defer t
+  )
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (setq indent-tabs-mode nil)
 
 (use-package yasnippet-snippets
   :ensure t
+  :defer t
   )
 
 	 
@@ -1092,6 +1103,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package counsel
   :ensure t
+  :defer t
   )
 	
 (when (boundp 'w32-pipe-read-delay)
@@ -1102,6 +1114,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package company
   :ensure t
+  :defer t
   :init
   (progn
 	(setq company-global-modes '(not org-mode))
@@ -1116,7 +1129,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
     
 
 
-(global-set-key (kbd "C-'") 'company-complete-common)
+;;(global-set-key (kbd "C-'") 'company-complete-common)
+(global-set-key (kbd "C-'") 'avy-goto-char-timer)
 
 
 
@@ -1133,6 +1147,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package ccls
   :ensure t
+  :defer t
   :hook (
 	   (c-mode c++-mode) .
 	   (lambda () (require 'ccls) (lsp)))
@@ -1150,12 +1165,14 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (use-package helm-xref
   :ensure t
+  :defer t
   :init (setq xref-show-xrefs-function 'helm-xref-show-xrefs)
   )
 
 
 (use-package lsp-mode
   :ensure t
+  :defer t
   :commands lsp
   :config
   (progn
@@ -1169,6 +1186,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
                                             xref-find-references))
 (use-package lsp-ui
   :ensure t
+  :defer t
   :commands lsp-ui-mode
   :config
   (setq lsp-ui-doc-enable t
@@ -1187,10 +1205,12 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package company-lsp
   :ensure t
+  :defer t
   :commands company-lsp)
 
 (use-package flycheck
-	   :ensure t
+  :ensure t
+  :defer t
        :bind (
 			  
 			  ("M-p" . flycheck-previous-error)
@@ -1218,6 +1238,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package helm-flycheck
   :ensure t
+  :defer t
   :config
   (eval-after-load 'flycheck
     '(define-key flycheck-mode-map (kbd "M-h c") 'helm-flycheck)))
@@ -1227,7 +1248,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package company-quickhelp
   :ensure t
-
+  :defer t
   :config
   (company-quickhelp-mode 1)
   ;;(define-key company-quickhelp-mode-map (kbd "M-h") nil) ;unset this key in company-quickhelp-mode so that it does not conflict with helm mode
@@ -1237,7 +1258,9 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   
 (use-package company-jedi
 
-  :ensure t)
+  :ensure t
+  :defer t
+  )
 
 
 
@@ -1314,6 +1337,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
    
    (use-package semantic
 	 :ensure t
+	 :defer t
 	 :init
 	 (semantic-mode 1)
 	 :config
@@ -1355,6 +1379,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package function-args
   :ensure t
+  :defer t
   :demand
 ;  :init
 ;  (add-hook 'prog-mode-hook 'function-args-mode)
@@ -1395,6 +1420,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 
 (use-package hideshow
+  :ensure t
+  :defer t
   :bind
   ("C-," . hydra-hs/body)
   :config
@@ -1414,14 +1441,17 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 (use-package try
   :ensure t
+  :defer t
   )
 (use-package expand-region
   :ensure t
+  :defer t
   :commands er/expand-region
   :bind ("C-=" . er/expand-region))
 
 (use-package multiple-cursors
   :ensure t
+  :defer t
   :bind
   (("C-M-=" . hydra-mc/body))
   
@@ -1661,6 +1691,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
  (use-package helm-bibtex
    :ensure t
+   :defer t
    :config
    (progn
 	 bibtex-completion-bibliography "~/Dropbox/bibliography/references.bib"
@@ -1931,6 +1962,7 @@ last month."
 
  (use-package ox-latex
    :ensure nil
+   :defer t
    :config
    (add-to-list 'org-latex-classes
 				'("ieeeconf"
@@ -1946,6 +1978,7 @@ last month."
 
  (use-package ox-beamer
    :ensure nil
+   :defer t
    :config
    (add-to-list 'org-latex-classes
   			   '("beamer"
@@ -2059,34 +2092,34 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (add-hook 'LaTeX-mode-hook
 		  (lambda () (local-set-key (quote [f9]) #'LaTeX-indent-line)))
 										;
-;; Octave Mode
+;; ;; Octave Mode
 
-(use-package octave
-  :ensure t
-  :config
-  (progn
-	(setq auto-mode-alist
-      (cons '("\\.m$" . octave-mode) auto-mode-alist))
-	(setq octave-auto-indent t)
-	(setq octave-auto-newline t)
-	(setq octave-blink-matching-block t)
-	(setq octave-block-offset 4)
-	(setq octave-continuation-offset 4)
-	(setq octave-continuation-string "\\")
-	(setq octave-mode-startup-message t)
-	(setq octave-send-echo-input t)
-	(setq octave-send-line-auto-forward t)
-	(setq octave-send-show-buffer t)
+;; (use-package octave
+;;   :ensure t
+;;   :config
+;;   (progn
+;; 	(setq auto-mode-alist
+;;       (cons '("\\.m$" . octave-mode) auto-mode-alist))
+;; 	(setq octave-auto-indent t)
+;; 	(setq octave-auto-newline t)
+;; 	(setq octave-blink-matching-block t)
+;; 	(setq octave-block-offset 4)
+;; 	(setq octave-continuation-offset 4)
+;; 	(setq octave-continuation-string "\\")
+;; 	(setq octave-mode-startup-message t)
+;; 	(setq octave-send-echo-input t)
+;; 	(setq octave-send-line-auto-forward t)
+;; 	(setq octave-send-show-buffer t)
 	
 
-			)
-		  )
- (add-hook 'octave-mode-hook
- 		  (lambda ()
- 			;(auto-complete-mode 1)
- 			(setq comment-start "% ")
- 			)
- 		  )
+;; 			)
+;; 		  )
+;;  (add-hook 'octave-mode-hook
+;;  		  (lambda ()
+;;  			;(auto-complete-mode 1)
+;;  			(setq comment-start "% ")
+;;  			)
+;;  		  )
 
   
 
@@ -2232,6 +2265,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 (use-package windmove
   ;; :defer 4
   :ensure t
+  :defer t
   :config
   (setq windmove-wrap-around t)
   (windmove-default-keybindings)
@@ -2262,19 +2296,20 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (call-interactively 'set-mark-command)
   )
 
-(defun jump-to-today-report ()
-  "call jump to bookmark function to go to today's clock table"
-  (interactive)
-  (bookmark-maybe-load-default-file)
+;; (defun jump-to-today-report ()
+;;   "call jump to bookmark function to go to today's clock table"
+;;   (interactive)
+;;   (bookmark-maybe-load-default-file)
   
-  (bookmark-jump "ClockReportToday")
-  (message "Went to today's clock report."))
+;;   (bookmark-jump "ClockReportToday")
+;;   (message "Went to today's clock report."))
 
 (with-eval-after-load "org"
   (progn
 	;; (add-hook 'org-mode-hook 'nolinum)
-	(let ((current-prefix-arg 1))
-	  (call-interactively 'org-reload)) ;; remove the export issue 
+	;;(let ((current-prefix-arg 1))
+	  ;;(call-interactively 'org-reload)
+	 ;; ) ;; remove the export issue 
 	(add-hook 'org-mode-hook #'visual-line-mode)
 	(add-hook 'org-mode-hook
 			  '(lambda ()
@@ -2416,7 +2451,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	
 	) )
 
-(use-package org-habit)
+;; (use-package org-habit)
 
 
 
@@ -2861,11 +2896,12 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
    
 (use-package free-keys
   :ensure t
+  :defer t
   )
 
 (use-package pdf-tools
-    :ensure t
-    :config
+  :ensure t
+  :config
     (pdf-tools-install)
     (setq-default pdf-view-display-size 'fit-width)
     ;(define-pdf-cache-function outline)
@@ -2950,6 +2986,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (use-package org-ref
   :ensure t
+  :defer t
   )
 
 
@@ -2987,6 +3024,7 @@ buffer in current window."
 
 (use-package academic-phrases
   :ensure t
+  :defer t
   )
 
 (use-package super-save
@@ -2994,7 +3032,13 @@ buffer in current window."
   :init
   (progn
 	(setq super-save-auto-save-when-idle t)
-	))
+	;; add integration with ace-window
+	(add-to-list 'super-save-triggers 'ace-window)
+	
+	;; save on find-file
+	(add-to-list 'super-save-hook-triggers 'find-file-hook)
+	)
+  )
 
 
 (defun smart-open-line-above ()
@@ -3010,6 +3054,7 @@ Position the cursor at it's beginning, according to the current mode."
 
 (use-package leetcode
   :ensure t
+  :defer t
   :init
   (progn
 	(setq leetcode-prefer-language "cpp")
@@ -3018,23 +3063,28 @@ Position the cursor at it's beginning, according to the current mode."
 
 (use-package rust-mode
   :ensure t
+  :defer t
   :hook (rust-mode . lsp))
 
 (use-package cargo
   :ensure t
+  :defer t
   :hook (rust-mode . cargo-minor-mode))
 
 (use-package flycheck-rust
   :ensure t
+  :defer t
   :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   )
 
 (use-package toml-mode
   :ensure t
+  :defer t
   )
 
 (use-package ein
   :ensure t
+  :defer t
   )
 (use-package org-bullets
   :ensure t
@@ -3055,34 +3105,6 @@ Position the cursor at it's beginning, according to the current mode."
   :ensure t
   :config
   (org-super-agenda-mode)
-  ;; (setq  org-super-agenda-groups
-  ;; 		'((:name "High Priority"
-  ;; 				 :priority "A"
-  ;; 				 :order 1
-  ;; 				 )
-  ;; 		  (:name "In Progress"
-  ;; 				 :todo "INPROGRESS"
-  ;; 				 :order 2
-  ;; 				 )
-  ;; 		  (:name "Next Action"
-  ;; 				 :todo "NEXTACTION"
-  ;; 				 :order 3
-  ;; 				 )
-  ;; 		  (:name "Follow Up"
-  ;; 				 :todo "FOLLOWUP"
-  ;; 				 :order 4
-  ;; 				 )
-  ;; 		  (:name "Today"
-  ;; 				 :deadline today
-  ;; 				 :order 5)
-  ;; 		  (:name "Over Due"
-  ;; 				 :deadline past
-  ;; 				 :order 6)
-  ;; 		  (:name "Delegate"
-  ;; 				 :todo "DELEGATE"
-  ;; 				 :order 7)
-  ;; 		  )
-  ;; 		)
    )
   
 (add-to-list 'org-agenda-custom-commands
@@ -3124,8 +3146,19 @@ Position the cursor at it's beginning, according to the current mode."
 (set-face-attribute 'org-mode-line-clock nil
                     :weight 'bold :box '(:line-width 1 :color "#FFBB00") :foreground "white" :background "#FF4040")
 
-(use-package helm-descbinds
+(use-package rg
   :ensure t
+  :defer t
+;;  :config 
+;;  (global-set-key (kbd "M-h g") 'rg)
+  )
+
+(use-package helm-rg
+  :afer helm
+  :ensure t
+  :defer t
+;;  :config
+;;  (global-set-key (kbd "M-h .") 'helm-rg)
   )
 
 
