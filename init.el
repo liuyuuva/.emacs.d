@@ -527,8 +527,8 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
 	 ("M-h t" . elpy-hydra/body)
 	 ("M-h v" . rifle-hydra/body)
 	 ("M-h u" . helm-multi-swoop-all)
-	 ("M-h ." . helm-rg)
-	 ("M-h g" . rg)
+	 ("M-h ." . rg)
+	 ("M-h g" . helm-do-ag)
 	 ("M-h n" . helm-org-in-buffer-headings)
 	 )
   )
@@ -2149,13 +2149,20 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (use-package smartparens
   :ensure t
-  :defer t
+  :init
+  (smartparens-global-mode 1)
+  (show-smartparens-global-mode 1)
   :bind
   (
    ("M-K" . hydra-smartparens/body)
    ("C-(" . hydra-smartparens/body)
    )
   :config
+  (require 'smartparens-config)
+  (use-package smartparens-org
+	:ensure t
+	:defer t
+	)
   (defhydra hydra-smartparens (:color red :hint nil)
   "
   _B_ backward-sexp            -----                                   -----        
@@ -2789,22 +2796,30 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (use-package afternoon-theme
   :ensure t)
-(use-package monokai-theme
-  :ensure t)
-(use-package cyberpunk-theme
-  :ensure t)
 
 (load-theme 'afternoon t)
-;;(load-theme 'monokai t)
-;;(load-theme 'cyberpunk t)
 
-;; (use-package ample-theme
-;;   :init (progn (load-theme 'ample t t)
-;;                (load-theme 'ample-flat t t)
-;;                (load-theme 'ample-light t t)
-;;                (enable-theme 'ample-flat))
-;;   :defer t
-;;   :ensure t)
+
+;; (use-package doom-themes
+;;   :ensure t
+;;   :config
+;;   ;; Global settings (defaults)
+;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+;;         doom-themes-enable-italic t) ; if nil, italics is universally disabled
+;;   (load-theme 'doom-solarized-dark t)
+
+;;   ;; Enable flashing mode-line on errors
+;;   (doom-themes-visual-bell-config)
+  
+;;   ;; Enable custom neotree theme (all-the-icons must be installed!)
+;;   (doom-themes-neotree-config)
+;;   ;; or for treemacs users
+;;   (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+;;   (doom-themes-treemacs-config)
+  
+;;   ;; Corrects (and improves) org-mode's native fontification.
+;;   (doom-themes-org-config)
+;;   )
 
 (if (eq system-type 'windows-nt)
 	(set-face-attribute 'mode-line nil :font "Courier New")
@@ -3161,5 +3176,9 @@ Position the cursor at it's beginning, according to the current mode."
 ;;  (global-set-key (kbd "M-h .") 'helm-rg)
   )
 
-
+(use-package helm-ag
+  :after helm
+  :ensure t
+  :defer t
+  )
 
