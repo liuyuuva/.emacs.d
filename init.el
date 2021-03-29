@@ -1078,11 +1078,12 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 	)
   )
 
-(use-package 'google-c-style
-  :ensure t
-  :defer t
-  )
-(add-hook 'c-mode-common-hook 'google-set-c-style)
+;;(use-package 'google-c-style
+;;  :ensure t
+;;  :defer t
+;;  )
+;;(add-hook 'c-mode-common-hook 'google-set-c-style)
+
 (setq indent-tabs-mode nil)
 
 (use-package yasnippet-snippets
@@ -2159,10 +2160,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
    )
   :config
   (require 'smartparens-config)
-  (use-package smartparens-org
-	:ensure t
-	:defer t
-	)
+  ;;(use-package smartparens-org
+	;;:ensure t
+	;;:defer t
+	;;)
   (defhydra hydra-smartparens (:color red :hint nil)
   "
   _B_ backward-sexp            -----                                   -----        
@@ -3042,18 +3043,18 @@ buffer in current window."
   :defer t
   )
 
-(use-package super-save
-  :ensure t
-  :init
-  (progn
-	(setq super-save-auto-save-when-idle t)
+;;(use-package super-save
+;;  :ensure t
+;;  :init
+;;  (progn
+;;	(setq super-save-auto-save-when-idle t)
 	;; add integration with ace-window
-	(add-to-list 'super-save-triggers 'ace-window)
-	
+;;	(add-to-list 'super-save-triggers 'ace-window)
+;;	
 	;; save on find-file
-	(add-to-list 'super-save-hook-triggers 'find-file-hook)
-	)
-  )
+	;;(add-to-list 'super-save-hook-triggers 'find-file-hook)
+	;;)
+  ;;)
 
 
 (defun smart-open-line-above ()
@@ -3169,7 +3170,7 @@ Position the cursor at it's beginning, according to the current mode."
   )
 
 (use-package helm-rg
-  :afer helm
+  :after helm
   :ensure t
   :defer t
 ;;  :config
@@ -3182,3 +3183,17 @@ Position the cursor at it's beginning, according to the current mode."
   :defer t
   )
 
+(use-package org-roam
+  :ensure t
+  :hook
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/Work/org/org-roam/")
+  :bind (
+		 :map org-roam-mode-map
+              (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n g" . org-roam-graph))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert))
+              (("C-c n I" . org-roam-insert-immediate))))
