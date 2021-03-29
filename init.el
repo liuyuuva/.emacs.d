@@ -1525,7 +1525,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
     (when (not buffer-backed-up)
       ;; Override the default parameters for per-session backups.
       (let ((backup-directory-alist '(("" . "~/.emacs.d/backup/per-session")))
-            (kept-new-versions 5000))
+            (kept-new-versions 50))
         (backup-buffer)))
     ;; Make a "per save" backup on each save.  The first save results in
     ;; both a per-session and a per-save backup, to keep the numbering
@@ -1580,7 +1580,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (show-paren-mode 1)
 (setq show-paren-style 'expression)
 
-(setq auto-save-interal 30)
+(setq auto-save-interal 300)
 (setq auto-save-timeout 10)
 (setq global-visual-line-mode t)
 (setq visible-bell t)
@@ -2481,7 +2481,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 
 
-(defhydra hydra-org-structural-move-search (:color red :columns 4)
+(defhydra hydra-org-structural-move-search (:color red :columns 4 :exit t)
 	"Org Structural Movement and Search"
 	("s" org-sparse-tree "sparse-tree")
 	("<up>" org-backward-heading-same-level "back same level")
@@ -2501,7 +2501,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (org-do-demote)
   )
 
-(defhydra hydra-org-edit-insert (:color red :columns 4)
+(defhydra hydra-org-edit-insert (:color red :columns 4 :exit t)
   "Org Insert and Edit"
   ("d" org-insert-drawer "insert drawer")
   ("a" org-archive-subtree "archive subtree")
