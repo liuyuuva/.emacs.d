@@ -18,11 +18,11 @@
 
 (if (eq system-type 'windows-nt)
     (progn
-      	(let ((default-directory "C:/Users/523452/Work/org/"))
-		  (normal-top-level-add-subdirs-to-load-path))
+;;      	(let ((default-directory "C:/Users/523452/Work/"))
+;;		  (normal-top-level-add-subdirs-to-load-path))
 		(add-to-list 'backup-directory-alist  '("." . "~/.emacs.d/backup/"))
 		(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
-		(setq default-directory "C:/Users/523452/Work/org/")
+		(setq default-directory "C:/Users/523452/Work/")
 		(add-to-list 'exec-path "c:/msys64/mingw64/bin/") ; have to use hunspell as emacs 26 cannot support aspell < v6, but aspell v6 for w64 is nowhere to find.
 										;(setq ispell-dictionary "C:/bin//Aspell/dict/")
 ;		(add-to-list 'exec-path "~/.emacs.d/ccls/")
@@ -31,14 +31,14 @@
         (setq my_org_memo_file "C:/Users/523452/Work/org/memo.org")
 		;;(setq my_org_journal_file "~/Dropbox/0_Journal/journal.org")
 		(setq my_org_meeting_notes_file "c:/Users/523452/Work/org/main.org")
-		(setq org_directory "C:/Users/523452/Work/org/")
+		(setq org_directory "c:/Users/523452/Work/org/")
 		(setq my_python_command "c:/Users/523452/bin/Anaconda3/python.exe")
         (setq my_ipython_path "c:/Users/523452/bin/Anaconda3/Scripts/ipython.exe")
 		;;	(add-to-list 'exec-path "c:/cygwin64/bin") ;; Added for ediff function
 		(add-to-list 'exec-path "c:/msys64/mingw64/bin");; added for clang
 		(add-to-list 'exec-path "c:/msys64/usr/bin");;added for find.exe and grep.exe
 		;;(add-to-list 'exec-path "c:/bin/glo656wb/bin");; for global.exe
-		(add-to-list 'exec-path "C:/Users/523452/Work/bin/Anaconda3/Scripts")
+		;;(add-to-list 'exec-path "C:/Users/523452/bin/Anaconda3/Scripts")
 		(setq preview-gs-command "gswin64c")
 		(setq doc-view-ghostscript-program "gswin64c")
 		(set-fontset-font t 'han (font-spec :family "Microsoft Yahei" :size 12))
@@ -145,10 +145,10 @@
 ;; borrows from http://stackoverflow.com/questions/23328037/in-emacs-how-to-maintain-a-list-of-recent-directories
 
 
-;; (use-package benchmark-init
-;;   :ensure t
-;;   :config
-;;    (add-hook 'after-init-hook 'benchmark-init/deactivate))
+ (use-package benchmark-init
+   :ensure t
+   :config
+    (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 (use-package winner
   :defer t
@@ -549,10 +549,13 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
   )
 
 (use-package helm-swoop
-  :ensure t)
+  :ensure t
+  :defer t
+  )
 
 (use-package helm-org
   :ensure t
+  :defer t
   )
 
 (use-package helm-ag
@@ -1034,20 +1037,28 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (use-package yasnippet
   :ensure t
-
+  :defer t
   :config
   
   (yas-reload-all)
   (add-hook 'prog-mode-hook #'yas-minor-mode)
   (yas-global-mode 1)
+
+  (defun company-yasnippet-or-completion ()
+	"Solve company yasnippet conflicts."
+	(interactive)
+	(let ((yas-fallback-behavior
+           (apply 'company-complete-common nil)))
+      (yas-expand)))
+
+  (define-key yas-keymap [tab] 'tab-complete-or-next-field)
+  (define-key yas-keymap (kbd "TAB") 'tab-complete-or-next-field)
+  (define-key yas-keymap [(control tab)] 'yas-next-field)
+  (define-key yas-keymap (kbd "C-g") 'abort-company-or-yas)
+
+
   )
 
-(defun company-yasnippet-or-completion ()
-  "Solve company yasnippet conflicts."
-  (interactive)
-  (let ((yas-fallback-behavior
-         (apply 'company-complete-common nil)))
-    (yas-expand)))
 
 (add-hook 'company-mode-hook
           (lambda ()
@@ -2177,7 +2188,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
    ("C-(" . hydra-smartparens/body)
    )
   :config
-  (require 'smartparens-config)
+;;  (require 'smartparens-config)
   ;;(use-package smartparens-org
 	;;:ensure t
 	;;:defer t
@@ -2798,10 +2809,6 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 ;(define-key yas-minor-mode-map [tab] nil)
 ;(define-key yas-minor-mode-map (kbd "TAB") nil)
 
-(define-key yas-keymap [tab] 'tab-complete-or-next-field)
-(define-key yas-keymap (kbd "TAB") 'tab-complete-or-next-field)
-(define-key yas-keymap [(control tab)] 'yas-next-field)
-(define-key yas-keymap (kbd "C-g") 'abort-company-or-yas)
 
 (defun my-mark-sexp ()
   "My own mark sexp fun"
@@ -3203,10 +3210,11 @@ Position the cursor at it's beginning, according to the current mode."
 
 (use-package org-roam
   :ensure t
+  :defer t
   :hook
   (after-init . org-roam-mode)
   :custom
-  (org-roam-directory "~/Work/org/org-roam/")
+  (org-roam-directory "~/org-roam/")
   :bind (
 		 :map org-roam-mode-map
               (("C-c n l" . org-roam)
@@ -3229,3 +3237,25 @@ Position the cursor at it's beginning, according to the current mode."
   )
 
 (define-key org-mode-map (kbd "<f10>") 'hydra-org-roam/body)
+
+(use-package org-roam-server
+  :ensure t
+  :defer t
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 7749
+        org-roam-server-authenticate nil
+        org-roam-server-export-inline-images t
+        org-roam-server-serve-files nil
+        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
+
+(use-package esup
+	     :ensure t
+	     :config
+	     (setq esup-depth 0)
+	     )
