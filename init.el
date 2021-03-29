@@ -1513,16 +1513,34 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq make-backup-files t)
 
 (setq version-control t ;; Use version numbers for backups
-	 kept-new-versions 20 ;; Number of newest versions to keep
-	 kept-old-versions 10 ;; Number of oldest versions to keep
+	 kept-new-versions 5000 ;; Number of newest versions to keep
+	 kept-old-versions 5 ;; Number of oldest versions to keep
 	 delete-old-versions t ;; Ask to delete excess backup versions?
-	)
+	 backup-by-copying t
+	 )
 	
-	  
-(defun force-backup-of-buffer ()
-  (let ((buffer-backed-up nil))
-	(backup-buffer)))
+  (defun force-backup-of-buffer ()
+    ;; Make a special "per session" backup at the first save of each
+    ;; emacs session.
+    (when (not buffer-backed-up)
+      ;; Override the default parameters for per-session backups.
+      (let ((backup-directory-alist '(("" . "~/.emacs.d/backup/per-session")))
+            (kept-new-versions 5000))
+        (backup-buffer)))
+    ;; Make a "per save" backup on each save.  The first save results in
+    ;; both a per-session and a per-save backup, to keep the numbering
+    ;; of per-save backups consistent.
+    (let ((buffer-backed-up nil))
+      (backup-buffer)))
+
+;; (defun force-backup-of-buffer ()
+;;   (let ((buffer-backed-up nil))
+;; 	(backup-buffer)))
+
+
 (add-hook 'before-save-hook  'force-backup-of-buffer)
+
+
 (setq initial-scratch-message "") ;; Uh, I know what Scratch is for
 
 
@@ -1562,8 +1580,8 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (show-paren-mode 1)
 (setq show-paren-style 'expression)
 
-(setq auto-save-interal 50)
-(setq auto-save-timeout 60)
+(setq auto-save-interal 30)
+(setq auto-save-timeout 10)
 (setq global-visual-line-mode t)
 (setq visible-bell t)
 (setq inhibit-startup-message t)
