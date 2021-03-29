@@ -101,7 +101,7 @@
 
 
 (set-language-environment "UTF-8")
-(global-set-key (kbd "C-M-!") 'eval-buffer)
+(global-set-key (kbd "C-M-!") 'save-buffers-kill-emacs)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
 ;; Instant Access to Init File
@@ -523,7 +523,7 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
 	 ("M-h r" . helm-resume)
      ("M-h c" . helm-flycheck)
 	 ("M-h l" . helm-recentf)
-	 ("M-h h" . helm-org-in-buffer-headings)
+	 ("M-h M-h" . helm-org-in-buffer-headings)
 	 ("M-h t" . elpy-hydra/body)
 	 ("M-h v" . rifle-hydra/body)
 	 ("M-h u" . helm-multi-swoop-all)
@@ -2433,7 +2433,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	(define-key org-mode-map (kbd "<f9> t s") 'org-timer-stop)
 	(define-key org-mode-map (kbd "<f9> t d") 'org-timer-set-timer)
 
-    (define-key org-mode-map (kbd "<f10>") 'add-sublevel-plainitem)
+;;    (define-key org-mode-map (kbd "<f10>") 'add-sublevel-plainitem)
 	
 	(define-key org-mode-map (kbd "C-<f12>") 'org-overview)
 	(define-key org-mode-map (kbd "<f12>") 'ace-window)
@@ -3193,7 +3193,21 @@ Position the cursor at it's beginning, according to the current mode."
 		 :map org-roam-mode-map
               (("C-c n l" . org-roam)
                ("C-c n f" . org-roam-find-file)
-               ("C-c n g" . org-roam-graph))
+               ("C-c n g" . org-roam-graph)
+
+			   )
               :map org-mode-map
               (("C-c n i" . org-roam-insert))
               (("C-c n I" . org-roam-insert-immediate))))
+
+(defhydra hydra-org-roam (:color red :columns 4 :exit t)
+  "Org Roam"
+  ("r" org-roam "start org roam")
+  ("f" org-roam-find-file  "find file")
+  ("g" org-roam-graph "org-roam-graph")
+  ("i" org-roam-insert "insert")
+  ("I" org-roam-insert-immediate "insert immediate")
+
+  )
+
+(define-key org-mode-map (kbd "<f10>") 'hydra-org-roam/body)
