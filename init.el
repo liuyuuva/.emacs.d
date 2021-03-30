@@ -790,11 +790,12 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
    (progn
      (global-set-key (kbd "C-S-j") 'avy-goto-line)
 	 (global-set-key (kbd "M-s") 'avy-goto-char-timer)
-	 (global-set-key (kbd "C-.") 'avy-goto-char-timer)
-
+	 (global-set-key (kbd "C-/") 'avy-goto-char-timer)
+	 (global-set-key (kbd "M-K") 'avy-goto-char-timer)
 	 
 	 )
    )
+
 (defun yl/setup-key-chord ()
   (interactive)
   (use-package key-chord
@@ -965,7 +966,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
   )
 
  (use-package undo-tree
-   :defer t
+   :ensure t
    :diminish undo-tree-mode
    :config
    (progn
@@ -2184,7 +2185,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (show-smartparens-global-mode 1)
   :bind
   (
-   ("M-K" . hydra-smartparens/body)
+;;   ("M-K" . hydra-smartparens/body)
    ("C-(" . hydra-smartparens/body)
    )
   :config
