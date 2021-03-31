@@ -456,9 +456,9 @@ _f_: find file            _a_: ag                _i_: Ibuffer           _c_: cac
 
 
 (use-package helm
-  :diminish helm
-  :defer t
   :ensure t
+  :defer t
+
   :init
   (progn
     (require 'helm-config)
@@ -974,7 +974,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
      (global-undo-tree-mode)
      (setq undo-tree-visualizer-timestamps t)
      (setq undo-tree-visualizer-diff t)))
-(global-unset-key (kbd "C-/"))
+;;(global-unset-key (kbd "C-/"))
 
 
 (use-package python
@@ -1640,7 +1640,12 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org Mode Setting;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(org-agenda-to-appt)
+
+;;(org-agenda-to-appt)
+(use-package org
+  :ensure t
+  )
+
 (setq org-special-ctrl-a t)
 (setq org-latex-create-formula-image-program 'dvipng)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
@@ -2680,9 +2685,9 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   (message "Jumped back to remembered position"))
 
 (global-set-key (kbd "C-M-/") 'flyspell-check-previous-highlighted-word)
-(global-set-key (kbd "C-1") 'remember-here) ;jump back mark in local mark ring
-(global-set-key (kbd "C-2") 'remember-jump) ; jump back to global mark ring
-
+(global-set-key (kbd "C-1") 'remember-here) 
+(global-set-key (kbd "C-2") 'remember-jump) 
+(global-set-key (kbd "C-3") 'pop-global-mark)
 
 
 (defun unpop-to-mark-command ()
@@ -2697,7 +2702,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 		(setq mark-ring (nbutlast mark-ring))
 		(goto-char (marker-position (car (last mark-ring))))))))
 
-(global-set-key (kbd "C-3") 'unpop-to-mark-command)
+(global-set-key (kbd "C-4") 'unpop-to-mark-command)
 (global-set-key (kbd "C-0") (lambda () (interactive) (push-mark-command nil nil)));
 
 ;(global-set-key (kbd "C-0") (lambda() (interactive) (push-mark nil nil 1)))
@@ -3256,7 +3261,9 @@ Position the cursor at it's beginning, according to the current mode."
         org-roam-server-network-label-wrap-length 20))
 
 (use-package esup
-	     :ensure t
-	     :config
+  :ensure t
+  :defer t
+  :config
 	     (setq esup-depth 0)
 	     )
+
