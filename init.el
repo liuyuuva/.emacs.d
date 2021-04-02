@@ -1645,7 +1645,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (use-package org
   :ensure t
   )
-
+(setq org-M-RET-may-split-line '((default . nil)) )
 (setq org-special-ctrl-a t)
 (setq org-latex-create-formula-image-program 'dvipng)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
@@ -1655,7 +1655,7 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 
 (setq org-use-speed-commands 1)
 
-(setq org-src-fontify-natively t)
+;;(setq org-src-fontify-natively t)
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 
@@ -1980,7 +1980,7 @@ last month."
 	  )
 
 (setq org-agenda-start-with-follow-mode 1)
-
+(setq org-confirm-babel-evaluate nil)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)
@@ -3033,15 +3033,20 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (use-package org-ref
   :ensure t
-  :defer t
+  :config
+  (progn
+	
+;; see org-ref for use of these variables
+	(setq org-ref-bibliography-notes '("~/Work/org/refs/paper_reading_notes.org"))
+	(setq org-ref-default-bibliography '("~/Work/org/refs/refs.bib"))
+	(setq org-ref-pdf-directory '("~/Work/org/refs/pdfs/"))
+		  
+	(setq reftex-default-bibliography '("~/Work/org/refs/refs.bib"))
+	     
+	)
   )
 
 
-
-;; see org-ref for use of these variables
-(setq org-ref-bibliography-notes "~/Dropbox/bibliography/paper_reading_notes.org"
-      org-ref-default-bibliography '("~/Dropbox/bibliography/references.bib")
-      org-ref-pdf-directory "~/Dropbox/bibliography/papers/")
 
 
 ;; (use-package org-pdfview
@@ -3267,3 +3272,14 @@ Position the cursor at it's beginning, according to the current mode."
 	     (setq esup-depth 0)
 	     )
 
+(use-package olivetti
+  :ensure t
+  :config
+  (define-key olivetti-mode-map (kbd "C-c \\") nil)
+  (add-hook 'text-mode-hook 'olivetti-mode)
+   (add-hook 'org-mode-hook 'olivetti-mode)
+   (add-hook 'olivetti-mode-hook (lambda () (interactive) (setq olivetti-body-width 110)))
+  )
+
+  
+  
