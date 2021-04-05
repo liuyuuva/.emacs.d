@@ -1715,9 +1715,9 @@ _t_: toggle    _._: toggle hydra _H_: help       C-o other win no-select
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline my_org_capture_file "Notes" )
 		 "* TODO %?\n ")
-        ("n" "Notes" entry (file+headline my_org_capture_file "Notes" )
-		 "* %?\nEntered on %U\n ")
-        ("m" "Meeting Note" entry (file+headline my_org_capture_file "Notes")
+        ("m" "MEMO" entry (file+headline my_org_capture_file "Notes" )
+		 "* MEMO %?\n ")
+        ("n" "Meeting Note" entry (file+headline my_org_capture_file "Notes")
          "* Meeting with %? on %U\n")
 		 ("j" "Journal" entry (file+datetree my_org_journal_file)
 		  "* %?\nEntered on %U\n %i\n ")
