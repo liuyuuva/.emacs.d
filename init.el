@@ -2312,13 +2312,13 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   :config
   (setq windmove-wrap-around t)
   (windmove-default-keybindings)
-  ;; :bind
-  ;; (
-  ;;  ("C-x <left>" . windmove-left)
-  ;;  ("C-x <right>" . windmove-right)
-  ;;  ("C-x <up>" . windmove-up)
-  ;;  ("C-x <down>" . windmove-down)
-  ;;  )
+   :bind
+   (
+    ("C-x <left>" . windmove-left)
+    ("C-x <right>" . windmove-right)
+    ("C-x <up>" . windmove-up)
+    ("C-x <down>" . windmove-down)
+    )
   )
 
 
@@ -2354,6 +2354,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	  ;;(call-interactively 'org-reload)
 	 ;; ) ;; remove the export issue 
 	(add-hook 'org-mode-hook #'visual-line-mode)
+	(add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
 	(add-hook 'org-mode-hook
 			  '(lambda ()
 				 (setq org-file-apps
@@ -3033,9 +3034,10 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 
 (use-package org-ref
   :ensure t
-  :config
+  :after org
+  :init
   (progn
-	
+	(setq org-ref-show-broken-links nil)
 ;; see org-ref for use of these variables
 	(setq org-ref-bibliography-notes '("~/Work/org/refs/paper_reading_notes.org"))
 	(setq org-ref-default-bibliography '("~/Work/org/refs/refs.bib"))
@@ -3046,7 +3048,12 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	)
   )
 
+(use-package org-autolist
+  :ensure t
+  :defer t
+  :after org
 
+  )
 
 
 ;; (use-package org-pdfview
