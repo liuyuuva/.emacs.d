@@ -3251,11 +3251,13 @@ Position the cursor at it's beginning, according to the current mode."
   ("g" org-roam-graph "org-roam-graph")
   ("i" org-roam-insert "insert")
   ("I" org-roam-insert-immediate "insert immediate")
+  ("t" org-roam-tag-add "add tags")
+  ("d" org-roam-tag-delete "delete tags")
 
   )
 
-(define-key org-mode-map (kbd "<f10>") 'hydra-org-roam/body)
-
+;;(define-key org-mode-map (kbd "<f10>") 'hydra-org-roam/body)
+(global-set-key (kbd "<f10>") 'hydra-org-roam/body)
 (use-package org-roam-server
   :ensure t
   :defer t
