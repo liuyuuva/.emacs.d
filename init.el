@@ -2716,24 +2716,23 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
   :ensure t
   :config
   (progn
-	(setq recentf-max-saved-items 200
+	(setq recentf-max-saved-items 20
 		  recentf-max-menu-items 15)
 	(recentf-mode 1)
 	(global-set-key "\C-x\ \C-r" 'recentf-open-files)
-	(run-at-time (current-time) 600 'recentf-save-list)
+	;(run-at-time (current-time) 600 'recentf-save-list)
 	(add-to-list 'recentf-exclude (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME")));ignore elpa install .el files
 	(add-to-list 'recentf-exclude "\\.breadcrumb\\'")
 	(add-to-list 'recentf-exclude "\\recentf\\'")
 	(add-to-list 'recentf-exclude "/\\.emacs\\.d/")
 	(add-to-list 'recentf-exclude "\\.log$")
 	(add-to-list 'recentf-exclude "\\.toc")
+	(add-to-list 'recentf-exclude "\\.org\\_archive")
 	(add-to-list 'recentf-exclude "\\.pdfsync$")
 	(add-to-list 'recentf-exclude "\\.aux$")
 	(add-to-list 'recentf-exclude "\\.gz$")
 	)
   )
-
-
 
 
 (put 'upcase-region 'disabled nil)
