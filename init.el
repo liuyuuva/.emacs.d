@@ -2507,6 +2507,7 @@ used to fill a paragraph to `my-LaTeX-auto-fill-function'."
 	("u" outline-up-heading "up level")
 	("n" org-narrow-to-subtree "narrow")
 	("l" org-agenda-set-restriction-lock "lock agenda to subtree")
+	("j" org-refile-goto-last-stored "goto last refiled headline")
 	("r" org-agenda-remove-restriction-lock "remove agenda subtree lock")
 	("w" widen "widen")
 	("q" nil "quit")
